@@ -27,7 +27,7 @@ export default defineConfig({
                 index: resolve(__dirname, 'index.html'),
                 login: resolve(__dirname, 'src/pages/login/login.html'),
                 signup: resolve(__dirname, 'src/pages/signup/signup.html'),
-                cards: resolve(__dirname, 'src/pages/cards/chats__cards.html'),
+                mainMessanger: resolve(__dirname, 'src/pages/mainMessanger/mainMessanger.html'),
                 profileEdit: resolve(__dirname, 'src/pages/profileEdit/profileEdit.html'),
                 editPassword: resolve(__dirname, 'src/pages/editPassword/editPassword.html'),
                 saveChanges: resolve(__dirname, 'src/pages/saveChanges/saveChanges.html'),

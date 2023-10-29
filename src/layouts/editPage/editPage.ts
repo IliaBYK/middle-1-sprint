@@ -2,7 +2,7 @@ import { HelperOptions } from 'handlebars';
 
 export default function editPage(this: object, { fn }: HelperOptions): string {
   return `
-    <a class="edit__button button" href="../../pages/cards/chats__cards.html"></a>
+    <a class="edit__button button" href="../../pages/mainMessanger/mainMessanger.html"></a>
     <div class="edit">
       <div class="edit__avatar-container">
         <div class="edit__over">
