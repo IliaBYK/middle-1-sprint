@@ -34,9 +34,10 @@ export default defineConfig({
                 notFound: resolve(__dirname, 'src/pages/notFound/notFound.html'),
                 internalErrorPage: resolve(__dirname, 'src/pages/internalErrorPage/internalErrorPage.html'),
             }
-        }
+        },
+        outDir: resolve(__dirname, 'dist')
     },
     server: {
-        open: '/src/pages/login/signup.html'
+        open: '/server.js'
     }
 });
