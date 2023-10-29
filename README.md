@@ -2,7 +2,7 @@
 
 ## Первый спринт, верстка с использованием шаблонизатора Handlebars
 
-<a href="https://sprint-1--frabjous-tarsier-921d27.netlify.app/" target="_blank"><p>Адрес проекта на Netlify</p></a>
+<a href="https://sprint-1--frabjous-tarsier-921d27.netlify.app/" target="_blank">Адрес проекта на Netlify</a>
 
 ---
 
