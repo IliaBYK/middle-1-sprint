@@ -26,7 +26,6 @@
 }
 
 .chats__profile {
-  text-decoration: none;
   display: inline-block;
   color: rgba(153, 153, 153, 1);
   text-align: right;
@@ -96,6 +95,10 @@
 .chats__img_place_header {
   width: 34px;
   height: 34px;
+}
+
+.chats__img-link {
+  text-decoration: none;
 }
 
 .chats__name {

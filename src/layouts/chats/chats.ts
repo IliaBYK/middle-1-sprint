@@ -6,7 +6,7 @@ export default function chats(this: object, { fn }: HelperOptions): string {
     <div class="chats">
       <aside class="chats__sidebar">
         <div class="chats__sidebar-header">
-          <a class="chats__profile button" href="../../pages/profileEdit/profileEdit.html">Профиль
+          <a class="chats__profile button">Профиль
             <svg class="chats__svg" xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
               <path d="M1 9L5 5L1 1" stroke="#999999"/>
             </svg>
@@ -22,7 +22,9 @@ export default function chats(this: object, { fn }: HelperOptions): string {
       </aside>
       <main class="chats__message-area">
          <header class="chats__header">
-          <img class="chats__img chats__img_place_header button" src="../../images/avatar.png"/>
+          <a class="chats__img-link" href="../../pages/profileEdit/profileEdit.html">
+            <img class="chats__img chats__img_place_header button" src="../../images/avatar.png"/>
+          </a>
           <h2 class="chats__name">Вадим</h2>
           <button class="chats__menu button"></button>
         </header>
