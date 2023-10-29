@@ -1,0 +1,23 @@
+{
+  "name": "yandex-praktikum-middle-1-sprint",
+  "private": false,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "npm run build && node server.js",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.4.6",
+    "sass": "^1.64.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-handlebars": "^1.6.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

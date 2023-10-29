@@ -1,0 +1,53 @@
+.edit__input {
+  outline: none;
+  border: none;
+  padding: 9px 0 9px 100px;
+  width: 510px;
+  color: #999;
+  text-align: right;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 13px;
+  box-sizing: border-box;
+
+  &-container {
+    position: relative;
+    border-bottom: 1px solid rgba(234, 234, 234, 1);
+
+    &_last {
+      border-bottom: none;
+    }
+
+    &_btns {
+      padding: 8px 0;
+    }
+  }
+}
+
+.edit__label {
+  position: absolute;
+  bottom: 10px;
+  color: #1E1E1E;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 13px;
+
+  &_type_btn {
+    color: #3369F3;
+  }
+}
+
+.edit__link {
+  text-decoration: none;
+  color: #3369F3;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 13px;
+
+  &_red {
+    color: red;
+  }
+}

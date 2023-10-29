@@ -1,0 +1,17 @@
+{{#> layouts/page title="Signup Page"}}
+    {{#app}}
+        {{#auth}}
+            <h1 class="auth__title">Регистрация</h1>
+            {{> input/input label='Почта' name='email' type="email"}}
+            {{> input/input label='Логин' name='login' type="text"}}
+            {{> input/input label='Имя' name='first_name' type='text'}}
+            {{> input/input label='Фамилия' name='second_name' type='text'}}
+            {{> input/input label='Телефон' name='phone' type='tel'}}
+            {{> input/input label='Пароль' name='password' type='password'}}
+            {{> input/input class="auth__label_last" label='Пароль еще раз' name='password' type='password'}}
+
+            {{> button/button class="auth__button auth__button_margin" label="Зарегистрироваться"}}
+            {{> button/button class="auth__button_reg" href="../login/login.html" label="Войти"}}
+        {{/auth}}
+    {{/app}}
+{{/ layouts/page}}
