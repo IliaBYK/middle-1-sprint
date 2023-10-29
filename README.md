@@ -2,6 +2,8 @@
 
 ### Первый спринт, верстка с использованием шаблонизатора Handlebars
 
+[Адрес проекта на Netlify](https://sprint-1--frabjous-tarsier-921d27.netlify.app/)
+
 ---
 
 [Прототип проекта в Figma](https://disk.yandex.ru/d/-V6pxHBlBkRVxw)
