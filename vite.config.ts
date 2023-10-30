@@ -31,8 +31,8 @@ export default defineConfig({
                 profileEdit: resolve(__dirname, 'src/pages/profileEdit/profileEdit.html'),
                 editPassword: resolve(__dirname, 'src/pages/editPassword/editPassword.html'),
                 saveChanges: resolve(__dirname, 'src/pages/saveChanges/saveChanges.html'),
-                notFound: resolve(__dirname, 'src/pages/notFound/notFound.html'),
-                internalErrorPage: resolve(__dirname, 'src/pages/internalErrorPage/internalErrorPage.html'),
+                404: resolve(__dirname, 'src/pages/404/404.html'),
+                500: resolve(__dirname, 'src/pages/500/500.html'),
             }
         },
         outDir: resolve(__dirname, 'dist')

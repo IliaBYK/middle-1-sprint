@@ -1,18 +1,18 @@
 .chats__card {
   display: flex;
-  border-bottom: 1px solid rgba(234, 234, 234, 1);
+  border-bottom: 1px solid $grayLines;
   box-sizing: border-box;
   padding: 12px 10px;
-}
 
-.chats__card:hover {
-  cursor: pointer;
-  transition: all 1s;
-  background: #EFEFEF;
-}
+  &:hover {
+    cursor: pointer;
+    transition: all 1s;
+    background: $grayDark;
+  }
 
-.chats__card_focus {
-  background: rgba(228, 237, 253, 1);
+  &_focus {
+    background: $lightBlue;
+  }
 }
 
 .chats__img {
@@ -32,15 +32,15 @@
 .chats__span {
   font-size: 12px;
   font-weight: 500;
-}
 
-.chats__span_invisible {
-  display: none;
+  &_invisible {
+    display: none;
+  }
 }
 
 .chats__text {
   font-size: 12px;
-  color: rgba(153, 153, 153, 1);
+  color: $grayForDates;
   margin: 0;
   line-height: 15px;
 }
@@ -55,14 +55,14 @@
 .chats__time {
   font-size: 9px;
   line-height: 13px;
-  color: rgba(153, 153, 153, 1);
+  color: $grayForDates;
   margin: 0;
 }
 
 .chats__counter {
   font-size: 11px;
-  color: white;
-  background-color: rgba(51, 105, 243, 1);
+  color: $white;
+  background-color: $blue;
   width: 20px;
   height: 20px;
   text-align: center;

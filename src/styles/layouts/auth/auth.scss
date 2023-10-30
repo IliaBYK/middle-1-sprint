@@ -3,7 +3,7 @@
   flex-direction: column;
   margin: auto;
   padding: 50px 30px 30px;
-  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.14);
+  box-shadow: $shadow;
   border-radius: 12px;
   box-sizing: border-box;
 }
@@ -13,15 +13,12 @@
   flex-direction: column;
   height: 100%;
   margin: auto;
-  /* padding: 50px 30px 30px; */
-  /* box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.14);
-  border-radius: 12px; */
 }
 
 .auth__title {
   font-size: 20px;
   font-weight: 500;
-  color: #1e1e1e;
+  color: $black;
   text-align: center;
   margin: 0 0 38px;
 }
@@ -33,19 +30,20 @@
   height: 37px;
   border: none;
   border-radius: 8px;
-  background-color: rgba(51, 105, 243, 1);
-  color: white;
+  background-color: $blue;
+  color: $white;
   font-size: 13px;
   font-weight: normal;
 }
 
 .auth__button_reg {
+  position: relative;
   border: none;
   display: block;
   font-size: 11px;
   margin: 14px auto 0;
   background-color: transparent;
-  color: rgba(51, 105, 243, 1);
+  color: $blue;
 }
 
 .auth__button_margin {

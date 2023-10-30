@@ -22,7 +22,7 @@ export default function chats(this: object, { fn }: HelperOptions): string {
       </aside>
       <main class="chats__message-area">
          <header class="chats__header">
-          <img class="chats__img chats__img_place_header button" src="../../images/avatar.png"/>
+          <img class="chats__img chats__img_place_header button" alt="Аватар собеседника" src="../../images/avatar.png"/>
           <h2 class="chats__name">Вадим</h2>
           <button class="chats__menu button"></button>
         </header>

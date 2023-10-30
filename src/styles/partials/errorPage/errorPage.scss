@@ -22,7 +22,8 @@
 }
 
 .errorPage__link {
-  color: #3369F3;
+  text-decoration: none;
+  color: $blue;
   font-size: 11px;
   font-style: normal;
   font-weight: 500;

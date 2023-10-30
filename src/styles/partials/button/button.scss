@@ -3,8 +3,8 @@
 }
 
 .button:hover {
-  opacity: .7;
-  transition: all 1s linear;
+  opacity: $opacityForButton;
+  transition: $trans;
 }
 
 .auth__link {
