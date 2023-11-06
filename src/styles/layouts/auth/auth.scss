@@ -1,0 +1,59 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  padding: 50px 30px 30px;
+  box-shadow: $shadow;
+  border-radius: 12px;
+  box-sizing: border-box;
+}
+
+.auth__form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: auto;
+}
+
+.auth__title {
+  font-size: 20px;
+  font-weight: 500;
+  color: $black;
+  text-align: center;
+  margin: 0 0 38px;
+}
+
+.auth__button {
+  position: relative;
+  margin: auto 0 0;
+  width: 280px;
+  height: 37px;
+  border: none;
+  border-radius: 8px;
+  background-color: $blue;
+  color: $white;
+  font-size: 13px;
+  font-weight: normal;
+}
+
+.auth__button_reg {
+  position: relative;
+  border: none;
+  display: block;
+  font-size: 11px;
+  margin: 14px auto 0;
+  background-color: transparent;
+  color: $blue;
+}
+
+.auth__button_margin {
+  margin-top: 62px;
+}
+
+.auth_place_login {
+  height: 450px;
+}
+
+.auth__button_place_login {
+  margin-top: auto;
+}

@@ -1,0 +1,16 @@
+{{#> layouts/page title="Login Page"}}
+  {{#app}}
+    {{#editPage}}
+      {{> inputEdit/inputEdit label='Почта' name='email' type="email"}}
+      {{> inputEdit/inputEdit label='Логин' name='login' type="text"}}
+      {{> inputEdit/inputEdit label='Имя' name='first_name' type="text"}}
+      {{> inputEdit/inputEdit label='Фамилия' name='second_name' type="text"}}
+      {{> inputEdit/inputEdit label='Имя в чате' name='display_name' type="text"}}
+      {{> inputEdit/inputEdit class='edit__input-container_last' label='Телефон' name='phone' type="tel"}}
+
+      {{#editPageBtns}}
+        {{> button/button class="auth__button edit__submit-btn" label="Cохранить"}}
+      {{/editPageBtns}}
+    {{/editPage}}
+  {{/app}}
+{{/ layouts/page}}
