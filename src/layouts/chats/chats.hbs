@@ -1,0 +1,21 @@
+<div class="chats">
+  {{sidebar}}
+  <main class="chats__message-area">
+    <header class="chats__header">
+      <img class="chats__img chats__img_place_header button" alt="Аватар собеседника" src="../../images/avatar.png" />
+      <h2 class="chats__name">Вадим</h2>
+      <button class="chats__menu button"></button>
+    </header>
+
+    <div class="chats__main">
+      <time class="chats__date">19 июня</time>
+      {{message}}
+    </div>
+
+    <footer class="chats__footer">
+      {{{Button class=this.class label=this.label onClick=this.onClick type=this.type}}}
+      {{{Input class=this.class label=this.label name=this.name type=this.type error=this.error}}}
+      {{{Button class=this.class label=this.label onClick=this.onClick type=this.type}}}
+    </footer>
+  </main>
+</div>
