@@ -1,9 +1,9 @@
-import Block from "../../../utils/Block";
+import Block from "../../utils/Block";
 import template from "./sidebar.hbs";
-import { Button } from "../../../partials/button";
-import Search from "../__search";
-import { Card } from "../../../partials/card";
-import { cards } from "../../../utils/cards";
+import { Button } from "../../partials/button";
+import Search from "../chatsSearch";
+import { Card } from "../../partials/card";
+import { cards } from "../../utils/cards";
 
 export class Sidebar extends Block {
   constructor() {

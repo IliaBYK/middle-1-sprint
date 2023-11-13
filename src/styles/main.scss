@@ -1,3 +1,10 @@
+#app {
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;;
+  box-sizing: border-box;
+}
+
 @import '../vendor/normalize.css';
 @import '../vendor/fonts/fonts.css';
 @import './variables.scss';
@@ -12,14 +19,5 @@
 @import './pages/mainMessanger/mainMessanger.scss';
 
 @import './partials/errorPage/errorPage.scss';
-@import './layouts/editPage/editPage.scss';
-@import './layouts/editPageBtns/editPageBtns.scss';
+@import './pages/editPage/editPage.scss';
 @import './pages/editPassword/editPassword.scss';
-
-
-#root {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;;
-  box-sizing: border-box;
-}

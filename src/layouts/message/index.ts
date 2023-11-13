@@ -5,7 +5,7 @@ import template from "./message.hbs";
 interface messageProps {
   class?: string;
   text: string;
-  time?: Date;
+  time?: string;
 }
 export default class Message extends Block {
   constructor(props: messageProps) {

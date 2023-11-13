@@ -11,6 +11,7 @@ interface InputProps {
   placeholder?: string;
   events?: {
     click: (e?: Event) => void;
+    blur?: (e?: Event) => void;
   };
 }
 

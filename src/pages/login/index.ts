@@ -2,7 +2,7 @@ import Block from "../../utils/Block";
 import template from "./login.hbs";
 import { render } from "../../utils/render";
 import { Button } from "../../partials/button";
-import { Input } from "../../partials/input";
+import { InputContainer } from "../../layouts/inputContainer";
 
 export class LoginPage extends Block {
   constructor() {
@@ -10,30 +10,39 @@ export class LoginPage extends Block {
   }
 
   init() {
-    this.children.login = new Input({
+    this.children.login = new InputContainer({
       label: "Логин",
       name: "login",
       type: "text",
       events: {
         click: () => {
-          console.log("q12323sw");
+          
+        },
+        blur: () => {
+          const container = this.children.login;
+          const input = (container).children.input;
+          if(!input.isValidLogin(input.getValue())) {
+            container.setProps(container.props.error = "asdasdasd");
+          } else {
+            container.setProps(container.props.error = "");
+          }
+          console.log(this.children.login.children.input.isValidLogin(this.children.login.children.input.getValue()))
         }
       }
     });
 
-    this.children.password = new Input({
+    this.children.password = new InputContainer({
       label: "Пароль",
       name: "password",
       type: "password",
       events: {
-        click: (e) => {
-          if((e?.target as HTMLInputElement).value != "123")
-          console.log(123123);
+        click: () => {
+          
         }
       }
     });
 
-    this.children.passwordElse = new Input({
+    this.children.passwordElse = new InputContainer({
       class: "auth__label_last", 
       label: "Пароль еще раз", 
       name: "password",

@@ -1,5 +1,5 @@
-import { InputSearch } from "../../../partials/inputSearch";
-import Block from "../../../utils/Block";
+import { InputSearch } from "../../partials/inputSearch";
+import Block from "../../utils/Block";
 import template from "./search.hbs";
 
 export default class Search extends Block {
