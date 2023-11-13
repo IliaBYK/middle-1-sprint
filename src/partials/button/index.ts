@@ -2,6 +2,7 @@ import Block from '../../utils/Block';
 import template from './button.hbs';
 
 interface ButtonProps {
+  content?: boolean;
   label?: string;
   type?: 'submit' | 'button',
   href?: string;

@@ -1,9 +1,11 @@
+import { Chats } from "../layouts/chats";
 import { LoginPage } from "../pages/login";
 import { SignupPage } from "../pages/signup";
 
 const ROUTES = {
   "login": LoginPage,
   "signup" : SignupPage,
+  "chats": Chats
 }
 
 export function render(name: keyof typeof ROUTES) {

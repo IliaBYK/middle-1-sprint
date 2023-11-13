@@ -1,12 +1,11 @@
 <aside class="chats__sidebar">
   <div class="chats__sidebar-header">
-    <button class="chats__profile button" href="../../pages/profileEdit/profileEdit.html">Профиль
-    </button>
-    {{{Button class=this.class label=this.label onClick=this.onClick type=this.type}}}
-    <svg class="chats__svg" xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
-      <path d="M1 9L5 5L1 1" stroke="#999999" />
-    </svg>
-    {{search}}
+    {{{button}}}
+    {{{search}}}
   </div>
-  {{cards}}
+  <ul class="chats__cards">
+    {{#each cards}}
+      {{{this}}}
+    {{/each}}
+  </ul>
 </aside>

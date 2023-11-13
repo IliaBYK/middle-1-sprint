@@ -14,12 +14,23 @@ export class LoginPage extends Block {
       label: "Логин",
       name: "login",
       type: "text",
+      events: {
+        click: () => {
+          console.log("q12323sw");
+        }
+      }
     });
 
     this.children.password = new Input({
       label: "Пароль",
       name: "password",
       type: "password",
+      events: {
+        click: (e) => {
+          if((e?.target as HTMLInputElement).value != "123")
+          console.log(123123);
+        }
+      }
     });
 
     this.children.passwordElse = new Input({
@@ -32,7 +43,9 @@ export class LoginPage extends Block {
     this.children.buttonSub = new Button({
       class: "auth__button auth__button_margin", 
       label: "Войти",
-      onClick: () => {}
+      events: {
+        click: () => {/* this.validation() */},
+      },
     });
 
     this.children.buttonLink = new Button({
@@ -43,6 +56,16 @@ export class LoginPage extends Block {
       },
     });
   }
+
+  /* validation() {
+    /* console.log(this.children.login.element?.children.forEach(el => el.tagName === "input"));
+    for(let i = 0; i < this.children.login.element?.children.length; i++) {
+      if(this.children.login.element?.children[i].tagName === "INPUT") {
+        console.log((this.children.login.element?.children[i] as Input).getName())
+      }
+    }
+    
+  } */
 
   render() {
     return this.compile(template, this.props);

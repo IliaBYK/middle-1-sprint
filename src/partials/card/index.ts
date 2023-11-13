@@ -1,16 +1,16 @@
 import Block from '../../utils/Block';
 import template from './card.hbs';
 
-interface ButtonProps {
+interface cardProps {
   src: string;
   name: string;
   text: string;
-  time: Date;
+  time: string;
   counter?: number;
 }
 
 export class Card extends Block {
-  constructor(props: ButtonProps) {
+  constructor(props: cardProps) {
     super({
       ...props,
     });

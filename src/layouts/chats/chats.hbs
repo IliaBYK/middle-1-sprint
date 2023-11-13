@@ -1,5 +1,5 @@
 <div class="chats">
-  {{sidebar}}
+  {{{sidebar}}}
   <main class="chats__message-area">
     <header class="chats__header">
       <img class="chats__img chats__img_place_header button" alt="Аватар собеседника" src="../../images/avatar.png" />
@@ -9,13 +9,15 @@
 
     <div class="chats__main">
       <time class="chats__date">19 июня</time>
-      {{message}}
+      {{#each messages}}
+        {{{this}}}
+      {{/each}}
     </div>
 
     <footer class="chats__footer">
-      {{{Button class=this.class label=this.label onClick=this.onClick type=this.type}}}
-      {{{Input class=this.class label=this.label name=this.name type=this.type error=this.error}}}
-      {{{Button class=this.class label=this.label onClick=this.onClick type=this.type}}}
+      {{{attachBtn}}}
+      {{{input}}}
+      {{{sendBtn}}}
     </footer>
   </main>
 </div>
