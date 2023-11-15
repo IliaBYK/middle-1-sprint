@@ -103,11 +103,7 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected componentDidUpdate (oldProps: P, newProps: P): boolean {
-<<<<<<< HEAD
     if (oldProps !== newProps) return true // линтер ругался
-=======
-    if(oldProps !== newProps) return true //линтер ругался
->>>>>>> 6a32f11ae713f45b6f9b638d9984cedcef19b9cd
     return true
   }
 
