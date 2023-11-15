@@ -3,8 +3,7 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-items: center;
+  place-items: center center;
   position: relative;
 
   &__container {
@@ -81,7 +80,7 @@
     width: 64px;
     height: 100%;
     z-index: 1000;
-    background: url(../../src/images/backBtn.svg) no-repeat;
+    background: url("../../src/images/backBtn.svg") no-repeat;
     background-position: center;
     background-color: $grayLight;
     border: none;

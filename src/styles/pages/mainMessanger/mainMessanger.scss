@@ -192,7 +192,7 @@
   bottom: 0;
   display: flex;
   align-items: center;
-  padding: 11px 0 11px;
+  padding: 11px 0;
   margin-top: auto;
   border-top: 1px solid $grayLines;
   background: $white;
@@ -201,7 +201,7 @@
 .chats__attach-btn {
   width: 32px;
   height: 32px;
-  background: url(../../src/images/attachBtn.png) no-repeat;
+  background: url("../../src/images/attachBtn.png") no-repeat;
   border: none;
   margin: 0 10px 0 0;
 }
@@ -222,7 +222,7 @@
 }
 
 .chats__send-btn {
-  background: url(../../src/images/sendBtn.png);
+  background: url("../../src/images/sendBtn.png");
   border: none;
   width: 28px;
   height: 28px;
@@ -230,7 +230,7 @@
 }
 
 .chats__menu {
-  background: url(../../src/images/menu.png) no-repeat;
+  background: url("../../src/images/menu.png") no-repeat;
   height: 15px;
   margin-left: auto;
   border: none;
@@ -247,7 +247,7 @@
   text-align: center;
   font-size: 12px;
   line-height: 12px;
-  color: r$grayForDates;
+  color: r$grayfordates;
   margin: 0 0 30px;
 }
 
@@ -281,7 +281,7 @@
 }
 
 .chats__message_user {
-  border-radius: 11px 11px 0 11px;
+  border-radius: 11px 11px 0;
   align-self: flex-end;
   background-color: $lightBlue;
   padding-right: 63px;
@@ -292,7 +292,7 @@
     bottom: 12px;
     right: 39px;
     content: '';
-    background: url(../../src/images/read.svg) no-repeat;
+    background: url("../../src/images/read.svg") no-repeat;
     width: 10px;
     height: 5px;
   }
