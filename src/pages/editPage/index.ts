@@ -1,19 +1,19 @@
-import Block from "../../utils/Block";
-import template from "./editPage.hbs";
-import { render } from "../../utils/render";
-import { Button } from "../../components/button";
-import { InputEdit } from "../../components/inputEdit";
-import { editBtn } from "../../components/editBtn";
-import { Title } from "../../components/title";
-import { Imagine } from "../../components/imagine";
-import { EditAvatarContainer } from "../../components/editAvatarContainer";
+import Block from '../../utils/Block'
+import template from './editPage.hbs'
+import { render } from '../../utils/render'
+import { Button } from '../../components/button'
+import { InputEdit } from '../../components/inputEdit'
+import { EditBtn } from '../../components/editBtn'
+import { Title } from '../../components/title'
+import { Imagine } from '../../components/imagine'
+import { EditAvatarContainer } from '../../components/editAvatarContainer'
 
 export class EditPage extends Block {
-  constructor() {
-    super({});
+  constructor () {
+    super({})
   }
 
-  init() {
+  init (): void {
     this.children.avatar = new EditAvatarContainer({
       events: {
         click: () => {}
@@ -21,86 +21,86 @@ export class EditPage extends Block {
     })
 
     this.children.title = new Title({
-      class: "edit__title",
-      label: "Андрей"
+      class: 'edit__title',
+      label: 'Андрей'
     })
 
     this.children.imagine = new Imagine({
-      src: "../../images/Union.png",
-      class: "edit__avatar",
-      alt: "Аватар пользователя",
+      src: '../../images/Union.png',
+      class: 'edit__avatar',
+      alt: 'Аватар пользователя'
     })
 
     this.children.buttonToChats = new Button({
-      class: "edit__button",
+      class: 'edit__button',
       events: {
-        click: () => render("chats")
+        click: () => { render('chats') }
       }
     })
 
     this.children.mail = new InputEdit({
-      label: "Почта",
-      name: "email",
-      type: "email",
-    });
+      label: 'Почта',
+      name: 'email',
+      type: 'email'
+    })
 
     this.children.login = new InputEdit({
-      label: "Логин",
-      name: "login",
-      type: "text",
-    });
+      label: 'Логин',
+      name: 'login',
+      type: 'text'
+    })
 
     this.children.firstName = new InputEdit({
-      label: "Имя",
-      name: "first_name",
-      type: "text",
-    });
+      label: 'Имя',
+      name: 'first_name',
+      type: 'text'
+    })
 
     this.children.secondName = new InputEdit({
-      label: "Фамилия", 
-      name: "second_name",
-      type: "text",
-    });
+      label: 'Фамилия',
+      name: 'second_name',
+      type: 'text'
+    })
 
     this.children.displayName = new InputEdit({
-      label: "Имя в чате", 
-      name: "display_name",
-      type: "text",
-    });
+      label: 'Имя в чате',
+      name: 'display_name',
+      type: 'text'
+    })
 
     this.children.phone = new InputEdit({
-      class: "edit__input-container_last",
-      label: "Телефон", 
-      name: "phone",
-      type: "tel",
-    });
+      class: 'edit__input-container_last',
+      label: 'Телефон',
+      name: 'phone',
+      type: 'tel'
+    })
 
-    this.children.changeData = new editBtn({
+    this.children.changeData = new EditBtn({
       /* class: "edit__input-container_btns", */
-      label: "Изменить данные",
+      label: 'Изменить данные',
       events: {
-        click: () => {/* this.validation() */},
-      },
-    });
+        click: () => { /* this.validation() */ }
+      }
+    })
 
-    this.children.changePassword = new editBtn({
+    this.children.changePassword = new EditBtn({
       /* class: "edit__input-container_btns",  */
-      label: "Изменить пароль",
+      label: 'Изменить пароль',
       events: {
-        click: () => {/* this.validation() */},
-      },
-    });
+        click: () => { /* this.validation() */ }
+      }
+    })
 
-    this.children.logout = new editBtn({
+    this.children.logout = new EditBtn({
       /* class: "edit__input-container_last edit__input-container_btns", */
-      label: "Выйти",
+      label: 'Выйти',
       events: {
-        click: () => render("login"),
-      },
-    });
+        click: () => { render('login') }
+      }
+    })
   }
 
-  render() {
-    return this.compile(template, this.props);
+  render (): DocumentFragment {
+    return this.compile(template, this.props)
   }
 }

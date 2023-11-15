@@ -1,20 +1,20 @@
-import { ErrorPage } from '../../components/errorPage';
-import Block from '../../utils/Block';
-import template from './500.hbs';
+import { ErrorPage } from '../../components/errorPage'
+import Block from '../../utils/Block'
+import template from './500.hbs'
 
 export class InternalError extends Block {
-  constructor() {
-    super({});
+  constructor () {
+    super({})
   }
 
-  init() {
+  init (): void {
     this.children.page = new ErrorPage({
-      code: "500",
-      message: "Мы уже фиксим"
+      code: '500',
+      message: 'Мы уже фиксим'
     })
   }
 
-  render() {
-    return this.compile(template, { ...this.props });
+  render (): DocumentFragment {
+    return this.compile(template, { ...this.props })
   }
 }

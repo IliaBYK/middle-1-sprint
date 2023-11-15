@@ -1,20 +1,20 @@
-import { ErrorPage } from '../../components/errorPage';
-import Block from '../../utils/Block';
-import template from './404.hbs';
+import { ErrorPage } from '../../components/errorPage'
+import Block from '../../utils/Block'
+import template from './404.hbs'
 
 export class NotFound extends Block {
-  constructor() {
-    super({});
+  constructor () {
+    super({})
   }
 
-  init() {
+  init (): void {
     this.children.page = new ErrorPage({
-      code: "404",
-      message: "Не туда попали"
+      code: '404',
+      message: 'Не туда попали'
     })
   }
 
-  render() {
-    return this.compile(template, { ...this.props });
+  render (): DocumentFragment {
+    return this.compile(template, { ...this.props })
   }
 }

@@ -1,29 +1,29 @@
-import Block from '../../utils/Block';
-import { render } from '../../utils/render';
-import { Button } from '../button';
-import template from './errorPage.hbs';
+import Block from '../../utils/Block'
+import { render } from '../../utils/render'
+import { Button } from '../button'
+import template from './errorPage.hbs'
 
 interface ErrorProps {
-  code: string;
-  message: string;
+  code: string
+  message: string
 }
 
 export class ErrorPage extends Block<ErrorProps> {
-  constructor(props: ErrorProps) {
-    super({...props});
+  constructor (props: ErrorProps) {
+    super({ ...props })
   }
 
-  init() {
+  init (): void {
     this.children.buttonBack = new Button({
-      class: "errorPage__link",
-      label: "Назад к чатам",
+      class: 'errorPage__link',
+      label: 'Назад к чатам',
       events: {
-        click: () => render("chats")
+        click: () => { render('chats') }
       }
     })
   }
 
-  render() {
-    return this.compile(template, { ...this.props });
+  render (): DocumentFragment {
+    return this.compile(template, { ...this.props })
   }
 }

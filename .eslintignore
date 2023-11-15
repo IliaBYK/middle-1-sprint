@@ -1,3 +1,6 @@
 /build
-**/*.min.js
 /node_modules 
+server.js
+vite.config.ts
+vite-plugin-handelbars-precompile.ts
+./*.ts

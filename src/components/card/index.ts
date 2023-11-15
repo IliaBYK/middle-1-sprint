@@ -1,22 +1,22 @@
-import Block from '../../utils/Block';
-import template from './card.hbs';
+import Block from '../../utils/Block'
+import template from './card.hbs'
 
 interface cardProps {
-  src: string;
-  name: string;
-  text: string;
-  time: string;
-  counter?: number;
+  src: string
+  name: string
+  text: string
+  time: string
+  counter?: number
 }
 
 export class Card extends Block {
-  constructor(props: cardProps) {
+  constructor (props: cardProps) {
     super({
-      ...props,
-    });
+      ...props
+    })
   }
 
-  render() {
-    return this.compile(template, this.props);
+  render (): DocumentFragment {
+    return this.compile(template, this.props)
   }
 }
