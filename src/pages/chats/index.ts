@@ -58,7 +58,6 @@ export class Chats extends Block {
   }
 
   protected componentDidUpdate (oldProps: chatProps, newProps: chatProps): boolean {
-    oldProps && newProps;
     this.children.chats = this.createMessages(chats)
 
     return true
