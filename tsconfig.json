@@ -6,9 +6,6 @@
     "forceConsistentCasingInFileNames": true,            
     "strict": true,                                     
     "skipLibCheck": true,
-    "lib": [
-      "ESNext",
-      "DOM",
-    ]
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
   }
 }
