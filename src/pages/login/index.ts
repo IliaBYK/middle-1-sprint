@@ -71,7 +71,6 @@ export class LoginPage extends Block {
       }
     })
 
-
     this.children.buttonTo404 = new Button({
       class: 'button__link',
       label: '404',

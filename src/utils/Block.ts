@@ -1,5 +1,5 @@
 import { EventBus } from './EventBus'
-import {nanoid} from 'nanoid'
+import { nanoid } from 'nanoid'
 
 // Нельзя создавать экземпляр данного класса
 class Block<P extends Record<string, any> = any> {
