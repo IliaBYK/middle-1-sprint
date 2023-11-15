@@ -103,7 +103,8 @@ class Block<P extends Record<string, any> = any> {
   }
 
   protected componentDidUpdate (oldProps: P, newProps: P): boolean {
-    return true
+    oldProps && newProps;
+    return true;
   }
 
   setProps = (nextProps: Partial<P>): void => {
