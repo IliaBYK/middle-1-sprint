@@ -24,11 +24,12 @@ export class Chats extends Block {
     this.children.messages = this.createMessages(chats);
     this.children.sidebar = new Sidebar();
 
-    this.children.password = new Input({
+    /* this.children.password = new Input({
       label: "Пароль",
       name: "password",
       type: "password",
-    });
+      required: true
+    }); */
 
     this.children.attachBtn = new Button({
       class: "chats__attach-btn",
@@ -40,7 +41,8 @@ export class Chats extends Block {
     this.children.input = new InputSearch({
       class: "chats__input", 
       placeholder: "Сообщение",
-      name: "message"
+      name: "message",
+      required: true,
     });
 
     this.children.sendBtn = new Button({

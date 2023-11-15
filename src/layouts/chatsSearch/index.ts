@@ -13,6 +13,7 @@ export default class Search extends Block {
       placeholder: "Поиск",
       name: "searchChat",
       type: "text",
+      required: false
     })
   }
 

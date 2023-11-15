@@ -6,6 +6,7 @@ interface InputProps {
   placeholder?: string;
   name?: string;
   type?: string
+  required: boolean
 }
 
 export class InputSearch extends Block<InputProps> {

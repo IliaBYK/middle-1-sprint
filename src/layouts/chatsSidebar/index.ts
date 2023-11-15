@@ -4,6 +4,7 @@ import { Button } from "../../partials/button";
 import Search from "../chatsSearch";
 import { Card } from "../../partials/card";
 import { cards } from "../../utils/cards";
+import { render } from "../../utils/render";
 
 export class Sidebar extends Block {
   constructor() {
@@ -17,7 +18,10 @@ export class Sidebar extends Block {
       class: "chats__profile",
       label: "Профиль",
       content: true,
-      type: "button"
+      type: "button",
+      events: {
+        click: () => render("edit")
+      }
     });
 
     this.children.search = new Search();

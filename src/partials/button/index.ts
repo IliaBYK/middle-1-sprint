@@ -7,9 +7,9 @@ interface ButtonProps {
   type?: 'submit' | 'button',
   href?: string;
   class?: string;
-  onClick?: () => void;
+  onClick?: (e?: Event) => void;
   events?: {
-    click: () => void;
+    click: (e?: Event) => void;
   };
 }
 

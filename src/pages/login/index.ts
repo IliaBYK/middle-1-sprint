@@ -3,6 +3,9 @@ import template from "./login.hbs";
 import { render } from "../../utils/render";
 import { Button } from "../../partials/button";
 import { InputContainer } from "../../layouts/inputContainer";
+import { Title } from "../../partials/title";
+import { submit, validation } from "../../utils/validation";
+import errors from "../../utils/errors";
 
 export class LoginPage extends Block {
   constructor() {
@@ -10,24 +13,20 @@ export class LoginPage extends Block {
   }
 
   init() {
+    this.children.title = new Title({
+      class: "auth__title",
+      label: "Вход"
+    })
+
     this.children.login = new InputContainer({
       label: "Логин",
       name: "login",
       type: "text",
+      required: true,
       events: {
-        click: () => {
-          
+        click: () => {console.log(this.element?.children);
         },
-        blur: () => {
-          const container = this.children.login;
-          const input = (container).children.input;
-          if(!input.isValidLogin(input.getValue())) {
-            container.setProps(container.props.error = "asdasdasd");
-          } else {
-            container.setProps(container.props.error = "");
-          }
-          console.log(this.children.login.children.input.isValidLogin(this.children.login.children.input.getValue()))
-        }
+        blur: () => validation(this.children, "login", errors)
       }
     });
 
@@ -35,25 +34,33 @@ export class LoginPage extends Block {
       label: "Пароль",
       name: "password",
       type: "password",
+      required: true,
       events: {
-        click: () => {
-          
-        }
+        click: () => {},
+        blur: () => validation(this.children, "password", errors)
       }
     });
 
     this.children.passwordElse = new InputContainer({
       class: "auth__label_last", 
       label: "Пароль еще раз", 
-      name: "password",
+      name: "passwordElse",
       type: "password",
+      required: true,
+      events: {
+        click: () => {},
+        blur: () => validation(this.children, "passwordElse", errors)
+      }
     });
 
     this.children.buttonSub = new Button({
       class: "auth__button auth__button_margin", 
       label: "Войти",
+      type: "submit",
       events: {
-        click: () => {/* this.validation() */},
+        click: (e?: Event) => {
+          submit(this.children, e)
+          /* this.validation() */},
       },
     });
 
@@ -65,16 +72,6 @@ export class LoginPage extends Block {
       },
     });
   }
-
-  /* validation() {
-    /* console.log(this.children.login.element?.children.forEach(el => el.tagName === "input"));
-    for(let i = 0; i < this.children.login.element?.children.length; i++) {
-      if(this.children.login.element?.children[i].tagName === "INPUT") {
-        console.log((this.children.login.element?.children[i] as Input).getName())
-      }
-    }
-    
-  } */
 
   render() {
     return this.compile(template, this.props);

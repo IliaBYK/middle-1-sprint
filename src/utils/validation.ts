@@ -1,115 +1,95 @@
-/* const form = document.querySelector('.my-form');
-const loginInput = form.querySelector('.username');
-const passwordInput = form.querySelector('.password');
-const confirmPasswordInput = form.querySelector('.confirm-password');
-
-form.addEventListener('submit', (evt) => {
-  // Отменяем действие по умолчанию
-  evt.preventDefault();
-  
-  // Получаем значения полей формы
-  const login = loginInput.value;
-  const password = passwordInput.value;
-  const confirmPassword = confirmPasswordInput.value;
-  
-  // Проверяем, что поля заполнены
-  if (!login || !password || !confirmPassword) {
-    alert('Пожалуйста, заполните все поля');
-    return;
-  }
-  
-  // Проверяем, что имя пользователя содержит только буквы и цифры
-  if (!isValidLogin(login)) {
-    alert('Логин может содержать только буквы на латинице и цифры');
-    return;
-  }
-  
-  // Проверяем, что пароль содержит хотя бы одну заглавную букву, одну строчную букву и одну цифру
-  if (!isValidPassword(password)) {
-    alert('Пароль должен содержать как минимум одну заглавную букву, одну строчную букву и одну цифру');
-    return;
-  }
-  
-  // Проверяем, что пароли совпадают
-  if (password !== confirmPassword) {
-    alert('Пароли не совпадают');
-    return;
-  }
-  
-  // Если всё в порядке, отправляем форму
-  form.submit();
-});
-
-function isValidLogin(login: string) {
+import { InputContainer } from './../layouts/inputContainer/index';
+import errors from './errors';
+import { render } from './render';
+function isValidName(name: string): boolean {
   // Проверка имени регулярным выражением
-  const pattern = /^[a-zA-Z0-9]+$/;
+  const pattern = /^\b[A-ZА-Я][а-яa-z]+$/;
+  return pattern.test(name);
+}
+
+function isValidLogin(login: string): boolean {
+  if(!login) return false;
+  // Проверка имени регулярным выражением
+  const pattern = /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{2,20}$/;
   return pattern.test(login);
 }
 
-function isValidPassword(password: string) {
+function isValidPassword(password: string): boolean {
+  if(!password) return false;
   // Проверка пароля регулярным выражением
-  const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,20}$/;
+  const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{7,40}$/;
   return pattern.test(password);
-} */
+}
 
-/* export class Validation {
-  form: HTMLElement;
-  input: HTMLElement;
-
-
-  constructor(props: any) {
-    this.form = document.querySelector(props.queryForm);
-    this.input = this.form.querySelector(props.queryInput);
-  }
-
-  _isValidLogin(login: string) {
-  // Проверка имени регулярным выражением
-    const pattern = /^[a-zA-Z0-9]+$/;
-    return pattern.test(login);
-  }
-
-  _isValidPassword(password: string) {
+function isValidEmail(email: string): boolean {
+  if(!email) return false;
   // Проверка пароля регулярным выражением
-    const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{8,20}$/;
-    return pattern.test(password);
+  const pattern = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+  return pattern.test(email);
+}
+
+function isValidPhone(phone: string): boolean {
+  if(phone!) return false;
+  // Проверка пароля регулярным выражением
+  const pattern = /^\+?[0-9]{9,15}$/g;
+  return pattern.test(phone);
+}
+
+function isValidMessage(message: string): boolean {
+  return message.length === 0;
+}
+
+const functions: Record<string, Function> = {
+  "email": isValidEmail,
+  "login": isValidLogin,
+  "message": isValidMessage,
+  "first_name": isValidName,
+  "second_name": isValidName,
+  "password": isValidPassword,
+  "passwordElse": isValidPassword,
+  "phone": isValidPhone
+}
+
+function validation(object: any, name: string, message: any) {
+    let isValid: boolean = false
+    const input = (object[name] as InputContainer)
+    if(!input.validation()) {
+      input.setProps({error: message[name]})
+    } else {
+      input.setProps({error: ""});
+      isValid = true;
+    } 
+    return isValid;
   }
 
-  submit() {
-    this.form.addEventListener('submit', (evt) => {
-    // Отменяем действие по умолчанию
-    evt.preventDefault();
-    
-    // Получаем значения полей формы
-    const login = loginInput.value;
-    const password = passwordInput.value;
-    const confirmPassword = confirmPasswordInput.value;
-    
-    // Проверяем, что поля заполнены
-    if (!login || !password || !confirmPassword) {
-      alert('Пожалуйста, заполните все поля');
-      return;
+function submit(object: any,e?: Event) {
+  e?.preventDefault()
+  let result: Record<any, any> = {};
+  let option: boolean = false;
+
+  const values = Object
+    .values(object)
+    .filter(el => el instanceof InputContainer)
+    .map(el => [(el as InputContainer).getName(), (el as InputContainer).getValue()]);
+
+  values.map(el => {
+    if(functions[el[0]]([el[1]])) {
+      result[el[0]] = el[1];
+      option = true;
+    } else {
+      option = false;
+      validation(object, el[0], errors)
     }
-    
-    // Проверяем, что имя пользователя содержит только буквы и цифры
-    if (!this._isValidLogin(login)) {
-      alert('Логин может содержать только буквы на латинице и цифры');
-      return;
-    }
-    
-    // Проверяем, что пароль содержит хотя бы одну заглавную букву, одну строчную букву и одну цифру
-    if (!this._isValidPassword(password)) {
-      alert('Пароль должен содержать как минимум одну заглавную букву, одну строчную букву и одну цифру');
-      return;
-    }
-    
-    // Проверяем, что пароли совпадают
-    if (password !== confirmPassword) {
-      alert('Пароли не совпадают');
-      return;
-    }
-    
-    // Если всё в порядке, отправляем форму
-    this.form.onsubmit();
-    })
+  })
+
+  if(result["password"] !== result["passwordElse"]) {
+    (object.passwordElse as InputContainer).setProps({error: "Пароли не совпадают"});
   }
-} */
+
+  if (result["password"] === result["passwordElse"] && option) {
+    console.log(result);
+    render("chats");
+  }
+}
+
+export {functions, validation, submit};

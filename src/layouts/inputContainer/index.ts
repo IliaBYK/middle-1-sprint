@@ -8,6 +8,7 @@ interface InputProps {
   class?: string;
   error?: string;
   type: string;
+  required: boolean;
   events?: {
     click: (e?: Event) => void
     blur?: (e?: Event) => void;
@@ -26,7 +27,21 @@ export class InputContainer extends Block<InputProps> {
       type: this.props.type,
       class: this.props.class,
       events: this.props.events,
+      error: this.props.error,
+      required: this.props.required
     });
+  }
+
+  validation() {
+    return (this.children.input as Input).validation()
+  }
+
+  getValue() {
+    return (this.children.input as Input).getValue()
+  }
+
+  getName() {
+    return (this.children.input as Input).getName()
   }
 
   render() {
