@@ -5,16 +5,16 @@
   box-sizing: border-box;
 }
 
-@import url('../vendor/normalize.css');
-@import url('../vendor/fonts/fonts.css');
-@import url('./variables.scss');
-@import url('./layouts/app/app.scss');
-@import url('./partials/button/button.scss');
-@import url('./partials/input/input.scss');
-@import url('./layouts/auth/auth.scss');
-@import url('./partials/inputEdit/inputEdit.scss');
-@import url('./partials/card/chats__cars.scss');
-@import url('./pages/mainMessanger/mainMessanger.scss');
-@import url('./partials/errorPage/errorPage.scss');
-@import url('./pages/editPage/editPage.scss');
-@import url('./pages/editPassword/editPassword.scss');
+@import '../vendor/normalize.css';
+@import '../vendor/fonts/fonts.css';
+@import './variables.scss';
+@import './layouts/app/app.scss';
+@import './partials/button/button.scss';
+@import './partials/input/input.scss';
+@import './layouts/auth/auth.scss';
+@import './partials/inputEdit/inputEdit.scss';
+@import './partials/card/chats__cars.scss';
+@import './pages/chats/chats.scss';
+@import './partials/errorPage/errorPage.scss';
+@import './pages/editPage/editPage.scss';
+@import './pages/editPassword/editPassword.scss';

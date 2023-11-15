@@ -87,7 +87,7 @@ export class EditPage extends Block {
       /* class: "edit__input-container_btns",  */
       label: 'Изменить пароль',
       events: {
-        click: () => { /* this.validation() */ }
+        click: () => { render("editPassword") }
       }
     })
 

@@ -1,5 +1,16 @@
 .button {
   cursor: pointer;
+
+  &__link {
+    position: absolute;
+    width: 50px;
+
+    &_right {
+      position: absolute;
+      right: 0;
+      width: 50px;
+    }
+  }
 }
 
 .button:hover {

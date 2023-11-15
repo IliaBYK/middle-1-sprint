@@ -70,6 +70,23 @@ export class LoginPage extends Block {
         click: () => { render('signup') }
       }
     })
+
+
+    this.children.buttonTo404 = new Button({
+      class: 'button__link',
+      label: '404',
+      events: {
+        click: () => { render(404) }
+      }
+    })
+
+    this.children.buttonTo500 = new Button({
+      class: 'button__link_right',
+      label: '500',
+      events: {
+        click: () => { render(500) }
+      }
+    })
   }
 
   render (): DocumentFragment {
