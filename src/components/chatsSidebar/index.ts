@@ -1,8 +1,8 @@
 import Block from "../../utils/Block";
 import template from "./sidebar.hbs";
-import { Button } from "../../partials/button";
+import { Button } from "../button";
 import Search from "../chatsSearch";
-import { Card } from "../../partials/card";
+import { Card } from "../card";
 import { cards } from "../../utils/cards";
 import { render } from "../../utils/render";
 

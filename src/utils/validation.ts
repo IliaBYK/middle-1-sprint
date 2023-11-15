@@ -1,4 +1,4 @@
-import { InputContainer } from './../layouts/inputContainer/index';
+import { InputContainer } from '../components/inputContainer/index';
 import errors from './errors';
 import { render } from './render';
 function isValidName(name: string): boolean {

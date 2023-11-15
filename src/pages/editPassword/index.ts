@@ -1,9 +1,9 @@
 import Block from "../../utils/Block";
 import template from "./editPassword.hbs";
 import { render } from "../../utils/render";
-import { Button } from "../../partials/button";
-import { InputEdit } from "../../partials/inputEdit";
-import { EditAvatarContainer } from "../../layouts/editAvatarContainer";
+import { Button } from "../../components/button";
+import { InputEdit } from "../../components/inputEdit";
+import { EditAvatarContainer } from "../../components/editAvatarContainer";
 
 export class EditPassword extends Block {
   constructor() {

@@ -1,4 +1,4 @@
-import { Imagine } from '../../partials/imagine';
+import { Imagine } from '../imagine';
 import Block from '../../utils/Block';
 import template from './container.hbs';
 

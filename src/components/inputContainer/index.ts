@@ -1,4 +1,4 @@
-import { Input } from '../../partials/input';
+import { Input } from '../input';
 import Block from '../../utils/Block';
 import template from './inputContainer.hbs';
 

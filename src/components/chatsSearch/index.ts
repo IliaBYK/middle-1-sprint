@@ -1,4 +1,4 @@
-import { InputSearch } from "../../partials/inputSearch";
+import { InputSearch } from "../inputSearch";
 import Block from "../../utils/Block";
 import template from "./search.hbs";
 

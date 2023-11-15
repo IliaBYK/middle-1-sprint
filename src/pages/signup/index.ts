@@ -1,9 +1,9 @@
 import Block from "../../utils/Block";
 import template from "./signup.hbs";
 import { render } from "../../utils/render";
-import { Button } from "../../partials/button";
-import { InputContainer } from "../../layouts/inputContainer";
-import { Title } from "../../partials/title";
+import { Button } from "../../components/button";
+import { InputContainer } from "../../components/inputContainer";
+import { Title } from "../../components/title";
 import {submit, validation } from "../../utils/validation";
 import errors from "../../utils/errors";
 

@@ -1,11 +1,10 @@
 import { chats } from '../../utils/chats';
 import Block from "../../utils/Block";
 import template from "./chats.hbs";
-import { Button } from "../../partials/button";
-import { Input } from "../../partials/input";
-import { Sidebar } from "../../layouts/chatsSidebar";
-import Message from "../../layouts/message";
-import { InputSearch } from "../../partials/inputSearch";
+import { Button } from "../../components/button";
+import { Sidebar } from "../../components/chatsSidebar";
+import Message from "../../components/message";
+import { InputSearch } from "../../components/inputSearch";
 
 interface chatProps {
   id?: number | string;
