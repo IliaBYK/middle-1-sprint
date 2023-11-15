@@ -1,4 +1,4 @@
-import { Input } from '../input'
+import { Input } from '../input/index'
 import Block from '../../utils/Block'
 import template from './inputContainer.hbs'
 

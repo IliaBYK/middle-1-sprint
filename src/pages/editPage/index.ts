@@ -1,12 +1,12 @@
 import Block from '../../utils/Block'
 import template from './editPage.hbs'
 import { render } from '../../utils/render'
-import { Button } from '../../components/button'
-import { InputEdit } from '../../components/inputEdit'
-import { EditBtn } from '../../components/editBtn'
-import { Title } from '../../components/title'
-import { Imagine } from '../../components/imagine'
-import { EditAvatarContainer } from '../../components/editAvatarContainer'
+import { Button } from '../../components/button/index'
+import { InputEdit } from '../../components/inputEdit/index'
+import { EditBtn } from '../../components/editBtn/index'
+import { Title } from '../../components/title/index'
+import { Imagine } from '../../components/imagine/index'
+import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 
 export class EditPage extends Block {
   constructor () {

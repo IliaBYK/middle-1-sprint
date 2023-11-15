@@ -1,4 +1,4 @@
-import { ErrorPage } from '../../components/errorPage'
+import { ErrorPage } from '../../components/errorPage/index'
 import Block from '../../utils/Block'
 import template from './404.hbs'
 

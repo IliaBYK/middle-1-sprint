@@ -1,4 +1,4 @@
-import { Imagine } from '../imagine'
+import { Imagine } from '../imagine/index'
 import Block from '../../utils/Block'
 import template from './container.hbs'
 

@@ -1,5 +1,5 @@
 import { EventBus } from './EventBus'
-import { nanoid } from 'nanoid'
+import { randomUUID } from 'crypto'
 
 // Нельзя создавать экземпляр данного класса
 class Block<P extends Record<string, any> = any> {
@@ -10,7 +10,7 @@ class Block<P extends Record<string, any> = any> {
     FLOW_RENDER: 'flow:render'
   } as const
 
-  public id = nanoid(6)
+  public id = randomUUID()
   protected props: P
   public children: Record<string, Block | Block[]>
   private readonly eventBus: () => EventBus

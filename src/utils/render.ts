@@ -1,10 +1,10 @@
-import { NotFound } from '../pages/404'
-import { InternalError } from '../pages/500'
-import { Chats } from '../pages/chats'
-import { EditPage } from '../pages/editPage'
-import { EditPassword } from '../pages/editPassword'
-import { LoginPage } from '../pages/login'
-import { SignupPage } from '../pages/signup'
+import { NotFound } from '../pages/404/index'
+import { InternalError } from '../pages/500/index'
+import { Chats } from '../pages/chats/index'
+import { EditPage } from '../pages/editPage/index'
+import { EditPassword } from '../pages/editPassword/index'
+import { LoginPage } from '../pages/login/index'
+import { SignupPage } from '../pages/signup/index'
 
 const ROUTES = {
   login: LoginPage,

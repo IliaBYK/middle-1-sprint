@@ -1,4 +1,4 @@
-import { InputSearch } from '../inputSearch'
+import { InputSearch } from '../inputSearch/index'
 import Block from '../../utils/Block'
 import template from './search.hbs'
 

@@ -1,4 +1,4 @@
-import { LoginPage } from '../../pages/login'
+import { LoginPage } from '../../pages/login/index'
 import Block from '../../utils/Block'
 import template from './auth.hbs'
 
