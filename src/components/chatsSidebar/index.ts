@@ -20,7 +20,7 @@ export class Sidebar extends Block {
       content: true,
       type: 'button',
       events: {
-        click: () => { render('edit') }
+        click: () => { render('profile') }
       }
     })
 

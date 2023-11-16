@@ -24,7 +24,6 @@ export class LoginPage extends Block {
       type: 'text',
       required: true,
       events: {
-        click: () => {},
         blur: () => validation(this.children, 'login', errors)
       }
     })
@@ -35,7 +34,6 @@ export class LoginPage extends Block {
       type: 'password',
       required: true,
       events: {
-        click: () => {},
         blur: () => validation(this.children, 'password', errors)
       }
     })
@@ -47,7 +45,6 @@ export class LoginPage extends Block {
       type: 'password',
       required: true,
       events: {
-        click: () => {},
         blur: () => validation(this.children, 'passwordElse', errors)
       }
     })

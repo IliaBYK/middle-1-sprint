@@ -1,14 +1,16 @@
 import Block from '../../utils/Block'
-import template from './editPage.hbs'
+import template from './Profile.hbs'
 import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
-import { InputEdit } from '../../components/inputEdit/index'
 import { EditBtn } from '../../components/editBtn/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
+import { validation } from '../../utils/validation'
+import errors from '../../utils/errors'
+import { InputContainer } from '../../components/inputContainer'
 
-export class EditPage extends Block {
+export class Profile extends Block {
   constructor () {
     super({})
   }
@@ -38,48 +40,84 @@ export class EditPage extends Block {
       }
     })
 
-    this.children.mail = new InputEdit({
+    this.children.email = new InputContainer({
       label: 'Почта',
+      class: 'edit__input',
       name: 'email',
-      type: 'email'
+      type: 'email',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'email', errors)
+      }
     })
 
-    this.children.login = new InputEdit({
+    this.children.login = new InputContainer({
       label: 'Логин',
+      class: 'edit__input',
       name: 'login',
-      type: 'text'
+      type: 'text',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'login', errors)
+      }
     })
 
-    this.children.firstName = new InputEdit({
+    this.children.first_name = new InputContainer({
       label: 'Имя',
+      class: 'edit__input',
       name: 'first_name',
-      type: 'text'
+      type: 'text',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'first_name', errors)
+      }
     })
 
-    this.children.secondName = new InputEdit({
+    this.children.second_name = new InputContainer({
       label: 'Фамилия',
+      class: 'edit__input',
       name: 'second_name',
-      type: 'text'
+      type: 'text',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'second_name', errors)
+      }
     })
 
-    this.children.displayName = new InputEdit({
+    this.children.display_name = new InputContainer({
       label: 'Имя в чате',
+      class: 'edit__input',
       name: 'display_name',
-      type: 'text'
+      type: 'text',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'display_name', errors)
+      }
     })
 
-    this.children.phone = new InputEdit({
-      class: 'edit__input-container_last',
+    this.children.phone = new InputContainer({
+      class: 'edit__input',
+      identificator: 'edit__input-container_last',
       label: 'Телефон',
       name: 'phone',
-      type: 'tel'
+      type: 'tel',
+      edit: true,
+      required: false,
+      events: {
+        blur: () => validation(this.children, 'phone', errors)
+      }
     })
 
     this.children.changeData = new EditBtn({
       /* class: "edit__input-container_btns", */
       label: 'Изменить данные',
       events: {
-        click: () => { /* this.validation() */ }
+        click: () => { render('editProfile') }
       }
     })
 

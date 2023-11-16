@@ -24,9 +24,6 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        click: () => {
-
-        },
         blur: () => validation(this.children, 'first_name', errors)
       }
     })
@@ -36,9 +33,6 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        click: () => {
-
-        },
         blur: () => validation(this.children, 'second_name', errors)
       }
     })
@@ -48,9 +42,6 @@ export class SignupPage extends Block {
       type: 'email',
       required: true,
       events: {
-        click: () => {
-
-        },
         blur: () => validation(this.children, 'email', errors)
       }
     })
@@ -60,9 +51,6 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        click: () => {
-
-        },
         blur: () => validation(this.children, 'login', errors)
       }
     })
@@ -72,9 +60,6 @@ export class SignupPage extends Block {
       type: 'tel',
       required: true,
       events: {
-        click: () => {
-
-        },
         blur: () => validation(this.children, 'phone', errors)
       }
     })
@@ -85,7 +70,6 @@ export class SignupPage extends Block {
       type: 'password',
       required: true,
       events: {
-        click: () => {},
         blur: () => validation(this.children, 'password', errors)
       }
     })
@@ -97,7 +81,6 @@ export class SignupPage extends Block {
       type: 'password',
       required: true,
       events: {
-        click: () => {},
         blur: () => validation(this.children, 'passwordElse', errors)
       }
     })

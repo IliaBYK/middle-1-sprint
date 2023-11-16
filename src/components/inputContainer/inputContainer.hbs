@@ -1,4 +1,13 @@
-<label class="auth__label {{class}}" for={{name}}>{{label}}{{#if required}}*{{/if}}
-  {{{input}}}
-  <span class="auth__input_error">{{error}}</span>
-</label>
+{{#unless edit}}
+  <label class="auth__label {{class}}" for={{name}}>{{label}}{{#if required}}*{{/if}}
+    {{{input}}}
+    <span class="auth__input_error">{{error}}</span>
+  </label>  
+{{/unless}}
+{{#if edit}}
+  <div class="edit__input-container {{identificator}}">
+    <label class="edit__label {{classInput}}" for="{{name}}">{{label}}</label>
+    {{{input}}}
+    <span class="edit__error">{{error}}</span>
+  </div>
+{{/if}}

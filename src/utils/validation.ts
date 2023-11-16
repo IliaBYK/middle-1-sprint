@@ -45,10 +45,25 @@ const functions: Record<string, (S: string) => boolean> = {
   message: isValidMessage,
   first_name: isValidName,
   second_name: isValidName,
+  display_name: isValidLogin,
   password: isValidPassword,
+  oldPassword: isValidPassword,
+  newPassword: isValidPassword,
+  newPasswordAgain: isValidPassword,
   passwordElse: isValidPassword,
   phone: isValidPhone
 }
+
+/* interface Names {
+  login: 'login'
+  email: 'email'
+  password: 'password'
+  passwordElse: 'passwordElse'
+  first_name: 'first_name'
+  second_name: 'second_name'
+  display_name: 'display_name'
+  phone: 'phone'
+} */
 
 function validation (object: any, name: string, message: any): boolean {
   let isValid: boolean = false
@@ -86,7 +101,11 @@ function submit (object: any, e?: Event): void {
     (object.passwordElse as InputContainer).setProps({ error: 'Пароли не совпадают' })
   }
 
-  if (result.password === result.passwordElse && option) {
+  if (result.newPassword !== result.newPasswordAgain) {
+    (object.newPasswordAgain as InputContainer).setProps({ error: 'Пароли не совпадают' })
+  }
+
+  if (result.password === (result.passwordElse || result.newPasswordAgain) && option) {
     console.log(result)
     render('chats')
   }

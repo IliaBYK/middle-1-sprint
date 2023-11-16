@@ -1,6 +1,6 @@
-import { Input } from '../input/index'
 import Block from '../../utils/Block'
-import template from './inputContainer.hbs'
+import template from './inputEditContainer.hbs'
+import { Input } from '../input'
 
 interface InputProps {
   name: string
@@ -9,14 +9,13 @@ interface InputProps {
   error?: string
   type: string
   required: boolean
-  edit?: boolean
   identificator?: string
   events?: {
     blur?: (e?: Event) => void
   }
 }
 
-export class InputContainer extends Block<InputProps> {
+export class InputEdit extends Block<InputProps> {
   constructor (props: InputProps) {
     super({ ...props })
   }

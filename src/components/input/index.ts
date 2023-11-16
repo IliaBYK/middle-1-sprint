@@ -8,11 +8,9 @@ interface InputProps {
   class?: string
   name: string
   for?: string
-  error?: string
   placeholder?: string
   required: boolean
   events?: {
-    click: (e?: Event) => void
     blur?: (e?: Event) => void
   }
 }
