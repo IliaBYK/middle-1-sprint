@@ -19,6 +19,7 @@ export class SignupPage extends Block {
     })
 
     this.children.first_name = new InputContainer({
+      class: 'auth__input',
       label: 'Имя',
       name: 'first_name',
       type: 'text',
@@ -28,6 +29,7 @@ export class SignupPage extends Block {
       }
     })
     this.children.second_name = new InputContainer({
+      class: 'auth__input',
       label: 'Фамилия',
       name: 'second_name',
       type: 'text',
@@ -37,6 +39,7 @@ export class SignupPage extends Block {
       }
     })
     this.children.email = new InputContainer({
+      class: 'auth__input',
       label: 'Почта',
       name: 'email',
       type: 'email',
@@ -46,6 +49,7 @@ export class SignupPage extends Block {
       }
     })
     this.children.login = new InputContainer({
+      class: 'auth__input',
       label: 'Логин',
       name: 'login',
       type: 'text',
@@ -55,6 +59,7 @@ export class SignupPage extends Block {
       }
     })
     this.children.phone = new InputContainer({
+      class: 'auth__input',
       label: 'Телефон',
       name: 'phone',
       type: 'tel',
@@ -65,6 +70,7 @@ export class SignupPage extends Block {
     })
 
     this.children.password = new InputContainer({
+      class: 'auth__input',
       label: 'Пароль',
       name: 'password',
       type: 'password',
@@ -75,7 +81,8 @@ export class SignupPage extends Block {
     })
 
     this.children.passwordElse = new InputContainer({
-      class: 'auth__label_last',
+      class: 'auth__input',
+      classLabel: 'auth__label_last',
       label: 'Пароль еще раз',
       name: 'passwordElse',
       type: 'password',

@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run build && node server.js",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --emptyOutDir",
     "preview": "vite preview",
     "eslint": "./node_modules/.bin/eslint",
     "stylelint": "./node_modules/.bin/stylelint"

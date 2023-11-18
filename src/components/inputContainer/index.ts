@@ -6,6 +6,7 @@ interface InputProps {
   name: string
   label: string
   class?: string
+  classLabel?: string
   error?: string
   type: string
   required: boolean

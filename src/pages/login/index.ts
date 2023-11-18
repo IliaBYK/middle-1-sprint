@@ -19,6 +19,7 @@ export class LoginPage extends Block {
     })
 
     this.children.login = new InputContainer({
+      class: 'auth__input',
       label: 'Логин',
       name: 'login',
       type: 'text',
@@ -29,6 +30,7 @@ export class LoginPage extends Block {
     })
 
     this.children.password = new InputContainer({
+      class: 'auth__input',
       label: 'Пароль',
       name: 'password',
       type: 'password',
@@ -39,7 +41,8 @@ export class LoginPage extends Block {
     })
 
     this.children.passwordElse = new InputContainer({
-      class: 'auth__label_last',
+      class: 'auth__input',
+      classLabel: 'auth__label_last',
       label: 'Пароль еще раз',
       name: 'passwordElse',
       type: 'password',
