@@ -10,7 +10,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 40px;
-  margin: 0 0 20px 0;
+  margin: 0 0 20px;
 }
 
 .errorPage__message {
@@ -18,11 +18,13 @@
   font-style: normal;
   font-weight: 500;
   line-height: 20px;
-  margin: 0 0 69px 0;
+  margin: 0 0 69px;
 }
 
 .errorPage__link {
   text-decoration: none;
+  background: none;
+  border: none;
   color: $blue;
   font-size: 11px;
   font-style: normal;

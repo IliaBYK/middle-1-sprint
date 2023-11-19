@@ -1,25 +1,13 @@
-@import '../vendor/normalize.css';
-@import '../vendor/fonts/fonts.css';
+@import './vendor/fonts/fonts.scss';
+@import './vendor/normalize.scss';
 @import './variables.scss';
 @import './layouts/app/app.scss';
 @import './partials/button/button.scss';
 @import './partials/input/input.scss';
-
 @import './layouts/auth/auth.scss';
 @import './partials/inputEdit/inputEdit.scss';
-
 @import './partials/card/chats__cars.scss';
-@import './pages/mainMessanger/mainMessanger.scss';
-
+@import './pages/chats/chats.scss';
 @import './partials/errorPage/errorPage.scss';
-@import './layouts/editPage/editPage.scss';
-@import './layouts/editPageBtns/editPageBtns.scss';
+@import './pages/editPage/editPage.scss';
 @import './pages/editPassword/editPassword.scss';
-
-
-#root {
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  margin: 0;
-  padding: 0;;
-  box-sizing: border-box;
-}
