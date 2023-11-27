@@ -1,9 +1,10 @@
 import { InputContainer } from '../components/inputContainer/index'
 import errors from './errors'
-import { render } from './render'
+// import { render } from './render'
+
 function isValidName (name: string): boolean {
   // Проверка имени регулярным выражением
-  const pattern = /^\b[A-ZА-Я][а-яa-z]+$/
+  const pattern = /[A-ZА-Я][a-zа-я-]*/
   return pattern.test(name)
 }
 
@@ -45,7 +46,7 @@ const functions: Record<string, (S: string) => boolean> = {
   message: isValidMessage,
   first_name: isValidName,
   second_name: isValidName,
-  display_name: isValidLogin,
+  display_name: isValidName,
   password: isValidPassword,
   oldPassword: isValidPassword,
   newPassword: isValidPassword,
@@ -65,11 +66,11 @@ const functions: Record<string, (S: string) => boolean> = {
   phone: 'phone'
 } */
 
-function validation (object: any, name: string, message: any): boolean {
+function validation (object: any, name: string): boolean {
   let isValid: boolean = false
   const input = (object[name] as InputContainer)
   if (!input.validation()) {
-    input.setProps({ error: message[name] })
+    input.setProps({ error: errors[name] })
   } else {
     input.setProps({ error: '' })
     isValid = true
@@ -77,7 +78,7 @@ function validation (object: any, name: string, message: any): boolean {
   return isValid
 }
 
-function submit (object: any, e?: Event): void {
+async function submit (object: any, onClick: () => Promise<void>, e?: Event): Promise<void> {
   e?.preventDefault()
   const result: Record<any, any> = {}
   let option: boolean = false
@@ -93,21 +94,24 @@ function submit (object: any, e?: Event): void {
       result[el[0]] = el[1]
     } else {
       option = false
-      validation(object, el[0], errors)
+      validation(object, el[0])
     }
   })
 
   if (result.password !== result.passwordElse) {
     (object.passwordElse as InputContainer).setProps({ error: 'Пароли не совпадают' })
+    return
   }
 
   if (result.newPassword !== result.newPasswordAgain) {
     (object.newPasswordAgain as InputContainer).setProps({ error: 'Пароли не совпадают' })
+    return
   }
 
   if (result.password === (result.passwordElse || result.newPasswordAgain) && option) {
     console.log(result)
-    render('chats')
+    await onClick()
+    // render('chats')
   }
 }
 

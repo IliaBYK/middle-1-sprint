@@ -1,10 +1,10 @@
 import Block from '../../utils/Block'
 import template from './sidebar.hbs'
-import { Button } from '../button/index'
 import Search from '../chatsSearch/index'
 import { Card } from '../card/index'
 import { cards } from '../../utils/cards'
-import { render } from '../../utils/render'
+import { Link } from '../link'
+// import { render } from '../../utils/render'
 
 export class Sidebar extends Block {
   constructor () {
@@ -14,14 +14,11 @@ export class Sidebar extends Block {
   init (): void {
     this.children.cards = this.createCards()
 
-    this.children.button = new Button({
-      class: 'chats__profile',
+    this.children.button = new Link({
+      class: 'chats__profile button',
       label: 'Профиль',
-      content: true,
-      type: 'button',
-      events: {
-        click: () => { render('profile') }
-      }
+      to: '/profile',
+      content: true
     })
 
     this.children.search = new Search()

@@ -9,7 +9,7 @@ interface InputProps {
   classLabel?: string
   error?: string
   type: string
-  required: boolean
+  required?: boolean
   edit?: boolean
   identificator?: string
   events?: {

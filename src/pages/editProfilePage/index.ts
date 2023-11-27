@@ -1,15 +1,14 @@
 import Block from '../../utils/Block'
 import template from './editProfilePage.hbs'
-import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
+import Router from '../../utils/Router'
 
-export class EditProfile extends Block {
+export class EditProfilePage extends Block {
   constructor () {
     super({})
   }
@@ -35,9 +34,16 @@ export class EditProfile extends Block {
     this.children.buttonToChats = new Button({
       class: 'edit__button',
       events: {
-        click: () => { render('chats') }
+        click: () => { Router.back() }
       }
     })
+
+    /*
+    class
+    label
+    name
+    type
+    */
 
     this.children.email = new InputContainer({
       label: 'Почта',
@@ -47,7 +53,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'email', errors)
+        blur: () => validation(this.children, 'email')
       }
     })
 
@@ -59,7 +65,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'login', errors)
+        blur: () => validation(this.children, 'login')
       }
     })
 
@@ -71,7 +77,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'first_name', errors)
+        blur: () => validation(this.children, 'first_name')
       }
     })
 
@@ -83,7 +89,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'second_name', errors)
+        blur: () => validation(this.children, 'second_name')
       }
     })
 
@@ -95,7 +101,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'display_name', errors)
+        blur: () => validation(this.children, 'display_name')
       }
     })
 
@@ -108,7 +114,7 @@ export class EditProfile extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'phone', errors)
+        blur: () => validation(this.children, 'phone')
       }
     })
 
@@ -118,7 +124,7 @@ export class EditProfile extends Block {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
+          // submit(this.children, e)
         }
       }
     })

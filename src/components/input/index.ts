@@ -9,7 +9,7 @@ interface InputProps {
   name: string
   for?: string
   placeholder?: string
-  required: boolean
+  required?: boolean
   events?: {
     blur?: (e?: Event) => void
   }
@@ -24,6 +24,10 @@ export class Input extends Block {
 
   validation (): boolean {
     return functions[this.props.name](this.getValue())
+  }
+
+  setValue (value: string): void {
+    (this.element as HTMLInputElement).value = value
   }
 
   getName (): string {

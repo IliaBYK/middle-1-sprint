@@ -1,13 +1,12 @@
 import Block from '../../utils/Block'
 import template from './editPassword.hbs'
-import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
+import Router from '../../utils/Router'
 
-export class EditPassword extends Block {
+export class EditPasswordPage extends Block {
   constructor () {
     super({})
   }
@@ -23,7 +22,7 @@ export class EditPassword extends Block {
     this.children.buttonToChats = new Button({
       class: 'edit__button',
       events: {
-        click: () => { render('chats') }
+        click: () => { Router.back() }
       }
     })
 
@@ -35,7 +34,7 @@ export class EditPassword extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'oldPassword', errors)
+        blur: () => validation(this.children, 'oldPassword')
       }
     })
 
@@ -47,7 +46,7 @@ export class EditPassword extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'newPassword', errors)
+        blur: () => validation(this.children, 'newPassword')
       }
     })
 
@@ -59,7 +58,7 @@ export class EditPassword extends Block {
       edit: true,
       required: false,
       events: {
-        blur: () => validation(this.children, 'newPasswordAgain', errors)
+        blur: () => validation(this.children, 'newPasswordAgain')
       }
     })
 
@@ -69,7 +68,7 @@ export class EditPassword extends Block {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
+          // submit(this.children, e)
           /* this.validation() */ }
       }
     })

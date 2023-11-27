@@ -1,15 +1,31 @@
 import Block from '../../utils/Block'
 import template from './login.hbs'
-import { render } from '../../utils/render'
+// import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
 import { InputContainer } from '../../components/inputContainer/index'
 import { Title } from '../../components/title/index'
 import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
+// import Router from '../../utils/Router'
+import { Link } from '../../components/link'
 
 export class LoginPage extends Block {
   constructor () {
     super({})
+  }
+
+  async onSignIn (): Promise<void> {
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.auth__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    await AuthController.signIn(data as unknown as ControllerSignUpData)
   }
 
   init (): void {
@@ -25,7 +41,7 @@ export class LoginPage extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'login', errors)
+        blur: () => validation(this.children, 'login')
       }
     })
 
@@ -36,7 +52,7 @@ export class LoginPage extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'password', errors)
+        blur: () => validation(this.children, 'password')
       }
     })
 
@@ -48,7 +64,7 @@ export class LoginPage extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'passwordElse', errors)
+        blur: () => validation(this.children, 'passwordElse')
       }
     })
 
@@ -58,33 +74,18 @@ export class LoginPage extends Block {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
+          void submit(this.children, this.onSignIn.bind(this), e)
           /* this.validation() */ }
       }
     })
 
-    this.children.buttonLink = new Button({
-      class: 'auth__button_reg',
+    this.children.buttonLink = new Link({
+      class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
-      events: {
-        click: () => { render('signup') }
-      }
-    })
-
-    this.children.buttonTo404 = new Button({
-      class: 'button__link',
-      label: '404',
-      events: {
-        click: () => { render(404) }
-      }
-    })
-
-    this.children.buttonTo500 = new Button({
-      class: 'button__link_right',
-      label: '500',
-      events: {
-        click: () => { render(500) }
-      }
+      to: '/register'
+      /* events: {
+        click: () => { Router.go('./register') } /* render('signup')
+      } */
     })
   }
 

@@ -1,20 +1,22 @@
+/* eslint-disable array-callback-return */
+import UserAPI from './../../api/UserApi'
+import { connect } from './../../utils/Store'
 import Block from '../../utils/Block'
 import template from './Profile.hbs'
-import { render } from '../../utils/render'
+import { type User } from '../../api/UserApi'
 import { Button } from '../../components/button/index'
-import { EditBtn } from '../../components/editBtn/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { validation } from '../../utils/validation'
-import errors from '../../utils/errors'
 import { InputContainer } from '../../components/inputContainer'
+import AuthController from '../../controllers/AuthController'
+import Router from '../../utils/Router'
+import { Link } from '../../components/link'
+import { type Input } from '../../components/input'
 
-export class Profile extends Block {
-  constructor () {
-    super({})
-  }
-
+interface ProfileProps extends User {}
+class Profile extends Block<ProfileProps> {
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       events: {
@@ -36,7 +38,11 @@ export class Profile extends Block {
     this.children.buttonToChats = new Button({
       class: 'edit__button',
       events: {
-        click: () => { render('chats') }
+        click: () => {
+          Router.back()
+          // void this.getUser()
+          // this.setValues()
+        }
       }
     })
 
@@ -46,99 +52,124 @@ export class Profile extends Block {
       name: 'email',
       type: 'email',
       edit: true,
-      required: false,
+      required: true,
       events: {
-        blur: () => validation(this.children, 'email', errors)
+        blur: () => {
+          validation(this.children, 'email')
+          // this.setValues()
+        }
       }
     })
 
     this.children.login = new InputContainer({
       label: 'Логин',
-      class: 'edit__input',
       name: 'login',
       type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'login', errors)
-      }
+      edit: true
     })
 
     this.children.first_name = new InputContainer({
       label: 'Имя',
-      class: 'edit__input',
       name: 'first_name',
       type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'first_name', errors)
-      }
+      edit: true
     })
 
     this.children.second_name = new InputContainer({
       label: 'Фамилия',
-      class: 'edit__input',
       name: 'second_name',
       type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'second_name', errors)
-      }
+      edit: true
     })
 
     this.children.display_name = new InputContainer({
       label: 'Имя в чате',
-      class: 'edit__input',
       name: 'display_name',
       type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'display_name', errors)
-      }
+      edit: true
     })
 
     this.children.phone = new InputContainer({
-      class: 'edit__input',
-      identificator: 'edit__input-container_last',
       label: 'Телефон',
       name: 'phone',
       type: 'tel',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'phone', errors)
-      }
+      edit: true
     })
 
-    this.children.changeData = new EditBtn({
-      /* class: "edit__input-container_btns", */
+    this.children.changeData = new Link({
+      class: 'edit__btn button',
       label: 'Изменить данные',
-      events: {
-        click: () => { render('editProfile') }
-      }
+      to: '/edit-profile'
     })
 
-    this.children.changePassword = new EditBtn({
-      /* class: "edit__input-container_btns",  */
+    this.children.changePassword = new Link({
+      class: 'edit__btn button',
       label: 'Изменить пароль',
-      events: {
-        click: () => { render('editPassword') }
-      }
+      to: '/edit-password'
     })
 
-    this.children.logout = new EditBtn({
-      /* class: "edit__input-container_last edit__input-container_btns", */
+    this.children.logout = new Button({
+      class: 'edit__btn button',
       label: 'Выйти',
       events: {
-        click: () => { render('login') }
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        click: async () => { await AuthController.logout() }
       }
     })
+
+    Object.entries(this.children).filter(([key, value]) => {
+      if (value instanceof InputContainer) {
+        (value.children.input as Input).setProps({
+          class: 'edit__input',
+          edit: true,
+          required: true,
+          events: {
+            blur: () => validation(this.children, (value.children.input as Input).getName())
+          }
+        })
+      }
+    })
+
+    Object.entries(this.children).filter(([key, value]) => {
+      if (this.props.display_name === null) this.props.display_name = this.props.first_name;
+      (this.children.title as Title).setProps({ label: this.props.first_name })
+      if (value instanceof InputContainer) {
+        (value.children.input as Input).setValue(this.props[key] + '')
+      } else return value
+      // return value instanceof InputContainer
+    })
+    /* this.getInputs().map((input) => {
+      const nameInput: keyof ProfileProps = ((input as InputContainer).children.input as Input).getName();
+      ((input as InputContainer).children.input as Input).setValue(this.props[nameInput])
+      console.log(this.props)
+    }) */
+  }
+
+  getInputs (): Array<Block<any> | Array<Block<any>>> {
+    return Object
+      .values(this.children)
+      .filter(el => el instanceof InputContainer)
+  }
+
+  /* setValues (): void {
+    this.getInputs().map((input) => {
+      ((input as InputContainer).children.input as Input).setValue(this.props[((input as InputContainer).children.input as Input).getName()])
+      console.log(((input as InputContainer).children.input as Input).getName())
+    })
+  } */
+
+  async getUser (): Promise<User> {
+    const user = await UserAPI.get()
+    console.log(user)
+
+    return user
   }
 
   render (): DocumentFragment {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const ProfilePage = connectUser(Profile as typeof Block)

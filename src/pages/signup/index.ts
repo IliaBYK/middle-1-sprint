@@ -1,15 +1,30 @@
 import Block from '../../utils/Block'
 import template from './signup.hbs'
-import { render } from '../../utils/render'
-import { Button } from '../../components/button/index'
-import { InputContainer } from '../../components/inputContainer/index'
-import { Title } from '../../components/title/index'
+import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
+/* import { render } from '../../utils/render' */
+import { Button } from '../../components/button'
+import { InputContainer } from '../../components/inputContainer'
+import { Title } from '../../components/title'
 import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import { Link } from '../../components/link'
 
 export class SignupPage extends Block {
   constructor () {
     super({})
+  }
+
+  async onSignUp (): Promise<void> {
+    // const element = this.getContent()
+
+    const inputs = this.getContent()?.querySelectorAll('.auth__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    await AuthController.signUp(data as unknown as ControllerSignUpData)
   }
 
   init (): void {
@@ -25,7 +40,7 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'first_name', errors)
+        blur: () => validation(this.children, 'first_name')
       }
     })
     this.children.second_name = new InputContainer({
@@ -35,7 +50,7 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'second_name', errors)
+        blur: () => validation(this.children, 'second_name')
       }
     })
     this.children.email = new InputContainer({
@@ -45,7 +60,7 @@ export class SignupPage extends Block {
       type: 'email',
       required: true,
       events: {
-        blur: () => validation(this.children, 'email', errors)
+        blur: () => validation(this.children, 'email')
       }
     })
     this.children.login = new InputContainer({
@@ -55,7 +70,7 @@ export class SignupPage extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'login', errors)
+        blur: () => validation(this.children, 'login')
       }
     })
     this.children.phone = new InputContainer({
@@ -65,7 +80,7 @@ export class SignupPage extends Block {
       type: 'tel',
       required: true,
       events: {
-        blur: () => validation(this.children, 'phone', errors)
+        blur: () => validation(this.children, 'phone')
       }
     })
 
@@ -76,7 +91,7 @@ export class SignupPage extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'password', errors)
+        blur: () => validation(this.children, 'password')
       }
     })
 
@@ -88,7 +103,7 @@ export class SignupPage extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'passwordElse', errors)
+        blur: () => validation(this.children, 'passwordElse')
       }
     })
 
@@ -97,17 +112,15 @@ export class SignupPage extends Block {
       label: 'Зарегистрироваться',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
+          void submit(this.children, this.onSignUp.bind(this), e)
         }
       }
     })
 
-    this.children.buttonLink = new Button({
-      class: 'auth__button_reg',
+    this.children.buttonLink = new Link({
+      class: 'auth__button_reg button',
       label: 'Войти',
-      events: {
-        click: () => { render('login') }
-      }
+      to: '/'
     })
   }
 

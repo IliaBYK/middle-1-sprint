@@ -1,4 +1,4 @@
-import { NotFound } from '../pages/404/index'
+/* import { NotFound } from '../pages/404/index'
 import { InternalError } from '../pages/500/index'
 import { Chats } from '../pages/chats/index'
 import { Profile } from '../pages/Profile/index'
@@ -30,4 +30,4 @@ export function render (name: keyof typeof ROUTES): void {
   root.append(page.getContent()!)
 
   page.dispatchComponentDidMount()
-}
+} */
