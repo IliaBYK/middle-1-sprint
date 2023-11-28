@@ -10,10 +10,12 @@ import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
-import AuthController from '../../controllers/AuthController'
+// import AuthController from '../../controllers/AuthController'
 import Router from '../../utils/Router'
-import { Link } from '../../components/link'
+// import { Link } from '../../components/link'
 import { type Input } from '../../components/input'
+import { EditProfileBtns } from '../../components/editProfileBtns'
+import Popup from '../../components/popup'
 
 interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
@@ -46,19 +48,16 @@ class Profile extends Block<ProfileProps> {
       }
     })
 
+    this.children.popup = new Popup({
+      class: 'popup_opened'
+    })
+
     this.children.email = new InputContainer({
       label: 'Почта',
       class: 'edit__input',
       name: 'email',
       type: 'email',
-      edit: true,
-      required: true,
-      events: {
-        blur: () => {
-          validation(this.children, 'email')
-          // this.setValues()
-        }
-      }
+      edit: true
     })
 
     this.children.login = new InputContainer({
@@ -96,6 +95,19 @@ class Profile extends Block<ProfileProps> {
       edit: true
     })
 
+    this.children.editBtns = new EditProfileBtns({})
+
+    /* this.children.changeDataBtn = new Button({
+      class: 'auth__button edit__submit-btn_password edit__submit-btn',
+      label: 'Cохранить',
+      type: 'submit',
+      events: {
+        click: (e?: Event) => {
+          // submit(this.children, e)
+        }
+      }
+    })
+
     this.children.changeData = new Link({
       class: 'edit__btn button',
       label: 'Изменить данные',
@@ -115,7 +127,7 @@ class Profile extends Block<ProfileProps> {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         click: async () => { await AuthController.logout() }
       }
-    })
+    }) */
 
     Object.entries(this.children).filter(([key, value]) => {
       if (value instanceof InputContainer) {
@@ -143,6 +155,19 @@ class Profile extends Block<ProfileProps> {
       ((input as InputContainer).children.input as Input).setValue(this.props[nameInput])
       console.log(this.props)
     }) */
+  }
+
+  protected componentDidUpdate (oldProps: ProfileProps, newProps: ProfileProps): boolean {
+    Object.entries(this.children).filter(([key, value]) => {
+      if (newProps.display_name === null) newProps.display_name = newProps.first_name + ' ' + newProps.second_name;
+      (this.children.title as Title).setProps({ label: newProps.first_name })
+      if (value instanceof InputContainer) {
+        (value.children.input as Input).setValue(newProps[key] + '')
+      } else return value
+      // return value instanceof InputContainer
+    })
+
+    return true
   }
 
   getInputs (): Array<Block<any> | Array<Block<any>>> {

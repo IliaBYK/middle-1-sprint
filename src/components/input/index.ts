@@ -10,6 +10,7 @@ interface InputProps {
   for?: string
   placeholder?: string
   required?: boolean
+  hidden?: string
   events?: {
     blur?: (e?: Event) => void
   }
