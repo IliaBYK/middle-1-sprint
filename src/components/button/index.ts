@@ -2,7 +2,7 @@ import Block from '../../utils/Block'
 import template from './button.hbs'
 
 interface ButtonProps {
-  content?: boolean
+  content?: unknown
   label?: string
   type?: 'submit' | 'button'
   href?: string

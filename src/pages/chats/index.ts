@@ -5,6 +5,9 @@ import { Button } from '../../components/button/index'
 import { Sidebar } from '../../components/chatsSidebar/index'
 import Message from '../../components/message/index'
 import { InputSearch } from '../../components/inputSearch/index'
+import { Imagine } from '../../components/imagine'
+import { Title } from '../../components/title'
+import Tab from '../../components/tab'
 
 interface chatProps {
   id?: number | string
@@ -33,7 +36,7 @@ export class Chats extends Block {
     this.children.attachBtn = new Button({
       class: 'chats__attach-btn',
       events: {
-        click: () => {}
+        click: () => { this.toggleClass((this.children.tabMedia as Tab), 'tab_bottom') }
       }
     })
 
@@ -55,6 +58,40 @@ export class Chats extends Block {
         }
       }
     })
+
+    this.children.imagineProfile = new Imagine({
+      class: 'chats__img chats__img_place_header button',
+      alt: 'Аватар собеседника',
+      src: '../../images/avatar.png'
+    })
+
+    this.children.title = new Title({
+      class: 'chats__name',
+      label: 'Вадим'
+    })
+
+    this.children.buttonUsers = new Button({
+      class: 'chats__menu',
+      events: {
+        click: () => { this.toggleClass((this.children.tabUsers as Tab), 'tab_top') }
+      }
+    })
+
+    this.children.tabUsers = new Tab({
+      class: 'tab_top',
+      users: true
+    })
+
+    this.children.tabMedia = new Tab({
+      class: 'tab_bottom',
+      users: false
+    })
+  }
+
+  toggleClass (block: Tab, className: string): void {
+    if (block.element?.classList.contains('tab_visible')) {
+      block.setProps({ class: `${className}` })
+    } else block.setProps({ class: `${className} tab_visible` })
   }
 
   protected componentDidUpdate (oldProps: chatProps, newProps: chatProps): boolean {

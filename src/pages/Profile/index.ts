@@ -22,7 +22,7 @@ class Profile extends Block<ProfileProps> {
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       events: {
-        click: () => {}
+        click: () => { (this.children.popup as Popup).setProps({ class: 'popup_opened' }) }
       }
     })
 
@@ -48,9 +48,7 @@ class Profile extends Block<ProfileProps> {
       }
     })
 
-    this.children.popup = new Popup({
-      class: 'popup_opened'
-    })
+    this.children.popup = new Popup({})
 
     this.children.email = new InputContainer({
       label: 'Почта',

@@ -2,13 +2,18 @@
   {{{sidebar}}}
   <main class="chats__message-area">
     <header class="chats__header">
-      <img class="chats__img chats__img_place_header button" alt="Аватар собеседника" src="../../images/avatar.png" />
-      <h2 class="chats__name">Вадим</h2>
-      <button class="chats__menu button"></button>
+      {{{imagineProfile}}}
+      {{!<img class="chats__img chats__img_place_header button" alt="Аватар собеседника" src="../../images/avatar.png" />}}
+      {{!<h2 class="chats__name">Вадим</h2>}}
+      {{{title}}}
+      {{! <button class="chats__menu button"></button>}}
+      {{{buttonUsers}}}
     </header>
 
     <div class="chats__main">
       <time class="chats__date">19 июня</time>
+      {{{tabUsers}}}
+      {{{tabMedia}}}
       {{#each messages}}
         {{{this}}}
       {{/each}}

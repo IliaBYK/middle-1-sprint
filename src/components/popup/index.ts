@@ -52,6 +52,14 @@ class Popup extends Block<PopupProps> {
         click: () => {}
       }
     })
+
+    this.children.closeBtn = new Button({
+      label: 'X',
+      class: 'popup__close-btn',
+      events: {
+        click: () => { this.setProps({ class: '' }) }
+      }
+    })
   }
 
   render (): DocumentFragment {
