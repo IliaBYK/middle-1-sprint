@@ -22,7 +22,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить пользователя',
-        src: '../../images/addUser.png'
+        src: '../../images/addUser.svg'
       })
     })
 
@@ -32,7 +32,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Удалить пользователя',
-        src: '../../images/deleteUser.png'
+        src: '../../images/deleteUser.svg'
       })
     })
 
@@ -42,7 +42,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить фото или видео',
-        src: '../../images/addMedia.png'
+        src: '../../images/addMedia.svg'
       })
     })
 
@@ -52,7 +52,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить файл',
-        src: '../../images/addFile.png'
+        src: '../../images/addFile.svg'
       })
     })
 
@@ -62,7 +62,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить локацию',
-        src: '../../images/addLocation.png'
+        src: '../../images/addLocation.svg'
       })
     })
   }

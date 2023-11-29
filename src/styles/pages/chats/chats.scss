@@ -201,7 +201,7 @@
 .chats__attach-btn {
   width: 32px;
   height: 32px;
-  background: url("../../src/images/attachBtn.png") no-repeat;
+  background: url("../../src/images/attachBtn.svg") no-repeat;
   border: none;
   margin: 0 10px 0 0;
 }
@@ -222,7 +222,7 @@
 }
 
 .chats__send-btn {
-  background: url("../../src/images/sendBtn.png");
+  background: url("../../src/images/sendBtn.svg");
   border: none;
   width: 28px;
   height: 28px;
@@ -230,10 +230,14 @@
 }
 
 .chats__menu {
-  background: url("../../src/images/menu.png") no-repeat;
-  height: 15px;
+  background: url("../../src/images/menu.svg") no-repeat;
+  background-position: center;
+  background-color: $grayBg;
   margin-left: auto;
   border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
 }
 
 .chats__main {

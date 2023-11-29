@@ -10,6 +10,7 @@
   background: $white;
 
   &_visible {
+    transition: all .5s linear;
     opacity: 1;
     visibility: visible;
   }
