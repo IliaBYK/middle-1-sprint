@@ -49,8 +49,8 @@ class UserAPI extends BaseAPI {
     await this.http.post('/logout')
   }
 
-  create = undefined
   update = undefined
+  create = undefined
   delete = undefined
 }
 

@@ -31,7 +31,7 @@ class AuthController {
 
   async signUp (data: ControllerSignUpData): Promise<void> {
     if (data.confirm_password !== data.password) {
-      store.set('currentUser.error', 'Passwords are not the same')
+      store.set('currentUser.error', 'Пароли не совпдают')
 
       return
     }

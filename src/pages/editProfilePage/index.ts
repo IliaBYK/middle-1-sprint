@@ -4,13 +4,29 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { /* submit, */ validation } from '../../utils/validation'
+import { submit, validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
+// import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
 export class EditProfilePage extends Block {
   constructor () {
     super({})
+  }
+
+  async submitChange (): Promise<void> {
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.edit__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    console.log(data)
+    // await AuthController.changeUser(data as unknown as ChangeData)
   }
 
   init (): void {
@@ -124,7 +140,7 @@ export class EditProfilePage extends Block {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          // submit(this.children, e)
+          void submit(this.children, this.submitChange.bind(this), e)
         }
       }
     })

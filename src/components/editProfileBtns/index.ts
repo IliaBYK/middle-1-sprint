@@ -2,21 +2,26 @@ import template from './editProfileBtns.hbs'
 import AuthController from '../../controllers/AuthController'
 import Block from '../../utils/Block'
 import { Button } from '../button'
+import Router from '../../utils/Router'
 
 interface EditProfileBtnsProps {
   editing?: boolean
+  submit?: () => Promise<void>
 }
 
 export class EditProfileBtns extends Block<EditProfileBtnsProps> {
+  /* submitData (e?: Event): void {
+    e?.preventDefault()
+    void this.props.submit()
+  } */
+
   init (): void {
     this.children.changeDataBtn = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
       label: 'Cохранить',
       type: 'submit',
       events: {
-        click: (e?: Event) => {
-          // submit(this.children, e)
-        }
+        click: () => { }
       }
     })
 
@@ -25,7 +30,7 @@ export class EditProfileBtns extends Block<EditProfileBtnsProps> {
       label: 'Изменить данные',
       events: {
         click: () => {
-          this.props.editing = true
+          Router.go('/edit-profile')
         }
       }
     })

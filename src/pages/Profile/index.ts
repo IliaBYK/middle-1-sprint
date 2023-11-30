@@ -8,17 +8,36 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { validation } from '../../utils/validation'
+import { submit, validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 // import AuthController from '../../controllers/AuthController'
 import Router from '../../utils/Router'
 // import { Link } from '../../components/link'
 import { type Input } from '../../components/input'
-import { EditProfileBtns } from '../../components/editProfileBtns'
+// import { EditProfileBtns } from '../../components/editProfileBtns'
 import Popup from '../../components/popup'
+import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
+import AuthController from '../../controllers/AuthController'
 
-interface ProfileProps extends User {}
+interface ProfileProps extends User {
+  editing: string
+}
 class Profile extends Block<ProfileProps> {
+  async submitChange (e?: Event): Promise<void> {
+    e?.preventDefault()
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.edit__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    await ChangeController.changeUser(data as unknown as ChangeData)
+  }
+
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       events: {
@@ -93,29 +112,37 @@ class Profile extends Block<ProfileProps> {
       edit: true
     })
 
-    this.children.editBtns = new EditProfileBtns({})
+    /* this.children.editBtns = new EditProfileBtns({
+      submit: this.submitChange
+    }) */
 
-    /* this.children.changeDataBtn = new Button({
+    this.children.changeDataBtn = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
       label: 'Cохранить',
       type: 'submit',
       events: {
-        click: (e?: Event) => {
-          // submit(this.children, e)
+        click: (e?: Event) => { void submit(this.children, this.submitChange.bind(this), e) }
+      }
+    })
+
+    this.children.changeData = new Button({
+      class: 'edit__btn button',
+      label: 'Изменить данные',
+      events: {
+        click: () => {
+          this.setProps({ editing: 'true' })
         }
       }
     })
 
-    this.children.changeData = new Link({
-      class: 'edit__btn button',
-      label: 'Изменить данные',
-      to: '/edit-profile'
-    })
-
-    this.children.changePassword = new Link({
+    this.children.changePassword = new Button({
       class: 'edit__btn button',
       label: 'Изменить пароль',
-      to: '/edit-password'
+      events: {
+        click: () => {
+          this.setProps({ editing: 'true' })
+        }
+      }
     })
 
     this.children.logout = new Button({
@@ -125,7 +152,7 @@ class Profile extends Block<ProfileProps> {
         // eslint-disable-next-line @typescript-eslint/no-misused-promises
         click: async () => { await AuthController.logout() }
       }
-    }) */
+    })
 
     Object.entries(this.children).filter(([key, value]) => {
       if (value instanceof InputContainer) {
@@ -141,7 +168,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     Object.entries(this.children).filter(([key, value]) => {
-      if (this.props.display_name === null) this.props.display_name = this.props.first_name;
+      this.props.display_name = this.props.first_name + ' ' + this.props.second_name;
       (this.children.title as Title).setProps({ label: this.props.first_name })
       if (value instanceof InputContainer) {
         (value.children.input as Input).setValue(this.props[key] + '')

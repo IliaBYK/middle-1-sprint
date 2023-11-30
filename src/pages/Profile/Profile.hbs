@@ -13,7 +13,16 @@
       {{{display_name}}}
       {{{phone}}}
   
-      {{{editBtns}}}
+      <div class="edit__btns">
+        {{#if editing}}
+          {{{changeDataBtn}}}
+        {{/if}}
+        {{#unless editing}}
+          {{{changeData}}}
+          {{{changePassword}}}
+          {{{logout}}}
+        {{/unless}}
+      </div>
     </form>
   </main>
 </div>
