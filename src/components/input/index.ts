@@ -11,6 +11,7 @@ interface InputProps {
   placeholder?: string
   required?: boolean
   hidden?: string
+  disabled?: boolean
   events?: {
     blur?: (e?: Event) => void
   }

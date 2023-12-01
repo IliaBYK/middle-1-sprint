@@ -9,7 +9,7 @@ export default abstract class BaseAPI {
 
   public abstract create? (data: unknown): Promise<unknown>
 
-  public abstract get? (identifier?: string | number): Promise<unknown>
+  public abstract request? (identifier?: string | number): Promise<unknown>
 
   public abstract update? (identifier: string | number, data: unknown): Promise<unknown>
 

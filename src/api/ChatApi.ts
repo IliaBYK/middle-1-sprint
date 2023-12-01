@@ -26,7 +26,7 @@ export class ChatsAPI extends BaseAPI {
     return await this.http.delete('/', { chatId: id })
   }
 
-  async get (): Promise<ChatInfo[]> {
+  async request (): Promise<ChatInfo[]> {
     return await this.http.get('/')
   }
 

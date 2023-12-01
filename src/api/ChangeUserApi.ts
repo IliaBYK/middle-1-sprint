@@ -23,17 +23,33 @@ export interface User extends userProps {
   avatar: string
 }
 
+export interface Avatar extends userProps {
+  avatar: string
+}
+
+export interface Password extends userProps {
+  oldPassword: 'string'
+  newPassword: 'string'
+}
+
 class ChangeUserAPI extends BaseAPI {
   constructor () {
     super('/user')
   }
 
-  async changeUser (data: ChangeData): Promise<void> {
-    await this.http.put('/profile', data)
+  async update (userId: string | number, data: ChangeData): Promise<void> {
+    await this.http.put('/profile', { id: userId, ...data })
   }
 
-  get = undefined
-  update = undefined
+  async changeAvatar (data: Avatar): Promise<void> {
+    await this.http.put('/profile/avatar', data)
+  }
+
+  async changePassword (data: Avatar): Promise<void> {
+    await this.http.put('/password', data)
+  }
+
+  request = undefined
   create = undefined
   delete = undefined
 }

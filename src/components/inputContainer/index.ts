@@ -13,6 +13,7 @@ interface InputProps {
   edit?: boolean
   identificator?: string
   placeholder?: string
+  disabled?: boolean
   events?: {
     blur?: (e?: Event) => void
   }
@@ -31,6 +32,7 @@ export class InputContainer extends Block<InputProps> {
       class: this.props.class,
       events: this.props.events,
       required: this.props.required,
+      disabled: this.props.disabled,
       placeholder: this.props.placeholder
     })
   }
