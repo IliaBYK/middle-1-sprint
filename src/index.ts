@@ -12,7 +12,7 @@ enum Routes {
   Signin = '/',
   Signup = '/sign-up',
   Profile = '/settings',
-  Chats = '/chats',
+  Chats = '/messenger',
   EditProfile = '/edit-profile',
   EditPassword = '/edit-password'
 }

@@ -59,7 +59,7 @@ class ChangeController {
       }
       const router = Router
 
-      router.go('/profile')
+      router.go('/sign-up')
     }
   }
 
