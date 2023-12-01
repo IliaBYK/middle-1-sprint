@@ -159,6 +159,7 @@ class EditProfile extends Block<EditProfileProps> {
   }
 
   protected componentDidUpdate (oldProps: EditProfileProps, newProps: EditProfileProps): boolean {
+    if (!oldProps && !newProps) return false
     Object.entries(this.children).filter(([key, value]) => {
       /* if (newProps.display_name === null)  */newProps.display_name = store.getState().currentUser?.first_name + ' ' + store.getState().currentUser?.second_name;
       (this.children.title as Title).setProps({ label: store.getState().currentUser?.first_name })

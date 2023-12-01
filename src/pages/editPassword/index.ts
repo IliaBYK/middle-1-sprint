@@ -67,7 +67,7 @@ export class EditPasswordPage extends Block {
       label: 'Cохранить',
       type: 'submit',
       events: {
-        click: (e?: Event) => {
+        click: () => {
           // submit(this.children, e)
           /* this.validation() */ }
       }
