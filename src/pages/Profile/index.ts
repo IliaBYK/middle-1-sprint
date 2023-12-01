@@ -151,6 +151,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     Object.entries(this.children).filter(([key, value]) => {
+      if (key) { key }
       if (value instanceof InputContainer) {
         value.setProps({ disabled: true });
         (value.children.input as Input).setProps({
@@ -181,6 +182,7 @@ class Profile extends Block<ProfileProps> {
   }
 
   protected componentDidUpdate (oldProps: ProfileProps, newProps: ProfileProps): boolean {
+    if (!oldProps && !newProps) return false
     Object.entries(this.children).filter(([key, value]) => {
       newProps.display_name = newProps.first_name + ' ' + newProps.second_name;
       (this.children.title as Title).setProps({ label: newProps.first_name })
