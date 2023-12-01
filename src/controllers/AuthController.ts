@@ -77,7 +77,7 @@ class AuthController {
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.api.get()
+    const user = await this.api.request()
 
     store.set('currentUser', user)
   }

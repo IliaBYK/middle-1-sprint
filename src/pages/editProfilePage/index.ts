@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 import Block from '../../utils/Block'
 import template from './editProfilePage.hbs'
 import { Button } from '../../components/button/index'
@@ -7,13 +8,14 @@ import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit, validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
+import { type User } from '../../api/UserApi'
+import { type Input } from '../../components/input'
+import store, { connect } from '../../utils/Store'
+import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
 // import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
-export class EditProfilePage extends Block {
-  constructor () {
-    super({})
-  }
-
+interface EditProfileProps extends User {}
+class EditProfile extends Block<EditProfileProps> {
   async submitChange (): Promise<void> {
     const element = this.getContent()
 
@@ -25,8 +27,8 @@ export class EditProfilePage extends Block {
       data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
     })
 
-    console.log(data)
-    // await AuthController.changeUser(data as unknown as ChangeData)
+    // console.log(data)
+    await ChangeController.changeUser(data as unknown as ChangeData)
   }
 
   init (): void {
@@ -144,9 +146,42 @@ export class EditProfilePage extends Block {
         }
       }
     })
+
+    Object.entries(this.children).filter(([key, value]) => {
+      // console.log(this.props)
+      this.props.display_name = this.props.first_name + ' ' + this.props.second_name;
+      (this.children.title as Title).setProps({ label: store.getState().currentUser?.first_name })
+      if (value instanceof InputContainer) {
+        (value.children.input as Input).setValue(this.props[key] + '')
+      } else return value
+      // return value instanceof InputContainer
+    })
+  }
+
+  protected componentDidUpdate (oldProps: EditProfileProps, newProps: EditProfileProps): boolean {
+    Object.entries(this.children).filter(([key, value]) => {
+      /* if (newProps.display_name === null)  */newProps.display_name = store.getState().currentUser?.first_name + ' ' + store.getState().currentUser?.second_name;
+      (this.children.title as Title).setProps({ label: store.getState().currentUser?.first_name })
+      if (value instanceof InputContainer) {
+        (value.children.input as Input).setValue(newProps[key] + '')
+      } else return value
+      // return value instanceof InputContainer
+    })
+
+    return true
+  }
+
+  getInputs (): Array<Block<any> | Array<Block<any>>> {
+    return Object
+      .values(this.children)
+      .filter(el => el instanceof InputContainer)
   }
 
   render (): DocumentFragment {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const EditProfilePage = connectUser(EditProfile as typeof Block)

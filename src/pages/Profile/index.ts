@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import UserAPI from './../../api/UserApi'
+// import UserAPI from './../../api/UserApi'
 import { connect } from './../../utils/Store'
 import Block from '../../utils/Block'
 import template from './Profile.hbs'
@@ -8,7 +8,7 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { submit, validation } from '../../utils/validation'
+import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 // import AuthController from '../../controllers/AuthController'
 import Router from '../../utils/Router'
@@ -16,14 +16,12 @@ import Router from '../../utils/Router'
 import { type Input } from '../../components/input'
 // import { EditProfileBtns } from '../../components/editProfileBtns'
 import Popup from '../../components/popup'
-import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
+// import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
 import AuthController from '../../controllers/AuthController'
 
-interface ProfileProps extends User {
-  editing: string
-}
+interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
-  async submitChange (e?: Event): Promise<void> {
+  /* async submitChange (e?: Event): Promise<void> {
     e?.preventDefault()
     const element = this.getContent()
 
@@ -36,7 +34,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     await ChangeController.changeUser(data as unknown as ChangeData)
-  }
+  } */
 
   init (): void {
     this.children.avatar = new EditAvatarContainer({
@@ -116,21 +114,21 @@ class Profile extends Block<ProfileProps> {
       submit: this.submitChange
     }) */
 
-    this.children.changeDataBtn = new Button({
+    /* this.children.changeDataBtn = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
       label: 'Cохранить',
       type: 'submit',
       events: {
         click: (e?: Event) => { void submit(this.children, this.submitChange.bind(this), e) }
       }
-    })
+    }) */
 
     this.children.changeData = new Button({
       class: 'edit__btn button',
       label: 'Изменить данные',
       events: {
         click: () => {
-          this.setProps({ editing: 'true' })
+          Router.go('/edit-profile')
         }
       }
     })
@@ -139,9 +137,7 @@ class Profile extends Block<ProfileProps> {
       class: 'edit__btn button',
       label: 'Изменить пароль',
       events: {
-        click: () => {
-          this.setProps({ editing: 'true' })
-        }
+        click: () => {}
       }
     })
 
@@ -156,10 +152,12 @@ class Profile extends Block<ProfileProps> {
 
     Object.entries(this.children).filter(([key, value]) => {
       if (value instanceof InputContainer) {
+        value.setProps({ disabled: true });
         (value.children.input as Input).setProps({
           class: 'edit__input',
           edit: true,
           required: true,
+          disabled: true,
           events: {
             blur: () => validation(this.children, (value.children.input as Input).getName())
           }
@@ -184,7 +182,7 @@ class Profile extends Block<ProfileProps> {
 
   protected componentDidUpdate (oldProps: ProfileProps, newProps: ProfileProps): boolean {
     Object.entries(this.children).filter(([key, value]) => {
-      if (newProps.display_name === null) newProps.display_name = newProps.first_name + ' ' + newProps.second_name;
+      newProps.display_name = newProps.first_name + ' ' + newProps.second_name;
       (this.children.title as Title).setProps({ label: newProps.first_name })
       if (value instanceof InputContainer) {
         (value.children.input as Input).setValue(newProps[key] + '')
@@ -195,11 +193,11 @@ class Profile extends Block<ProfileProps> {
     return true
   }
 
-  getInputs (): Array<Block<any> | Array<Block<any>>> {
+  /* getInputs (): Array<Block<any> | Array<Block<any>>> {
     return Object
       .values(this.children)
       .filter(el => el instanceof InputContainer)
-  }
+  } */
 
   /* setValues (): void {
     this.getInputs().map((input) => {
@@ -208,12 +206,12 @@ class Profile extends Block<ProfileProps> {
     })
   } */
 
-  async getUser (): Promise<User> {
+  /* async getUser (): Promise<User> {
     const user = await UserAPI.get()
     console.log(user)
 
     return user
-  }
+  } */
 
   render (): DocumentFragment {
     return this.compile(template, this.props)

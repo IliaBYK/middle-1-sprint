@@ -41,7 +41,7 @@ class UserAPI extends BaseAPI {
     await this.http.post('/signup', data)
   }
 
-  async get (): Promise<User> {
+  async request (): Promise<User> {
     return await this.http.get('/user')
   }
 

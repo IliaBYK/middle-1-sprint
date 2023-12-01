@@ -109,7 +109,7 @@ async function submit (object: any, onClick: () => Promise<void>, e?: Event): Pr
   }
 
   if (result.password === (result.passwordElse || result.newPasswordAgain) && option) {
-    console.log(result)
+    // console.log(result)
     await onClick()
     // render('chats')
   }

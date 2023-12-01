@@ -1,6 +1,7 @@
 import ChangeUserApi from '../api/ChangeUserApi'
 import UserApi from '../api/UserApi'
 import isEqual from '../helpers/isEqual'
+import Router from '../utils/Router'
 import store from '../utils/Store'
 
 export interface ChangeData {
@@ -44,27 +45,26 @@ class ChangeController {
 
     store.set('currentUser.isLoading', true)
 
-    console.log(isEqual(ChangeData, store.getState().currentUser!))
+    // console.log(isEqual(ChangeData, store.getState().currentUser!))
 
     if (!isEqual(ChangeData, store.getState().currentUser!)) {
       await this.fetchUser()
       try {
-        const response = this.api.changeUser(ChangeData)
+        const response = this.api.update(store.getState().currentUser?.id + '', ChangeData)
         if ((response as any).reason) {
           store.set('currentUser.error', (response as any).reason)
         }
       } catch (e) {
         store.set('currentUser.isLoading', false)
       }
+      const router = Router
+
+      router.go('/profile')
     }
-
-    // const router = Router
-
-    // router.go('/profile')
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.apiUser.get()
+    const user = await this.apiUser.request()
 
     store.set('currentUser', user)
   }

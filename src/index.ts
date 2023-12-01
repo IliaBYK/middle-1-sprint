@@ -27,12 +27,12 @@ async function start (): Promise<void> {
     .use(Routes.Chats, Chats)
     .start()
 
-  let isProtectedRoute = true
+  let isLoggedIn = true
 
   switch (window.location.pathname) {
     case Routes.Index:
     case Routes.Register:
-      isProtectedRoute = false
+      isLoggedIn = false
       break
   }
 
@@ -41,13 +41,13 @@ async function start (): Promise<void> {
 
     Router.start()
 
-    if (!isProtectedRoute) {
-      Router.go(Routes.Profile)
+    if (!isLoggedIn) {
+      Router.go(Routes.Chats)
     }
   } catch (e) {
     Router.start()
 
-    if (isProtectedRoute) {
+    if (isLoggedIn) {
       Router.go(Routes.Index)
     }
   }
