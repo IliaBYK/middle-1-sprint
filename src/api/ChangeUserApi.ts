@@ -41,14 +41,6 @@ class ChangeUserAPI extends BaseAPI {
     await this.http.put('/profile', { id: userId, ...data })
   }
 
-  async changeAvatar (data: Avatar): Promise<void> {
-    await this.http.put('/profile/avatar', data)
-  }
-
-  async changePassword (data: Password): Promise<void> {
-    await this.http.put('/password', data)
-  }
-
   request = undefined
   create = undefined
   delete = undefined
