@@ -9,9 +9,9 @@ import { EditProfilePage } from './pages/editProfilePage'
 import { EditPasswordPage } from './pages/editPassword'
 
 enum Routes {
-  Index = '/',
-  Register = '/register',
-  Profile = '/profile',
+  Signin = '/',
+  Signup = '/sign-up',
+  Profile = '/settings',
   Chats = '/chats',
   EditProfile = '/edit-profile',
   EditPassword = '/edit-password'
@@ -19,8 +19,8 @@ enum Routes {
 
 async function start (): Promise<void> {
   Router
-    .use(Routes.Index, LoginPage)
-    .use(Routes.Register, SignupPage)
+    .use(Routes.Signin, LoginPage)
+    .use(Routes.Signup, SignupPage)
     .use(Routes.Profile, ProfilePage)
     .use(Routes.EditProfile, EditProfilePage)
     .use(Routes.EditPassword, EditPasswordPage)
@@ -30,8 +30,8 @@ async function start (): Promise<void> {
   let isLoggedIn = true
 
   switch (window.location.pathname) {
-    case Routes.Index:
-    case Routes.Register:
+    case Routes.Signin:
+    case Routes.Signup:
       isLoggedIn = false
       break
   }
@@ -48,7 +48,7 @@ async function start (): Promise<void> {
     Router.start()
 
     if (isLoggedIn) {
-      Router.go(Routes.Index)
+      Router.go(Routes.Signin)
     }
   }
 }

@@ -14,9 +14,9 @@ export class SignupPage extends Block {
   }
 
   async onSignUp (): Promise<void> {
-    // const element = this.getContent()
+    const element = this.getContent()
 
-    const inputs = this.getContent()?.querySelectorAll('.auth__input')
+    const inputs = element?.querySelectorAll('.auth__input')
 
     const data: Record<string, unknown> = {}
 

@@ -82,7 +82,7 @@ export class LoginPage extends Block {
     this.children.buttonLink = new Link({
       class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
-      to: '/register'
+      to: '/sign-up'
       /* events: {
         click: () => { Router.go('./register') } /* render('signup')
       } */
