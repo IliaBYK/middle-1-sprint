@@ -6,12 +6,16 @@
     {{{avatar}}}
     {{{title}}}
     <form class="edit__form" id="edit-form">
-      {{{email}}}
+      {{!-- {{{email}}}
       {{{login}}}
       {{{first_name}}}
       {{{second_name}}}
       {{{display_name}}}
-      {{{phone}}}
+      {{{phone}}} --}}
+
+      {{#each inputs}}
+        {{{this}}}
+      {{/each}}
   
       <div class="edit__btns">
         {{{changeData}}}

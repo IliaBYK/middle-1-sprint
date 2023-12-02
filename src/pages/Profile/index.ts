@@ -1,5 +1,4 @@
 /* eslint-disable array-callback-return */
-// import UserAPI from './../../api/UserApi'
 import { connect } from './../../utils/Store'
 import Block from '../../utils/Block'
 import template from './Profile.hbs'
@@ -8,34 +7,25 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
-// import AuthController from '../../controllers/AuthController'
 import Router from '../../utils/Router'
-// import { Link } from '../../components/link'
 import { type Input } from '../../components/input'
-// import { EditProfileBtns } from '../../components/editProfileBtns'
 import Popup from '../../components/popup'
-// import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
 import AuthController from '../../controllers/AuthController'
+
+const InputNames: Record<string, string> = {
+  email: 'Почта',
+  login: 'Логин',
+  first_name: 'Имя',
+  second_name: 'Фамилия',
+  display_name: 'Имя в чате',
+  phone: 'Телефон'
+}
+
+const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>
 
 interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
-  /* async submitChange (e?: Event): Promise<void> {
-    e?.preventDefault()
-    const element = this.getContent()
-
-    const inputs = element?.querySelectorAll('.edit__input')
-
-    const data: Record<string, unknown> = {}
-
-    Array.from(inputs!).forEach((input) => {
-      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
-    })
-
-    await ChangeController.changeUser(data as unknown as ChangeData)
-  } */
-
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       events: {
@@ -45,7 +35,7 @@ class Profile extends Block<ProfileProps> {
 
     this.children.title = new Title({
       class: 'edit__title',
-      label: 'Андрей'
+      label: this.props.first_name
     })
 
     this.children.imagine = new Imagine({
@@ -59,15 +49,28 @@ class Profile extends Block<ProfileProps> {
       events: {
         click: () => {
           Router.back()
-          // void this.getUser()
-          // this.setValues()
         }
       }
     })
 
     this.children.popup = new Popup({})
 
-    this.children.email = new InputContainer({
+    this.children.inputs = userFields.map(inputName => {
+      return new InputContainer({
+        name: inputName as string,
+        label: InputNames[inputName],
+        class: 'edit__input',
+        edit: true,
+        required: true,
+        disabled: true
+      })
+    })
+
+    this.children.inputs.map((inputWrap) => {
+      ((inputWrap as InputContainer).children.input as Input).setValue(this.props[(inputWrap as InputContainer).getName()] + '')
+    })
+
+    /* this.children.email = new InputContainer({
       label: 'Почта',
       class: 'edit__input',
       name: 'email',
@@ -108,19 +111,6 @@ class Profile extends Block<ProfileProps> {
       name: 'phone',
       type: 'tel',
       edit: true
-    })
-
-    /* this.children.editBtns = new EditProfileBtns({
-      submit: this.submitChange
-    }) */
-
-    /* this.children.changeDataBtn = new Button({
-      class: 'auth__button edit__submit-btn_password edit__submit-btn',
-      label: 'Cохранить',
-      type: 'submit',
-      events: {
-        click: (e?: Event) => { void submit(this.children, this.submitChange.bind(this), e) }
-      }
     }) */
 
     this.children.changeData = new Button({
@@ -152,7 +142,7 @@ class Profile extends Block<ProfileProps> {
       }
     })
 
-    Object.entries(this.children).filter(([key, value]) => {
+    /* Object.entries(this.children).filter(([key, value]) => {
       if (key) { key }
       if (value instanceof InputContainer) {
         value.setProps({ disabled: true });
@@ -160,22 +150,18 @@ class Profile extends Block<ProfileProps> {
           class: 'edit__input',
           edit: true,
           required: true,
-          disabled: true,
-          events: {
-            blur: () => validation(this.children, (value.children.input as Input).getName())
-          }
+          disabled: true
         })
       }
-    })
+    }) */
 
-    Object.entries(this.children).filter(([key, value]) => {
+    /* Object.entries(this.children).filter(([key, value]) => {
       this.props.display_name = this.props.first_name + ' ' + this.props.second_name;
       (this.children.title as Title).setProps({ label: this.props.first_name })
       if (value instanceof InputContainer) {
         (value.children.input as Input).setValue(this.props[key] + '')
       } else return value
-      // return value instanceof InputContainer
-    })
+    }) */
     /* this.getInputs().map((input) => {
       const nameInput: keyof ProfileProps = ((input as InputContainer).children.input as Input).getName();
       ((input as InputContainer).children.input as Input).setValue(this.props[nameInput])
@@ -184,14 +170,9 @@ class Profile extends Block<ProfileProps> {
   }
 
   protected componentDidUpdate (oldProps: ProfileProps, newProps: ProfileProps): boolean {
-    if (!oldProps && !newProps) return false
-    Object.entries(this.children).filter(([key, value]) => {
-      newProps.display_name = newProps.first_name + ' ' + newProps.second_name;
-      (this.children.title as Title).setProps({ label: newProps.first_name })
-      if (value instanceof InputContainer) {
-        (value.children.input as Input).setValue(newProps[key] + '')
-      } else return value
-      // return value instanceof InputContainer
+    if (!oldProps && !newProps) return false;
+    (this.children.inputs as InputContainer[]).map((inputWrap) => {
+      ((inputWrap).children.input as Input).setValue(newProps[inputWrap.getName()] + '')
     })
 
     return true

@@ -41,6 +41,7 @@ class ChangeController {
   } */
 
   async changeUser (data: ChangeData): Promise<void> {
+    data.display_name = data.first_name + ' ' + data.second_name
     const { ...ChangeData } = data
 
     store.set('currentUser.isLoading', true)
