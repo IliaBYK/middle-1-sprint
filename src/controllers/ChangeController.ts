@@ -1,5 +1,5 @@
-import ChangeUserApi from '../api/ChangeUserApi'
-import UserApi from '../api/UserApi'
+import ChangeUserApi from '../api/change-user-data-api'
+import UserApi from '../api/user-api'
 import isEqual from '../helpers/isEqual'
 import Router from '../utils/Router'
 import store from '../utils/Store'
@@ -59,7 +59,7 @@ class ChangeController {
       }
       const router = Router
 
-      router.go('/sign-up')
+      router.go('/settings')
     }
   }
 

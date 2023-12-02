@@ -8,7 +8,7 @@ import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit, validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
-import { type User } from '../../api/UserApi'
+import { type User } from '../../api/user-api'
 import { type Input } from '../../components/input'
 import store, { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
@@ -40,7 +40,7 @@ class EditProfile extends Block<EditProfileProps> {
 
     this.children.title = new Title({
       class: 'edit__title',
-      label: 'Андрей'
+      label: this.props.first_name
     })
 
     this.children.imagine = new Imagine({

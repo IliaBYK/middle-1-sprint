@@ -17,7 +17,7 @@ export class Sidebar extends Block {
     this.children.button = new Link({
       class: 'chats__profile button',
       label: 'Профиль',
-      to: '/profile',
+      to: '/settings',
       content: true
     })
 

@@ -1,5 +1,5 @@
-import BaseAPI from './BaseApi'
-import { type User } from './UserApi'
+import BaseAPI from './base-api'
+import { type User } from './user-api'
 
 export interface ChatInfo {
   id: number

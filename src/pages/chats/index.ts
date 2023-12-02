@@ -8,6 +8,8 @@ import { InputSearch } from '../../components/inputSearch/index'
 import { Imagine } from '../../components/imagine'
 import { Title } from '../../components/title'
 import Tab from '../../components/tab'
+import { connect } from '../../utils/Store'
+import { type User } from '../../api/user-api'
 
 interface chatProps {
   id?: number | string
@@ -17,8 +19,9 @@ interface chatProps {
   class?: string
 }
 
-export class Chats extends Block {
-  constructor (props?: chatProps) {
+interface MessangerProps extends User {}
+class Messanger extends Block<MessangerProps> {
+  constructor (props: MessangerProps) {
     super({ ...props })
   }
 
@@ -67,7 +70,7 @@ export class Chats extends Block {
 
     this.children.title = new Title({
       class: 'chats__name',
-      label: 'Вадим'
+      label: this.props.first_name
     })
 
     this.children.buttonUsers = new Button({
@@ -110,3 +113,7 @@ export class Chats extends Block {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const Chats = connectUser(Messanger as typeof Block)

@@ -1,4 +1,4 @@
-import BaseAPI from './BaseApi'
+import BaseAPI from './base-api'
 
 export interface ChangeData {
   email: string

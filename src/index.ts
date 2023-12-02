@@ -13,8 +13,8 @@ enum Routes {
   Signup = '/sign-up',
   Profile = '/settings',
   Chats = '/messenger',
-  EditProfile = '/edit-profile',
-  EditPassword = '/edit-password'
+  EditProfile = '/settings/edit-profile',
+  EditPassword = '/settings/edit-password'
 }
 
 async function start (): Promise<void> {

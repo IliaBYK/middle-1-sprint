@@ -3,7 +3,7 @@
 import { connect } from './../../utils/Store'
 import Block from '../../utils/Block'
 import template from './Profile.hbs'
-import { type User } from '../../api/UserApi'
+import { type User } from '../../api/user-api'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
@@ -128,7 +128,7 @@ class Profile extends Block<ProfileProps> {
       label: 'Изменить данные',
       events: {
         click: () => {
-          Router.go('/edit-profile')
+          Router.go('/settings/edit-profile')
         }
       }
     })
@@ -137,7 +137,9 @@ class Profile extends Block<ProfileProps> {
       class: 'edit__btn button',
       label: 'Изменить пароль',
       events: {
-        click: () => {}
+        click: () => {
+          Router.go('/settings/edit-password')
+        }
       }
     })
 

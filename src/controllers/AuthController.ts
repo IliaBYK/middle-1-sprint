@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import UserAPI from '../api/UserApi'
+import UserAPI from '../api/user-api'
 import store from '../utils/Store'
 import Router from '../utils/Router'
 /* import { response } from 'express' */
