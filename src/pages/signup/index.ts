@@ -2,12 +2,24 @@ import Block from '../../utils/Block'
 import template from './signup.hbs'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 /* import { render } from '../../utils/render' */
-import { Button } from '../../components/button'
-import { InputContainer } from '../../components/inputContainer'
-import { Title } from '../../components/title'
+import { Button } from '../../components/button/index'
+import { InputContainer } from '../../components/inputContainer/index'
+import { Title } from '../../components/title/index'
 import { submit, validation } from '../../utils/validation'
-import { Link } from '../../components/link'
+import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
+
+const InputNames: Record<string, string> = {
+  first_name: 'Имя',
+  second_name: 'Фамилия',
+  email: 'Почта',
+  login: 'Логин',
+  phone: 'Телефон',
+  password: 'Пароль',
+  passwordAgain: 'Пароль еще раз'
+}
+
+const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
 
 class Signup extends Block {
   constructor () {
@@ -34,14 +46,27 @@ class Signup extends Block {
       label: 'Регистрация'
     })
 
-    this.children.first_name = new InputContainer({
+    this.children.inputs = userFields.map(input => {
+      return new InputContainer({
+        class: 'auth__input',
+        label: InputNames[input],
+        name: input,
+        type: input === 'password' || input === 'passwordAgain' ? 'password' : 'text',
+        required: true,
+        events: {
+          blur: () => validation(this.children.inputs)
+        }
+      })
+    })
+
+    /* this.children.first_name = new InputContainer({
       class: 'auth__input',
       label: 'Имя',
       name: 'first_name',
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'first_name')
+        blur: () => validation(this.children)
       }
     })
     this.children.second_name = new InputContainer({
@@ -51,7 +76,7 @@ class Signup extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'second_name')
+        blur: () => validation(this.children)
       }
     })
     this.children.email = new InputContainer({
@@ -61,7 +86,7 @@ class Signup extends Block {
       type: 'email',
       required: true,
       events: {
-        blur: () => validation(this.children, 'email')
+        blur: () => validation(this.children)
       }
     })
     this.children.login = new InputContainer({
@@ -71,7 +96,7 @@ class Signup extends Block {
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'login')
+        blur: () => validation(this.children)
       }
     })
     this.children.phone = new InputContainer({
@@ -81,7 +106,7 @@ class Signup extends Block {
       type: 'tel',
       required: true,
       events: {
-        blur: () => validation(this.children, 'phone')
+        blur: () => validation(this.children)
       }
     })
 
@@ -92,7 +117,7 @@ class Signup extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'password')
+        blur: () => validation(this.children)
       }
     })
 
@@ -104,16 +129,16 @@ class Signup extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'passwordElse')
+        blur: () => validation(this.children)
       }
-    })
+    }) */
 
     this.children.buttonSub = new Button({
       class: 'auth__button auth__button_margin',
       label: 'Зарегистрироваться',
       events: {
         click: (e?: Event) => {
-          void submit(this.children, this.onSignUp.bind(this), e)
+          void submit(this.children.inputs, this.onSignUp.bind(this), e)
         }
       }
     })

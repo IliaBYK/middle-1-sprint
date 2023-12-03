@@ -10,6 +10,7 @@ import { Title } from '../../components/title'
 import Tab from '../../components/tab'
 import { connect } from '../../utils/Store'
 import { type User } from '../../api/user-api'
+import { avatar } from '../../images'
 
 interface chatProps {
   id?: number | string
@@ -65,7 +66,7 @@ class Messanger extends Block<MessangerProps> {
     this.children.imagineProfile = new Imagine({
       class: 'chats__img chats__img_place_header button',
       alt: 'Аватар собеседника',
-      src: '../../images/avatar.png'
+      src: avatar
     })
 
     this.children.title = new Title({

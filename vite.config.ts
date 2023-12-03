@@ -1,14 +1,14 @@
-import {defineConfig} from 'vite';
-import {resolve} from 'path';
+import { defineConfig } from 'vite'
+import { resolve } from 'path';
 import vitePluginHandlebarsPrecompile from './vite-plugin-handelbars-precompile';
 
 export default defineConfig({
     root: resolve(__dirname, 'src'),
     server: {
-        port: 3000,
+        port: 3001,
     },
     preview: {
-      port: 3000,
+      port: 3001,
     },
     build: {
         outDir: resolve(__dirname, 'dist'),

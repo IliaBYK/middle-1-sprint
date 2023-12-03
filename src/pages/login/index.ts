@@ -7,8 +7,16 @@ import { Title } from '../../components/title/index'
 import { submit, validation } from '../../utils/validation'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 // import Router from '../../utils/Router'
-import { Link } from '../../components/link'
+import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
+
+const InputNames: Record<string, string> = {
+  login: 'Логин',
+  password: 'Пароль',
+  passwordAgain: 'Пароль еще раз'
+}
+
+const userFields: string[] = ['login', 'password', 'passwordAgain']
 
 class Login extends Block {
   constructor () {
@@ -35,14 +43,27 @@ class Login extends Block {
       label: 'Вход'
     })
 
-    this.children.login = new InputContainer({
+    this.children.inputs = userFields.map(input => {
+      return new InputContainer({
+        class: 'auth__input',
+        label: InputNames[input],
+        name: input,
+        type: input === 'password' || input === 'passwordAgain' ? 'password' : 'text',
+        required: true,
+        events: {
+          blur: () => validation(this.children.inputs)
+        }
+      })
+    })
+
+    /* this.children.login = new InputContainer({
       class: 'auth__input',
       label: 'Логин',
       name: 'login',
       type: 'text',
       required: true,
       events: {
-        blur: () => validation(this.children, 'login')
+        blur: () => validation(this.children)
       }
     })
 
@@ -53,7 +74,7 @@ class Login extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'password')
+        blur: () => validation(this.children)
       }
     })
 
@@ -65,9 +86,9 @@ class Login extends Block {
       type: 'password',
       required: true,
       events: {
-        blur: () => validation(this.children, 'passwordElse')
+        blur: () => validation(this.children)
       }
-    })
+    }) */
 
     this.children.buttonSub = new Button({
       class: 'auth__button auth__button_margin',
@@ -75,7 +96,7 @@ class Login extends Block {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          void submit(this.children, this.onSignIn.bind(this), e)
+          void submit(this.children.inputs, this.onSignIn.bind(this), e)
           /* this.validation() */ }
       }
     })

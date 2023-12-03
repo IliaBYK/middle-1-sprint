@@ -1,4 +1,6 @@
-import { InputContainer } from '../components/inputContainer/index'
+/* eslint-disable array-callback-return */
+import { type InputContainer } from '../components/inputContainer/index'
+import type Block from './Block'
 import errors from './errors'
 // import { render } from './render'
 
@@ -51,7 +53,7 @@ const functions: Record<string, (S: string) => boolean> = {
   oldPassword: isValidPassword,
   newPassword: isValidPassword,
   newPasswordAgain: isValidPassword,
-  passwordElse: isValidPassword,
+  passwordAgain: isValidPassword,
   phone: isValidPhone
 }
 
@@ -66,27 +68,27 @@ const functions: Record<string, (S: string) => boolean> = {
   phone: 'phone'
 } */
 
-function validation (object: any, name: string): boolean {
+function validation (object: any): boolean {
   let isValid: boolean = false
-  const input = (object[name] as InputContainer)
-  if (!input.validation()) {
-    input.setProps({ error: errors[name] })
-  } else {
-    input.setProps({ error: '' })
-    isValid = true
-  }
+  const inputs = (object as InputContainer[])
+  inputs.map((el) => {
+    if (!el.validation()) {
+      el.setProps({ error: errors[el.getName()] })
+    } else {
+      el.setProps({ error: '' })
+      isValid = true
+    }
+  })
   return isValid
 }
 
-async function submit (object: any, onClick: () => Promise<void>, e?: Event): Promise<void> {
+async function submit (array: Block<any> | Array<Block<any>>, onClick: () => Promise<void>, e?: Event): Promise<void> {
   e?.preventDefault()
-  const result: Record<any, any> = {}
+  const result: Record<string, string> = {}
   let option: boolean = false
 
-  const values = Object
-    .values(object)
-    .filter(el => el instanceof InputContainer)
-    .map(el => [(el as InputContainer).getName(), (el as InputContainer).getValue()])
+  const inputs = Object.values(array)
+  const values = inputs.map(el => [el.getName(), el.getValue()])
 
   values.forEach(el => {
     if (functions[el[0]](el[1])) {
@@ -94,21 +96,21 @@ async function submit (object: any, onClick: () => Promise<void>, e?: Event): Pr
       result[el[0]] = el[1]
     } else {
       option = false
-      validation(object, el[0])
+      validation(array)
     }
   })
 
-  if (result.password !== result.passwordElse) {
-    (object.passwordElse as InputContainer).setProps({ error: 'Пароли не совпадают' })
+  if (result.password !== result.passwordAgain) {
+    ((inputs.find((el: InputContainer) => el.getName() === 'passwordAgain'))).setProps({ error: 'Пароли не совпадают' })
     return
   }
 
   if (result.newPassword !== result.newPasswordAgain) {
-    (object.newPasswordAgain as InputContainer).setProps({ error: 'Пароли не совпадают' })
+    ((inputs.find((el: InputContainer) => el.getName() === 'newPasswordAgain'))).setProps({ error: 'Пароли не совпадают' })
     return
   }
 
-  if (result.password === (result.passwordElse || result.newPasswordAgain) && option) {
+  if (result.password === (result.passwordAgain || result.newPasswordAgain) && option) {
     // console.log(result)
     await onClick()
     // render('chats')

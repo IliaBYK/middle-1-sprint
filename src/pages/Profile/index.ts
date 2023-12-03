@@ -7,11 +7,12 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { InputContainer } from '../../components/inputContainer'
+import { InputContainer } from '../../components/inputContainer/index'
 import Router from '../../utils/Router'
-import { type Input } from '../../components/input'
-import Popup from '../../components/popup'
+import { type Input } from '../../components/input/index'
+import Popup from '../../components/popup/index'
 import AuthController from '../../controllers/AuthController'
+import { Union } from '../../images/index'
 
 const InputNames: Record<string, string> = {
   email: 'Почта',
@@ -39,7 +40,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     this.children.imagine = new Imagine({
-      src: '../../images/Union.png',
+      src: this.props.avatar || Union,
       class: 'edit__avatar',
       alt: 'Аватар пользователя'
     })

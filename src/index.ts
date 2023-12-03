@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Chats } from './pages/chats'
-import { SignupPage } from './pages/signup'
-import { LoginPage } from './pages/login'
+import { Chats } from './pages/chats/index'
+import { SignupPage } from './pages/signup/index'
+import { LoginPage } from './pages/login/index'
 import Router from './utils/Router'
-import { ProfilePage } from './pages/Profile'
+import { ProfilePage } from './pages/Profile/index'
 import AuthController from './controllers/AuthController'
-import { EditProfilePage } from './pages/editProfilePage'
-import { EditPasswordPage } from './pages/editPassword'
+import { EditProfilePage } from './pages/editProfilePage/index'
+import { EditPasswordPage } from './pages/editPassword/index'
 
 enum Routes {
   Signin = '/',

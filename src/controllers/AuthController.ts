@@ -53,7 +53,7 @@ class AuthController {
       return
     }
 
-    // await this.fetchUser()
+    await this.fetchUser()
 
     const router = Router
 
@@ -62,6 +62,8 @@ class AuthController {
 
   async signIn (data: SignInData): Promise<void> {
     await this.api.signin(data)
+
+    await this.fetchUser()
 
     const router = Router
 

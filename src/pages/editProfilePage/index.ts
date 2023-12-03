@@ -6,12 +6,13 @@ import { Title } from '../../components/title/index'
 import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit, validation } from '../../utils/validation'
-import { InputContainer } from '../../components/inputContainer'
+import { InputContainer } from '../../components/inputContainer/index'
 import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
-import { type Input } from '../../components/input'
+import { type Input } from '../../components/input/index'
 import store, { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
+import { Union } from '../../images'
 // import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
 const InputNames: Record<string, string> = {
@@ -59,7 +60,7 @@ class EditProfile extends Block<EditProfileProps> {
     })
 
     this.children.imagine = new Imagine({
-      src: '../../images/Union.png',
+      src: this.props.avatar || Union,
       class: 'edit__avatar',
       alt: 'Аватар пользователя'
     })
@@ -84,7 +85,10 @@ class EditProfile extends Block<EditProfileProps> {
         label: InputNames[inputName],
         class: 'edit__input',
         edit: true,
-        required: true
+        required: true,
+        events: {
+          blur: () => validation(this.children.inputs)
+        }
       })
     });
 
@@ -92,7 +96,7 @@ class EditProfile extends Block<EditProfileProps> {
       (inputWrap.children.input as Input).setValue(this.props[(inputWrap.children.input as Input).getName()] + '')
     })
 
-    this.children.email = new InputContainer({
+    /* this.children.email = new InputContainer({
       label: 'Почта',
       class: 'edit__input',
       name: 'email',
@@ -163,7 +167,7 @@ class EditProfile extends Block<EditProfileProps> {
       events: {
         blur: () => validation(this.children, 'phone')
       }
-    })
+    }) */
 
     this.children.changeData = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
@@ -171,7 +175,7 @@ class EditProfile extends Block<EditProfileProps> {
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          void submit(this.children, this.submitChange.bind(this), e)
+          void submit(this.children.inputs, this.submitChange.bind(this), e)
         }
       }
     })

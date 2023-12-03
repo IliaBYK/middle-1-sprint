@@ -1,3 +1,4 @@
+import { type Password } from './../api/change-user-data-api'
 import ChangeUserApi from '../api/change-user-data-api'
 import UserApi from '../api/user-api'
 import isEqual from '../helpers/isEqual'
@@ -13,6 +14,10 @@ export interface ChangeData {
   phone: string
 }
 
+interface PasswordData extends Password {
+  newPasswordAgain: string
+}
+
 class ChangeController {
   private readonly api: typeof ChangeUserApi
   private readonly apiUser: typeof UserApi
@@ -22,23 +27,24 @@ class ChangeController {
     this.apiUser = UserApi
   }
 
-  /* isEqual (newProps: ChangeData, oldProps: User | undefined): boolean {
-    let result: boolean = true
-    for (const [key, value] of Object.entries(lhs)) {
-      const rightValue = rhs[key]
-      if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
-        if (isEqual(value, rightValue)) {
-          continue
-        }
-        result = false
-      }
-
-      if (value !== rightValue) {
-        result = false
-      }
+  async ChangePassword (data: PasswordData): Promise<void> {
+    if (data.oldPassword !== data.newPassword && data.newPassword === data.newPasswordAgain) {
+      await this.api.changePassword(data)
     }
-    return result
-  } */
+  }
+
+  async ChangeAvatar (data: FormData | string): Promise<void> {
+    try {
+      const response = this.api.changeAvatar(data)
+      if ((response as any).reason) {
+        store.set('currentUser.error', (response as any).reason)
+      }
+    } catch (e) {
+      store.set('currentUser.isLoading', false)
+    }
+
+    store.set('currentUser.avatar', data)
+  }
 
   async changeUser (data: ChangeData): Promise<void> {
     data.display_name = data.first_name + ' ' + data.second_name

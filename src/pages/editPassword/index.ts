@@ -6,6 +6,14 @@ import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
 
+const InputNames: Record<string, string> = {
+  oldPassword: 'Старый пароль',
+  newPassword: 'Новый пароль',
+  newPasswordAgain: 'Повторите новый пароль'
+}
+
+const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
+
 export class EditPasswordPage extends Block {
   constructor () {
     super({})
@@ -26,7 +34,21 @@ export class EditPasswordPage extends Block {
       }
     })
 
-    this.children.oldPassword = new InputContainer({
+    this.children.inputs = userFields.map(input => {
+      return new InputContainer({
+        class: 'edit__input',
+        label: InputNames[input],
+        name: input,
+        type: 'password',
+        edit: true,
+        required: false,
+        events: {
+          blur: () => validation(this.children)
+        }
+      })
+    })
+
+    /* this.children.oldPassword = new InputContainer({
       class: 'edit__input',
       label: 'Старый пароль',
       name: 'oldPassword',
@@ -60,7 +82,7 @@ export class EditPasswordPage extends Block {
       events: {
         blur: () => validation(this.children, 'newPasswordAgain')
       }
-    })
+    }) */
 
     this.children.changeData = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',

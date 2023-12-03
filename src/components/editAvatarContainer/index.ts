@@ -1,6 +1,7 @@
 import { Imagine } from '../imagine/index'
 import Block from '../../utils/Block'
 import template from './container.hbs'
+import { Union } from '../../images'
 
 interface Props {
   class?: string
@@ -17,7 +18,7 @@ export class EditAvatarContainer extends Block<Props> {
 
   init (): void {
     this.children.imagine = new Imagine({
-      src: '../../images/Union.png',
+      src: Union,
       class: 'edit__avatar',
       alt: 'Аватар пользователя'
     })

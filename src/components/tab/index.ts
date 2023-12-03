@@ -2,6 +2,7 @@ import Block from '../../utils/Block'
 import template from './tab.hbs'
 import { Button } from '../button'
 import { Imagine } from '../imagine'
+import { addFile, addLocation, addMedia, addUser, deleteUser } from '../../images'
 
 interface TabProps {
   class?: string
@@ -22,7 +23,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить пользователя',
-        src: '../../images/addUser.svg'
+        src: addUser
       })
     })
 
@@ -32,7 +33,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Удалить пользователя',
-        src: '../../images/deleteUser.svg'
+        src: deleteUser
       })
     })
 
@@ -42,7 +43,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить фото или видео',
-        src: '../../images/addMedia.svg'
+        src: addMedia
       })
     })
 
@@ -52,7 +53,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить файл',
-        src: '../../images/addFile.svg'
+        src: addFile
       })
     })
 
@@ -62,7 +63,7 @@ class Tab extends Block<TabProps> {
       content: new Imagine({
         class: 'tab__img',
         alt: 'Добавить локацию',
-        src: '../../images/addLocation.svg'
+        src: addLocation
       })
     })
   }
