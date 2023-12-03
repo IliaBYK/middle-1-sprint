@@ -115,7 +115,7 @@ class Block<P extends Record<string, any> = any> {
     return true
   }
 
-  setProps = (nextProps: Partial<P>): void => {
+  setProps (nextProps: Partial<P>): void {
     if (!nextProps) {
       return
     }

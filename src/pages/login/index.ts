@@ -8,8 +8,9 @@ import { submit, validation } from '../../utils/validation'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 // import Router from '../../utils/Router'
 import { Link } from '../../components/link'
+import { connect } from '../../utils/Store'
 
-export class LoginPage extends Block {
+class Login extends Block {
   constructor () {
     super({})
   }
@@ -93,3 +94,7 @@ export class LoginPage extends Block {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const LoginPage = connectUser(Login as typeof Block)

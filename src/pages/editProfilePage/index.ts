@@ -14,6 +14,17 @@ import store, { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
 // import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
+const InputNames: Record<string, string> = {
+  email: 'Почта',
+  login: 'Логин',
+  first_name: 'Имя',
+  second_name: 'Фамилия',
+  display_name: 'Имя в чате',
+  phone: 'Телефон'
+}
+
+const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof EditProfileProps>
+
 interface EditProfileProps extends User {}
 class EditProfile extends Block<EditProfileProps> {
   async submitChange (): Promise<void> {
@@ -27,7 +38,9 @@ class EditProfile extends Block<EditProfileProps> {
       data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
     })
 
-    // console.log(data)
+    console.log(data)
+
+    this.setProps({ state: data })
     await ChangeController.changeUser(data as unknown as ChangeData)
   }
 
@@ -62,6 +75,20 @@ class EditProfile extends Block<EditProfileProps> {
     name
     type
     */
+
+    this.children.inputs = userFields.map(inputName => {
+      return new InputContainer({
+        name: inputName as string,
+        label: InputNames[inputName],
+        class: 'edit__input',
+        edit: true,
+        required: true
+      })
+    })
+
+    this.children.inputs.map((inputWrap) => {
+      ((inputWrap as InputContainer).children.input as Input).setValue(this.props[(inputWrap as InputContainer).getName()] + '')
+    })
 
     this.children.email = new InputContainer({
       label: 'Почта',
@@ -159,17 +186,12 @@ class EditProfile extends Block<EditProfileProps> {
   }
 
   protected componentDidUpdate (oldProps: EditProfileProps, newProps: EditProfileProps): boolean {
-    if (!oldProps && !newProps) return false
-    Object.entries(this.children).filter(([key, value]) => {
-      /* if (newProps.display_name === null)  */newProps.display_name = store.getState().currentUser?.first_name + ' ' + store.getState().currentUser?.second_name;
-      (this.children.title as Title).setProps({ label: store.getState().currentUser?.first_name })
-      if (value instanceof InputContainer) {
-        (value.children.input as Input).setValue(newProps[key] + '')
-      } else return value
-      // return value instanceof InputContainer
+    if (!oldProps && !newProps) return false;
+    (this.children.inputs as InputContainer[]).map((inputWrap) => {
+      ((inputWrap).children.input as Input).setValue(newProps[inputWrap.getName()] + '')
     })
 
-    return true
+    return false
   }
 
   getInputs (): Array<Block<any> | Array<Block<any>>> {

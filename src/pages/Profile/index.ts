@@ -175,7 +175,7 @@ class Profile extends Block<ProfileProps> {
       ((inputWrap).children.input as Input).setValue(newProps[inputWrap.getName()] + '')
     })
 
-    return true
+    return false
   }
 
   /* getInputs (): Array<Block<any> | Array<Block<any>>> {

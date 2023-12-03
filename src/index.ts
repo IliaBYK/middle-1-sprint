@@ -17,6 +17,10 @@ enum Routes {
   EditPassword = '/settings/edit-password'
 }
 
+window.addEventListener('popstate', () => {
+  Router.start()
+})
+
 async function start (): Promise<void> {
   Router
     .use(Routes.Signin, LoginPage)
@@ -25,7 +29,6 @@ async function start (): Promise<void> {
     .use(Routes.EditProfile, EditProfilePage)
     .use(Routes.EditPassword, EditPasswordPage)
     .use(Routes.Chats, Chats)
-    .start()
 
   let isLoggedIn = true
 

@@ -53,7 +53,7 @@ class AuthController {
       return
     }
 
-    await this.fetchUser()
+    // await this.fetchUser()
 
     const router = Router
 

@@ -49,7 +49,6 @@ class ChangeController {
     // console.log(isEqual(ChangeData, store.getState().currentUser!))
 
     if (!isEqual(ChangeData, store.getState().currentUser!)) {
-      await this.fetchUser()
       try {
         const response = this.api.update(store.getState().currentUser?.id + '', ChangeData)
         if ((response as any).reason) {
@@ -58,6 +57,9 @@ class ChangeController {
       } catch (e) {
         store.set('currentUser.isLoading', false)
       }
+
+      // await this.fetchUser()
+
       const router = Router
 
       router.go('/settings')

@@ -7,8 +7,9 @@ import { InputContainer } from '../../components/inputContainer'
 import { Title } from '../../components/title'
 import { submit, validation } from '../../utils/validation'
 import { Link } from '../../components/link'
+import { connect } from '../../utils/Store'
 
-export class SignupPage extends Block {
+class Signup extends Block {
   constructor () {
     super({})
   }
@@ -128,3 +129,7 @@ export class SignupPage extends Block {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const SignupPage = connectUser(Signup as typeof Block)
