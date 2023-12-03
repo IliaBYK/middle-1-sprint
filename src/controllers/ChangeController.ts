@@ -60,6 +60,8 @@ class ChangeController {
 
       // await this.fetchUser()
 
+      store.set('currentUser', data)
+
       const router = Router
 
       router.go('/settings')

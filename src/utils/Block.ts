@@ -120,7 +120,10 @@ class Block<P extends Record<string, any> = any> {
       return
     }
 
+    const oldValue = { ...this.props }
+
     Object.assign(this.props, nextProps)
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, this.props)
   }
 
   get element (): HTMLElement | null {

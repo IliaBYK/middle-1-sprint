@@ -45,6 +45,10 @@ export class InputContainer extends Block<InputProps> {
     return (this.children.input as Input).getValue()
   }
 
+  setValue (data: string): void {
+    (this.children.input as Input).setValue(data)
+  }
+
   getName (): string {
     return (this.children.input as Input).getName()
   }

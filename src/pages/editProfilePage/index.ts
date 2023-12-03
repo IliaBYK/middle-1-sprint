@@ -38,9 +38,11 @@ class EditProfile extends Block<EditProfileProps> {
       data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
     })
 
-    console.log(data)
+    // console.log(data)
 
-    this.setProps({ state: data })
+    // this.setProps(data)
+
+    // console.log(this.props)
     await ChangeController.changeUser(data as unknown as ChangeData)
   }
 
@@ -84,10 +86,10 @@ class EditProfile extends Block<EditProfileProps> {
         edit: true,
         required: true
       })
-    })
+    });
 
-    this.children.inputs.map((inputWrap) => {
-      ((inputWrap as InputContainer).children.input as Input).setValue(this.props[(inputWrap as InputContainer).getName()] + '')
+    (this.children.inputs as InputContainer[]).map((inputWrap: InputContainer) => {
+      (inputWrap.children.input as Input).setValue(this.props[(inputWrap.children.input as Input).getName()] + '')
     })
 
     this.children.email = new InputContainer({
@@ -191,7 +193,7 @@ class EditProfile extends Block<EditProfileProps> {
       ((inputWrap).children.input as Input).setValue(newProps[inputWrap.getName()] + '')
     })
 
-    return false
+    return true
   }
 
   getInputs (): Array<Block<any> | Array<Block<any>>> {
