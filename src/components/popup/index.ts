@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { InputContainer } from './../inputContainer/index'
 import Block from '../../utils/Block'
 import { Title } from '../title'
@@ -9,7 +10,7 @@ interface PopupProps {
   error?: string
   isLoaded?: boolean
   addUser?: boolean
-  // onClick: () => void | Promise<void>
+  onClick: () => void | Promise<void>
   events?: {
     click: () => void | Promise<void>
   }
@@ -40,8 +41,6 @@ class Popup extends Block<PopupProps> {
         class: 'popup__input',
         label: 'Выбрать файл на компьютере',
         classLabel: 'popup__label button'
-        // label: ''
-        // hidden: 'hidden'
       })
 
     this.children.button = new Button({
@@ -49,7 +48,7 @@ class Popup extends Block<PopupProps> {
       type: 'submit',
       label: this.props.addUser ? 'Добавить' : 'Поменять',
       events: {
-        click: () => {}
+        click: async () => { await this.props.onClick() }
       }
     })
 

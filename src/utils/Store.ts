@@ -2,6 +2,8 @@ import { set } from '../helpers/helpers'
 import isEqual from '../helpers/isEqual'
 import { EventBus } from './EventBus'
 import type Block from './Block'
+import { type ChatInfo } from '../api/chats-api'
+import { type Message } from '../controllers/MessageController'
 
 export enum StoreEvents {
   Updated = 'updated',
@@ -20,6 +22,9 @@ interface User {
 
 interface StoreData {
   currentUser?: User
+  chats?: ChatInfo[]
+  messages?: Record<number, Message[]>
+  selectedChat?: number
 }
 
 export class Store extends EventBus {

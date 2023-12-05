@@ -1,41 +1,28 @@
-import { chats } from '../../utils/chats'
+import MessagesController, { type Message as MessageInfo } from '../../controllers/MessageController'
 import Block from '../../utils/Block'
-import template from './chats.hbs'
+import template from './chatsMain.hbs'
 import { Button } from '../../components/button/index'
-import { Sidebar } from '../../components/chatsSidebar/index'
-import Message from '../../components/message/index'
-import { InputSearch } from '../../components/inputSearch/index'
 import { Imagine } from '../../components/imagine'
 import { Title } from '../../components/title'
 import Tab from '../../components/tab'
-import { connect } from '../../utils/Store'
-import { type User } from '../../api/user-api'
 import { avatar } from '../../images'
+import { connect } from '../../utils/Store'
+import { Message } from '../message'
+import { Input } from '../input'
 
-interface chatProps {
-  id?: number | string
-  text?: string
-  isOwner?: boolean
-  time?: string
-  class?: string
+interface ChatProps {
+  messages: MessageInfo[]
+  selectedChat: number | undefined
+  userId: number
 }
 
-interface MessangerProps extends User {}
-class Messanger extends Block<MessangerProps> {
-  constructor (props: MessangerProps) {
+export class Chats extends Block<ChatProps> {
+  constructor (props: ChatProps) {
     super({ ...props })
   }
 
   init (): void {
-    this.children.messages = this.createMessages(chats)
-    this.children.sidebar = new Sidebar()
-
-    /* this.children.password = new Input({
-      label: "Пароль",
-      name: "password",
-      type: "password",
-      required: true
-    }); */
+    this.children.messages = this.createMessages(this.props)
 
     this.children.attachBtn = new Button({
       class: 'chats__attach-btn',
@@ -44,7 +31,7 @@ class Messanger extends Block<MessangerProps> {
       }
     })
 
-    this.children.input = new InputSearch({
+    this.children.input = new Input({
       class: 'chats__input',
       placeholder: 'Сообщение',
       name: 'message',
@@ -56,9 +43,12 @@ class Messanger extends Block<MessangerProps> {
       type: 'submit',
       events: {
         click: () => {
-          if (((this.children.input as Block).element as HTMLInputElement).value.trim().length === 0) {
-            alert('Введите сообщение')
-          }
+          const input = this.children.input as Input
+          const message = input.getValue()
+
+          input.setValue('')
+
+          MessagesController.sendMessage(this.props.selectedChat!, message)
         }
       }
     })
@@ -71,7 +61,7 @@ class Messanger extends Block<MessangerProps> {
 
     this.children.title = new Title({
       class: 'chats__name',
-      label: this.props.first_name
+      label: '123'
     })
 
     this.children.buttonUsers = new Button({
@@ -98,15 +88,9 @@ class Messanger extends Block<MessangerProps> {
     } else block.setProps({ class: `${className} tab_visible` })
   }
 
-  protected componentDidUpdate (oldProps: chatProps, newProps: chatProps): boolean {
-    if (oldProps !== newProps) this.children.chats = this.createMessages(chats)
-
-    return true
-  }
-
-  private createMessages (chats: chatProps[]): Message[] {
-    return chats.map((data: chatProps | any) => {
-      return new Message({ class: data.isOwner ? 'chats__message_user' : '', ...data })
+  private createMessages (props: ChatProps): any {
+    return props.messages.map(data => {
+      return new Message({ ...data, isUser: props.userId === data.user_id })
     })
   }
 
@@ -115,6 +99,22 @@ class Messanger extends Block<MessangerProps> {
   }
 }
 
-const connectUser = connect((state) => ({ ...state.currentUser }))
+const withChat = connect((state) => {
+  const selectedChatId = state.selectedChat
 
-export const Chats = connectUser(Messanger as typeof Block)
+  if (!selectedChatId) {
+    return {
+      messages: [],
+      selectedChat: undefined,
+      userId: state.currentUser?.id
+    }
+  }
+
+  return {
+    messages: [],
+    selectedChat: state.selectedChat,
+    userId: state.currentUser?.id
+  }
+})
+
+export const ChatsMain = withChat(Chats as typeof Block)

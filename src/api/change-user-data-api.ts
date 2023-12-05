@@ -45,7 +45,9 @@ class ChangeUserAPI extends BaseAPI {
     await this.http.put('/password', data)
   }
 
-  async changeAvatar (data: FormData | string): Promise<void> {
+  async changeAvatar (file: File): Promise<void> {
+    const data = new FormData()
+    data.append('avatar', file)
     await this.http.put('/profile/avatar', data)
   }
 

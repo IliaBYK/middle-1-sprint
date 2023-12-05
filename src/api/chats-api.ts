@@ -22,6 +22,12 @@ export class ChatsAPI extends BaseAPI {
     return await this.http.get('/')
   }
 
+  async getToken (id: number): Promise<string> {
+    const response = await this.http.post<{ token: string }>(`/token/${id}`)
+
+    return response.token
+  }
+
   async create (title: string): Promise<void> {
     await this.http.post('/', { title })
   }

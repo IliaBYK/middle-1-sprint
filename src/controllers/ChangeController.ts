@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 import { type Password } from './../api/change-user-data-api'
 import ChangeUserApi from '../api/change-user-data-api'
 import UserApi from '../api/user-api'
@@ -33,17 +34,15 @@ class ChangeController {
     }
   }
 
-  async ChangeAvatar (data: FormData | string): Promise<void> {
+  async ChangeAvatar (file: File): Promise<void> {
     try {
-      const response = this.api.changeAvatar(data)
+      const response = await this.api.changeAvatar(file)
       if ((response as any).reason) {
         store.set('currentUser.error', (response as any).reason)
       }
     } catch (e) {
       store.set('currentUser.isLoading', false)
     }
-
-    store.set('currentUser.avatar', data)
   }
 
   async changeUser (data: ChangeData): Promise<void> {

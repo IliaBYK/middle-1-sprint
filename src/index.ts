@@ -1,5 +1,5 @@
+import { Messanger } from './pages/messanger/index';
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Chats } from './pages/chats/index'
 import { SignupPage } from './pages/signup/index'
 import { LoginPage } from './pages/login/index'
 import Router from './utils/Router'
@@ -12,7 +12,7 @@ enum Routes {
   Signin = '/',
   Signup = '/sign-up',
   Profile = '/settings',
-  Chats = '/messenger',
+  Messanger = '/messenger',
   EditProfile = '/settings/edit-profile',
   EditPassword = '/settings/edit-password'
 }
@@ -28,7 +28,7 @@ async function start (): Promise<void> {
     .use(Routes.Profile, ProfilePage)
     .use(Routes.EditProfile, EditProfilePage)
     .use(Routes.EditPassword, EditPasswordPage)
-    .use(Routes.Chats, Chats)
+    .use(Routes.Messanger, Messanger)
 
   let isLoggedIn = true
 
@@ -45,7 +45,7 @@ async function start (): Promise<void> {
     Router.start()
 
     if (!isLoggedIn) {
-      Router.go(Routes.Chats)
+      Router.go(Routes.Messanger)
     }
   } catch (e) {
     Router.start()

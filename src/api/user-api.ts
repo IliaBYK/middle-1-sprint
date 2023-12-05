@@ -14,9 +14,9 @@ export interface SignupData {
   phone: string
 }
 
-type userProps = Record<string, string | number>
+// type userProps = Record<string, string | number>
 
-export interface User extends userProps {
+export interface User {
   id: number
   first_name: string
   second_name: string

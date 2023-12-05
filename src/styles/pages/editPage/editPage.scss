@@ -36,8 +36,7 @@
 
   &__avatar-container {
     position: relative;
-    width: 130px;
-    height: 130px;
+    overflow: hidden;
     background: $grayDark;
     border-radius: 50%;
     display: flex;
@@ -50,6 +49,10 @@
   &__avatar {
     display: block;
     margin: auto;
+    width: 130px;
+    height: 130px;
+    overflow: hidden;
+    object-fit: cover;
 
     &:hover {
       opacity: 0;

@@ -10,6 +10,8 @@ export enum Method {
 interface Options {
   method: Method
   data?: any
+  headers?: any
+  withCridentials?: boolean
 }
 
 export default class HTTPTransport {
@@ -53,7 +55,7 @@ export default class HTTPTransport {
   }
 
   private async request<Response>(url: string, options: Options = { method: Method.Get }): Promise<Response> {
-    const { method, data } = options
+    const { method, data, headers, withCridentials = true } = options
 
     return await new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest()
@@ -73,14 +75,19 @@ export default class HTTPTransport {
       xhr.onerror = () => { reject({ reason: 'network error' }) }
       xhr.ontimeout = () => { reject({ reason: 'timeout' }) }
 
-      xhr.setRequestHeader('Content-Type', 'application/json')
+      Object.entries(headers ?? {}).forEach(([key, value]) => {
+        xhr.setRequestHeader(key, value as string)
+      })
 
-      xhr.withCredentials = true
+      xhr.withCredentials = withCridentials
       xhr.responseType = 'json'
 
       if (method === Method.Get || !data) {
         xhr.send()
+      } else if (data instanceof FormData) {
+        xhr.send(data)
       } else {
+        xhr.setRequestHeader('Content-Type', 'application/json')
         xhr.send(JSON.stringify(data))
       }
     })
