@@ -8,6 +8,7 @@ export interface Message {
   type: string
   user_id: number
   content: string
+  is_read: boolean
   file?: {
     id: number
     user_id: number
@@ -50,6 +51,8 @@ class MessagesController {
       type: 'message',
       content: message
     })
+
+    console.log(this.fetchOldMessages(id))
   }
 
   fetchOldMessages (id: number): void {

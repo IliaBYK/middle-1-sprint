@@ -7,6 +7,8 @@ import ChatsController from '../../controllers/ChatsController'
 import { Card } from '../card/index'
 import { Link } from '../link'
 import { connect } from '../../utils/Store'
+import { Union } from '../../images'
+import { Button } from '../button'
 
 interface SideBarProps {
   chats: ChatInfo[]
@@ -28,13 +30,22 @@ class SidebarWrap extends Block<SideBarProps> {
       content: true
     })
 
+    this.children.buttonAddChat = new Button({
+      class: 'chats__add-chat-btn auth__button',
+      label: 'Создать чат'
+    })
+
     this.children.search = new Search()
   }
 
   private createCards (props: SideBarProps): any {
     return props.chats.map(data => {
       return new Card({
-        ...data,
+        src: data.avatar || Union,
+        name: data.title,
+        text: data.last_message.content,
+        time: data.last_message.time.slice(0, 10), // позже отфарматирую дату в нормальный вид
+        unread_count: data.unread_count,
         events: {
           click: () => {
             ChatsController.selectChat(data.id)
@@ -42,6 +53,13 @@ class SidebarWrap extends Block<SideBarProps> {
         }
       })
     })
+  }
+
+  protected componentDidUpdate (oldProps: SideBarProps, newProps: SideBarProps): boolean {
+    if (!oldProps && !newProps) return false
+    this.children.messages = this.createCards(newProps)
+
+    return true
   }
 
   render (): DocumentFragment {

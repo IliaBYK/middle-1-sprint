@@ -90,8 +90,20 @@ export class Chats extends Block<ChatProps> {
 
   private createMessages (props: ChatProps): any {
     return props.messages.map(data => {
-      return new Message({ ...data, isUser: props.userId === data.user_id })
+      return new Message({
+        content: data.content,
+        isRead: data.is_read,
+        time: data.time?.slice(0, 10),
+        isUser: props.userId === data.user_id
+      })
     })
+  }
+
+  protected componentDidUpdate (oldProps: ChatProps, newProps: ChatProps): boolean {
+    if (!oldProps && !newProps) return false
+    this.children.messages = this.createMessages(newProps)
+
+    return true
   }
 
   render (): DocumentFragment {
@@ -104,14 +116,14 @@ const withChat = connect(state => {
 
   if (!selectedChatId) {
     return {
-      messages: [],
+      messages: [{}],
       selectedChat: undefined,
       userId: state.currentUser?.id
     }
   }
 
   return {
-    messages: state.messages?.[selectedChatId] || [],
+    messages: state.messages?.[selectedChatId] || [{}],
     selectedChat: state.selectedChat,
     userId: state.currentUser?.id
   }

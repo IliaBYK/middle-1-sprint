@@ -5,7 +5,7 @@ export interface ChatInfo {
   id: number
   title: string
   avatar: string
-  counter: number
+  unread_count: number
   last_message: {
     user: User
     time: string

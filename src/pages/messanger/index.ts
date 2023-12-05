@@ -11,9 +11,7 @@ export class Messanger extends Block {
     this.children.chatsMain = new ChatsMain({})
 
     ChatsController.fetchChats().finally(() => {
-      (this.children.sidebar as Block).setProps({
-        isLoaded: true
-      })
+      (this.children.sidebar as Block).setProps({ isLoaded: true })
     })
   }
 
