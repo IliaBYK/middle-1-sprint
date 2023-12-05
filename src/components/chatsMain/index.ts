@@ -99,7 +99,7 @@ export class Chats extends Block<ChatProps> {
   }
 }
 
-const withChat = connect((state) => {
+const withChat = connect(state => {
   const selectedChatId = state.selectedChat
 
   if (!selectedChatId) {
@@ -111,7 +111,7 @@ const withChat = connect((state) => {
   }
 
   return {
-    messages: [],
+    messages: state.messages?.[selectedChatId] || [],
     selectedChat: state.selectedChat,
     userId: state.currentUser?.id
   }

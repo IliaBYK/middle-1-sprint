@@ -303,3 +303,17 @@
     height: 5px;
   }
 }
+
+.chats__empty-list {
+  margin: auto;
+  color: $grayForDates;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+
+  &_place_sidebar {
+    margin-top: 30px;
+  }
+}
