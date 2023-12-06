@@ -93,81 +93,8 @@ class EditProfile extends Block<EditProfileProps> {
     });
 
     (this.children.inputs as InputContainer[]).map((inputWrap: InputContainer) => {
-      (inputWrap.children.input as Input).setValue(this.props[(inputWrap.children.input as Input).getName()] + '')
+      (inputWrap.children.input as Input).setValue((this.props as unknown as Record<string, string>)[(inputWrap.children.input as Input).getName()])
     })
-
-    /* this.children.email = new InputContainer({
-      label: 'Почта',
-      class: 'edit__input',
-      name: 'email',
-      type: 'email',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'email')
-      }
-    })
-
-    this.children.login = new InputContainer({
-      label: 'Логин',
-      class: 'edit__input',
-      name: 'login',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'login')
-      }
-    })
-
-    this.children.first_name = new InputContainer({
-      label: 'Имя',
-      class: 'edit__input',
-      name: 'first_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'first_name')
-      }
-    })
-
-    this.children.second_name = new InputContainer({
-      label: 'Фамилия',
-      class: 'edit__input',
-      name: 'second_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'second_name')
-      }
-    })
-
-    this.children.display_name = new InputContainer({
-      label: 'Имя в чате',
-      class: 'edit__input',
-      name: 'display_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'display_name')
-      }
-    })
-
-    this.children.phone = new InputContainer({
-      class: 'edit__input',
-      identificator: 'edit__input-container_last',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'phone')
-      }
-    }) */
 
     this.children.changeData = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
@@ -185,7 +112,7 @@ class EditProfile extends Block<EditProfileProps> {
       this.props.display_name = this.props.first_name + ' ' + this.props.second_name;
       (this.children.title as Title).setProps({ label: store.getState().currentUser?.first_name })
       if (value instanceof InputContainer) {
-        (value.children.input as Input).setValue(this.props[key] + '')
+        (value.children.input as Input).setValue((this.props as unknown as Record<string, string>)[key] + '')
       } else return value
       // return value instanceof InputContainer
     })
@@ -194,7 +121,7 @@ class EditProfile extends Block<EditProfileProps> {
   protected componentDidUpdate (oldProps: EditProfileProps, newProps: EditProfileProps): boolean {
     if (!oldProps && !newProps) return false;
     (this.children.inputs as InputContainer[]).map((inputWrap) => {
-      ((inputWrap).children.input as Input).setValue(newProps[inputWrap.getName()] + '')
+      ((inputWrap).children.input as Input).setValue((newProps as unknown as Record<string, string>)[inputWrap.getName()] + '')
     })
 
     return true
