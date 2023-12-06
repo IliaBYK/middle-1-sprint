@@ -9,6 +9,7 @@ import { Link } from '../link'
 import { connect } from '../../utils/Store'
 import { Union } from '../../images'
 import { Button } from '../button'
+import TabAdd from '../tabForAddChat'
 
 interface SideBarProps {
   chats: ChatInfo[]
@@ -32,10 +33,21 @@ class SidebarWrap extends Block<SideBarProps> {
 
     this.children.buttonAddChat = new Button({
       class: 'chats__add-chat-btn auth__button',
-      label: 'Создать чат'
+      label: 'Создать чат',
+      events: {
+        click: () => { this.toggleClass((this.children.tabForAddChat as TabAdd), 'tab-add') }
+      }
     })
 
+    this.children.tabForAddChat = new TabAdd({})
+
     this.children.search = new Search()
+  }
+
+  toggleClass (block: TabAdd, className: string): void {
+    if (block.element?.classList.contains('tab_visible')) {
+      block.setProps({ class: `${className}` })
+    } else block.setProps({ class: `${className} tab_visible` })
   }
 
   private createCards (props: SideBarProps): any {

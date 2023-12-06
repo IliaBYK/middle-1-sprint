@@ -45,4 +45,51 @@
       margin-bottom: 0;
     }
   }
+
+  &-add {
+    box-sizing: border-box;
+    width: 290px;
+    display: flex;
+    flex-direction: column;
+    bottom: -80px;
+
+    &__title {
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+      margin: 0 0 15px;
+    }
+
+    &__input {
+      border: none;
+      border-bottom: 1px solid $grayLines;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__button {
+      border: none;
+      border-radius: 6px;
+      height: 30px;
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+    }
+  }
 }
