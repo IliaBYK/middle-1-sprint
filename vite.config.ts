@@ -3,23 +3,12 @@ import { resolve } from 'path';
 import vitePluginHandlebarsPrecompile from './vite-plugin-handelbars-precompile';
 
 export default defineConfig({
-    root: resolve(__dirname, 'src'),
-    server: {
-        port: 3001,
-    },
-    preview: {
-      port: 3001,
-    },
-    build: {
-        outDir: resolve(__dirname, 'dist'),
-        rollupOptions: {
-            input: {
-                index: resolve(__dirname, 'src/index.html'),
-            },
-            output: {
-                assetFileNames: 'assets/[name].[ext]',
-            },
-        },
-    },
-    plugins: [vitePluginHandlebarsPrecompile()],
+  root: resolve(__dirname, 'src'),
+	build: {
+	outDir: resolve(__dirname, 'dist'),
+	rollupOptions: {},
+	},
+	plugins: [
+		vitePluginHandlebarsPrecompile()
+  	]
 });
