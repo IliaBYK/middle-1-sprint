@@ -53,7 +53,7 @@ class ChangeController {
 
     // console.log(isEqual(ChangeData, store.getState().currentUser!))
 
-    if (!isEqual(ChangeData, store.getState().currentUser!)) {
+    if (!isEqual(ChangeData, store.getState().currentUser)) {
       try {
         const response = this.api.update(store.getState().currentUser?.id + '', ChangeData)
         if ((response as any).reason) {
