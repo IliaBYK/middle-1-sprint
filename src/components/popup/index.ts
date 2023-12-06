@@ -10,7 +10,7 @@ interface PopupProps {
   error?: string
   isLoaded?: boolean
   addUser?: boolean
-  onClick: () => void | Promise<void>
+  onClick: (value: number) => Promise<void>
   events?: {
     click: () => void | Promise<void>
   }
@@ -33,7 +33,8 @@ class Popup extends Block<PopupProps> {
       ? new InputContainer({
         name: 'login',
         label: 'Логин',
-        type: 'text'
+        type: 'text',
+        class: 'auth__input'
       })
       : new InputContainer({
         name: 'file',
@@ -48,7 +49,16 @@ class Popup extends Block<PopupProps> {
       type: 'submit',
       label: this.props.addUser ? 'Добавить' : 'Поменять',
       events: {
-        click: async () => { await this.props.onClick() }
+        click: async () => {
+          if (!(this.children.input as InputContainer).getValue()) {
+            (this.children.input as InputContainer).setProps({ error: 'Введите id пользователя' })
+          } else {
+            (this.children.input as InputContainer).setProps({ error: '' })
+            await this.props.onClick(+(this.children.input as InputContainer).getValue()).catch(() => {
+              (this.children.input as InputContainer).setProps({ error: 'Произошла ошибка, возможно такого пользователя нет' })
+            })
+          }
+        }
       }
     })
 

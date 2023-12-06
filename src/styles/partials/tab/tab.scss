@@ -51,7 +51,11 @@
     width: 290px;
     display: flex;
     flex-direction: column;
-    bottom: -80px;
+    bottom: -110px;
+
+    &__label {
+      text-align: left;
+    }
 
     &__title {
       color: $black;

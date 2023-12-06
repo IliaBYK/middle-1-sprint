@@ -9,7 +9,7 @@ interface ButtonProps {
   class?: string
   onClick?: (e?: Event) => void
   events?: {
-    click: (e?: Event) => void
+    click: (e?: Event) => void | Promise<void>
   }
 }
 

@@ -7,7 +7,7 @@ import { connect } from '../../utils/Store'
 interface ChatProps {
   id: number
   title: string
-  counter: number
+  unread_count: number
   selectedChat: ChatInfo
   events: {
     click: () => void

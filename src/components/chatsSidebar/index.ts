@@ -55,8 +55,8 @@ class SidebarWrap extends Block<SideBarProps> {
       return new Card({
         src: data.avatar || Union,
         name: data.title,
-        text: data.last_message.content,
-        time: data.last_message.time.slice(0, 10), // позже отфарматирую дату в нормальный вид
+        text: data.last_message?.content || '',
+        time: data.last_message?.time.slice(0, 10) || '', // позже отфарматирую дату в нормальный вид
         unread_count: data.unread_count,
         events: {
           click: () => {

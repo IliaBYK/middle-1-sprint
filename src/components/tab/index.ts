@@ -7,6 +7,11 @@ import { addFile, addLocation, addMedia, addUser, deleteUser } from '../../image
 interface TabProps {
   class?: string
   users?: boolean
+  addUser: () => void
+  deleteUser: () => Promise<void>
+  addFile: () => Promise<void>
+  addMedia: () => Promise<void>
+  addLocation: () => Promise<void>
 }
 
 class Tab extends Block<TabProps> {
@@ -24,7 +29,10 @@ class Tab extends Block<TabProps> {
         class: 'tab__img',
         alt: 'Добавить пользователя',
         src: addUser
-      })
+      }),
+      events: {
+        click: () => { this.props.addUser() }
+      }
     })
 
     this.children.buttonDelete = new Button({
@@ -34,7 +42,10 @@ class Tab extends Block<TabProps> {
         class: 'tab__img',
         alt: 'Удалить пользователя',
         src: deleteUser
-      })
+      }),
+      events: {
+        click: async () => { await this.props.deleteUser() }
+      }
     })
 
     this.children.addMedia = new Button({
@@ -44,7 +55,10 @@ class Tab extends Block<TabProps> {
         class: 'tab__img',
         alt: 'Добавить фото или видео',
         src: addMedia
-      })
+      }),
+      events: {
+        click: async () => { await this.props.addMedia() }
+      }
     })
 
     this.children.addFile = new Button({
@@ -54,7 +68,10 @@ class Tab extends Block<TabProps> {
         class: 'tab__img',
         alt: 'Добавить файл',
         src: addFile
-      })
+      }),
+      events: {
+        click: async () => { await this.props.addFile() }
+      }
     })
 
     this.children.addLocation = new Button({
@@ -64,7 +81,10 @@ class Tab extends Block<TabProps> {
         class: 'tab__img',
         alt: 'Добавить локацию',
         src: addLocation
-      })
+      }),
+      events: {
+        click: async () => { await this.props.addLocation() }
+      }
     })
   }
 

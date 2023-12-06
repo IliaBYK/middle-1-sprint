@@ -8,7 +8,10 @@ import Tab from '../../components/tab'
 import { avatar } from '../../images'
 import { connect } from '../../utils/Store'
 import { Message } from '../message'
-import { Input } from '../input'
+import ChatsController from '../../controllers/ChatsController'
+import { InputContainer } from '../inputContainer'
+import { validation } from '../../utils/validation'
+import Popup from '../popup'
 
 interface ChatProps {
   messages: MessageInfo[]
@@ -24,6 +27,11 @@ export class Chats extends Block<ChatProps> {
   init (): void {
     this.children.messages = this.createMessages(this.props)
 
+    this.children.popup = new Popup({
+      addUser: true,
+      onClick: async (value: number) => { await ChatsController.addUserToChat(this.props.selectedChat as number, value) }
+    })
+
     this.children.attachBtn = new Button({
       class: 'chats__attach-btn',
       events: {
@@ -31,11 +39,15 @@ export class Chats extends Block<ChatProps> {
       }
     })
 
-    this.children.input = new Input({
+    this.children.input = new InputContainer({
+      label: '',
       class: 'chats__input',
+      classLabel: 'chats__label',
       placeholder: 'Сообщение',
       name: 'message',
-      required: true
+      events: {
+        blur: () => validation(this.children.input)
+      }
     })
 
     this.children.sendBtn = new Button({
@@ -43,10 +55,17 @@ export class Chats extends Block<ChatProps> {
       type: 'submit',
       events: {
         click: () => {
-          const input = this.children.input as Input
+          const input = this.children.input as InputContainer
           const message = input.getValue()
 
+          if (!message) {
+            input.setProps({ error: 'Введите сообщение' })
+            return
+          }
+
           input.setValue('')
+
+          input.setProps({ error: '' })
 
           MessagesController.sendMessage(this.props.selectedChat!, message)
         }
@@ -61,7 +80,7 @@ export class Chats extends Block<ChatProps> {
 
     this.children.title = new Title({
       class: 'chats__name',
-      label: '123'
+      label: ''
     })
 
     this.children.buttonUsers = new Button({
@@ -73,12 +92,24 @@ export class Chats extends Block<ChatProps> {
 
     this.children.tabUsers = new Tab({
       class: 'tab_top',
-      users: true
+      users: true,
+      addUser: () => {
+        (this.children.popup as Popup).setProps({ class: 'popup_opened' })
+      },
+      deleteUser: async () => { },
+      addFile: async () => { },
+      addMedia: async () => { },
+      addLocation: async () => { }
     })
 
     this.children.tabMedia = new Tab({
       class: 'tab_bottom',
-      users: false
+      users: false,
+      addUser: () => { },
+      deleteUser: async () => { },
+      addFile: async () => { },
+      addMedia: async () => { },
+      addLocation: async () => { }
     })
   }
 

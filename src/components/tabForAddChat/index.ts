@@ -1,8 +1,11 @@
 import Block from '../../utils/Block'
 import template from './tab.hbs'
 import { Button } from '../button'
-import { Input } from '../input'
 import { Title } from '../title'
+import ChatsController from '../../controllers/ChatsController'
+import { validation } from '../../utils/validation'
+import { InputContainer } from '../inputContainer'
+import { type Input } from '../input'
 
 interface TabProps {
   class?: string
@@ -21,14 +24,31 @@ class TabAdd extends Block<TabProps> {
       label: 'Введите название чата'
     })
 
-    this.children.input = new Input({
+    this.children.input = new InputContainer({
+      label: 'Название',
       name: 'addChat',
-      class: 'tab-add__input'
+      class: 'tab-add__input',
+      classLabel: 'tab-add__label',
+      events: {
+        blur: () => {
+          (this.children.input as InputContainer).setProps({
+            error: (((this.children.input as InputContainer).children.input as Input).getContent() as HTMLInputElement).validationMessage
+          })
+        }
+      }
     })
 
     this.children.button = new Button({
       class: 'tab-add__button',
-      label: 'Создать'
+      label: 'Создать',
+      events: {
+        click: async () => {
+          if (!(((this.children.input as InputContainer).children.input as Input).getContent() as HTMLInputElement).validationMessage) {
+            this.setProps({ class: '' })
+            await ChatsController.create((this.children.input as InputContainer).getValue())
+          } else validation(this.children.input)
+        }
+      }
     })
   }
 

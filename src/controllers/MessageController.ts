@@ -51,8 +51,6 @@ class MessagesController {
       type: 'message',
       content: message
     })
-
-    console.log(this.fetchOldMessages(id))
   }
 
   fetchOldMessages (id: number): void {

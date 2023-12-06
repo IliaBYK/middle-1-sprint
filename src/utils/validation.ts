@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { type InputContainer } from '../components/inputContainer/index'
+import { InputContainer } from '../components/inputContainer/index'
 import type Block from './Block'
 import errors from './errors'
 // import { render } from './render'
@@ -39,7 +39,7 @@ function isValidPhone (phone: string): boolean {
 }
 
 function isValidMessage (message: string): boolean {
-  return message.length === 0
+  return message.length > 0
 }
 
 const functions: Record<string, (S: string) => boolean> = {
@@ -54,7 +54,8 @@ const functions: Record<string, (S: string) => boolean> = {
   newPassword: isValidPassword,
   newPasswordAgain: isValidPassword,
   passwordAgain: isValidPassword,
-  phone: isValidPhone
+  phone: isValidPhone,
+  addChat: isValidName
 }
 
 /* interface Names {
@@ -70,15 +71,24 @@ const functions: Record<string, (S: string) => boolean> = {
 
 function validation (object: any): boolean {
   let isValid: boolean = false
-  const inputs = (object as InputContainer[])
-  inputs.map((el) => {
-    if (!el.validation()) {
-      el.setProps({ error: errors[el.getName()] })
+  if (object instanceof InputContainer) {
+    if (!object.validation()) {
+      object.setProps({ error: errors[object.getName()] })
     } else {
-      el.setProps({ error: '' })
+      object.setProps({ error: '' })
       isValid = true
     }
-  })
+  } else {
+    const inputs = (object as InputContainer[])
+    inputs.map((el) => {
+      if (!el.validation()) {
+        el.setProps({ error: errors[el.getName()] })
+      } else {
+        el.setProps({ error: '' })
+        isValid = true
+      }
+    })
+  }
   return isValid
 }
 
