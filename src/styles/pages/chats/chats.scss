@@ -217,7 +217,7 @@
 }
 
 .chats__label {
-  display: block;
+  flex-direction: row;
   margin: 0;
 }
 
@@ -234,7 +234,6 @@
   font-style: normal;
   font-weight: 500;
   line-height: 12px;
-  width: -webkit-fill-available;
 }
 
 .chats__send-btn {
