@@ -5,7 +5,7 @@ import { LoginPage } from './pages/login/index'
 import Router from './utils/Router'
 import { ProfilePage } from './pages/Profile/index'
 import AuthController from './controllers/AuthController'
-import ChatsController from './controllers/ChatsController'
+// import ChatsController from './controllers/ChatsController'
 import { EditProfilePage } from './pages/editProfilePage/index'
 import { EditPasswordPage } from './pages/editPassword/index'
 
@@ -41,7 +41,7 @@ async function start (): Promise<void> {
   }
 
   try {
-    await ChatsController.fetchChats()
+    // await ChatsController.fetchChats()
 
     await AuthController.fetchUser()
 

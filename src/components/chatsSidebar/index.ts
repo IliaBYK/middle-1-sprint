@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import Block from '../../utils/Block'
 import template from './sidebar.hbs'
@@ -17,8 +18,10 @@ interface SideBarProps {
 }
 
 class SidebarWrap extends Block<SideBarProps> {
-  constructor (props: SideBarProps) {
-    super({ ...props })
+  protected async componentDidMount (): Promise<void> {
+    super.componentDidMount()
+
+    await ChatsController.fetchChats()
   }
 
   init (): void {
@@ -69,7 +72,7 @@ class SidebarWrap extends Block<SideBarProps> {
 
   protected componentDidUpdate (oldProps: SideBarProps, newProps: SideBarProps): boolean {
     if (!oldProps && !newProps) return false
-    this.children.messages = this.createCards(newProps)
+    this.children.cards = this.createCards(newProps)
 
     return true
   }
@@ -79,6 +82,6 @@ class SidebarWrap extends Block<SideBarProps> {
   }
 }
 
-const withChats = connect((state) => ({ chats: [...state.chats || []] }))
+const withChats = connect((state) => ({ chats: [...state.chats || [{}]] }))
 
 export const Sidebar = withChats(SidebarWrap as typeof Block)

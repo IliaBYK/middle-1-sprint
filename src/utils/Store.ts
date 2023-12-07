@@ -1,5 +1,5 @@
 import { set } from '../helpers/helpers'
-import isEqual from '../helpers/isEqual'
+// import isEqual from '../helpers/isEqual'
 import { EventBus } from './EventBus'
 import type Block from './Block'
 import { type ChatInfo } from '../api/chats-api'
@@ -59,9 +59,9 @@ export function connect (mapStateToProps: (state: StoreData) => any) {
           const newState = mapStateToProps(store.getState())
 
           // если что-то из используемых данных поменялось, обновляем компонент
-          if (!isEqual(state, newState)) {
-            this.setProps({ ...newState })
-          }
+          /* if (!isEqual(state, newState)) { */
+          this.setProps({ ...newState })
+          /* } */
 
           // не забываем сохранить новое состояние
           state = newState
