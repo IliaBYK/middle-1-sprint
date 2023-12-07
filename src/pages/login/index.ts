@@ -1,12 +1,10 @@
 import Block from '../../utils/Block'
 import template from './login.hbs'
-// import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
 import { InputContainer } from '../../components/inputContainer/index'
 import { Title } from '../../components/title/index'
 import { submit, validation } from '../../utils/validation'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
-// import Router from '../../utils/Router'
 import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
 
@@ -56,40 +54,6 @@ class Login extends Block {
       })
     })
 
-    /* this.children.login = new InputContainer({
-      class: 'auth__input',
-      label: 'Логин',
-      name: 'login',
-      type: 'text',
-      required: true,
-      events: {
-        blur: () => validation(this.children)
-      }
-    })
-
-    this.children.password = new InputContainer({
-      class: 'auth__input',
-      label: 'Пароль',
-      name: 'password',
-      type: 'password',
-      required: true,
-      events: {
-        blur: () => validation(this.children)
-      }
-    })
-
-    this.children.passwordElse = new InputContainer({
-      class: 'auth__input',
-      classLabel: 'auth__label_last',
-      label: 'Пароль еще раз',
-      name: 'passwordElse',
-      type: 'password',
-      required: true,
-      events: {
-        blur: () => validation(this.children)
-      }
-    }) */
-
     this.children.buttonSub = new Button({
       class: 'auth__button auth__button_margin',
       label: 'Войти',
@@ -97,7 +61,7 @@ class Login extends Block {
       events: {
         click: (e?: Event) => {
           void submit(this.children.inputs, this.onSignIn.bind(this), e)
-          /* this.validation() */ }
+        }
       }
     })
 
@@ -105,9 +69,6 @@ class Login extends Block {
       class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
       to: '/sign-up'
-      /* events: {
-        click: () => { Router.go('./register') } /* render('signup')
-      } */
     })
   }
 

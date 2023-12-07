@@ -19,7 +19,7 @@ export interface SignInData {
 }
 
 export interface ControllerSignUpData extends SignUpData {
-  confirm_password: string
+  passwordAgain: string
 }
 
 class AuthController {
@@ -30,13 +30,13 @@ class AuthController {
   }
 
   async signUp (data: ControllerSignUpData): Promise<void> {
-    if (data.confirm_password !== data.password) {
+    if (data.passwordAgain !== data.password) {
       store.set('currentUser.error', 'Пароли не совпдают')
 
       return
     }
 
-    const { confirm_password, ...signUpData } = data
+    const { passwordAgain, ...signUpData } = data
 
     store.set('currentUser.isLoading', true)
 

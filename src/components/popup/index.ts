@@ -62,6 +62,7 @@ class Popup extends Block<PopupProps> {
             (this.children.input as InputContainer).setProps({ error: this.props.addUser ? 'Введите id пользователя' : 'Загрузите файл' })
           } else {
             (this.children.input as InputContainer).setProps({ error: '' })
+            this.setProps({ class: '' })
             await this.props.onClick(+(this.children.input as InputContainer).getValue()).catch(() => {
               (this.children.input as InputContainer).setProps({ error: 'Произошла ошибка, возможно такого пользователя нет' })
             })

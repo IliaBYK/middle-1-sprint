@@ -29,7 +29,7 @@ export class EditAvatarContainer extends Block<Props> {
     if (!oldProps && !newProps) return false;
     (this.children.imagine as Imagine).setProps({ src: newProps.avatar })
 
-    return false
+    return true
   }
 
   render (): DocumentFragment {

@@ -43,6 +43,8 @@ class ChangeController {
     } catch (e) {
       store.set('currentUser.isLoading', false)
     }
+
+    await this.fetchUser()
   }
 
   async changeUser (data: ChangeData): Promise<void> {
