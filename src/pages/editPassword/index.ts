@@ -14,13 +14,18 @@ const InputNames: Record<string, string> = {
 
 const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
 
-export class EditPasswordPage extends Block {
-  constructor () {
-    super({})
+interface Props {
+  avatar: string
+}
+
+export class EditPasswordPage extends Block<Props> {
+  constructor (props: Props) {
+    super({ ...props })
   }
 
   init (): void {
     this.children.avatar = new EditAvatarContainer({
+      avatar: this.props.avatar,
       class: 'edit__avatar-container_place_password',
       events: {
         click: () => {}

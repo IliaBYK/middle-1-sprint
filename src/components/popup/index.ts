@@ -49,7 +49,6 @@ class Popup extends Block<PopupProps> {
     const input = element?.querySelector('.popup__input')
     const label = element?.querySelector('.popup__label');
     (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
-      this.setProps({ isLoaded: true });
       (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
     })
 
