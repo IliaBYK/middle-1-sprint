@@ -6,14 +6,12 @@ import template from './Profile.hbs'
 import { type User } from '../../api/user-api'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
-import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { InputContainer } from '../../components/inputContainer/index'
 import Router from '../../utils/Router'
 import { type Input } from '../../components/input/index'
 import Popup from '../../components/popup/index'
 import AuthController from '../../controllers/AuthController'
-import { Union } from '../../images/index'
 import ChangeController from '../../controllers/ChangeController'
 
 const InputNames: Record<string, string> = {
@@ -31,20 +29,47 @@ interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
   async submitChange (): Promise<void> {
     const element = this.getContent()
+    const reader = new FileReader()
 
     const input = element?.querySelector('.popup__input')
+    const label = element?.querySelector('.popup__label')
 
     const value: File = (((input as HTMLInputElement).files![0]) as unknown as File)
 
     const data: File = value
 
-    await ChangeController.ChangeAvatar(data).then(() => {
-      (this.children.popup as Popup).setProps({ class: '' })
+    reader.readAsDataURL(data);
+
+    (input as HTMLInputElement).addEventListener('change', (e: Event) => {
+      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
     })
+
+    reader.onload = function () {
+      const img = element?.querySelector('.edit__avatar')
+
+      if (typeof reader.result === 'string') {
+        (img as HTMLImageElement).src = reader.result
+      }
+    }
+
+    if (value) {
+      await ChangeController.ChangeAvatar(data).then(() => {
+        (this.children.popup as Popup).setProps({
+          class: '',
+          isLoaded: true
+        })
+      })
+    } else {
+      (this.children.popup as Popup).setProps({
+        isLoaded: false
+      });
+      ((this.children.popup as Popup).children as unknown as InputContainer).setProps({ error: 'Загрузите файл' })
+    }
   }
 
   init (): void {
     this.children.avatar = new EditAvatarContainer({
+      avatar: this.props.avatar,
       events: {
         click: () => { (this.children.popup as Popup).setProps({ class: 'popup_opened' }) }
       }
@@ -53,12 +78,6 @@ class Profile extends Block<ProfileProps> {
     this.children.title = new Title({
       class: 'edit__title',
       label: this.props.first_name
-    })
-
-    this.children.imagine = new Imagine({
-      src: this.props.avatar || Union,
-      class: 'edit__avatar',
-      alt: 'Аватар пользователя'
     })
 
     this.children.buttonToChats = new Button({
@@ -71,6 +90,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     this.children.popup = new Popup({
+      addUser: false,
       onClick: this.submitChange.bind(this)
     })
 
@@ -87,6 +107,10 @@ class Profile extends Block<ProfileProps> {
 
     (this.children.inputs as InputContainer[]).map((inputWrap: InputContainer) => {
       (inputWrap.children.input as Input).setValue((this.props as unknown as Record<string, string>)[(inputWrap.children.input as Input).getName()] + '')
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`
     })
 
     this.children.changeData = new Button({
@@ -122,6 +146,10 @@ class Profile extends Block<ProfileProps> {
     if (!oldProps && !newProps) return false;
     (this.children.inputs as InputContainer[]).map((inputWrap) => {
       ((inputWrap).children.input as Input).setValue((newProps as unknown as Record<string, string>)[inputWrap.getName()] + '')
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
     })
 
     return true

@@ -49,6 +49,7 @@ class EditProfile extends Block<EditProfileProps> {
 
   init (): void {
     this.children.avatar = new EditAvatarContainer({
+      avatar: this.props.avatar,
       events: {
         click: () => {}
       }
@@ -94,6 +95,10 @@ class EditProfile extends Block<EditProfileProps> {
 
     (this.children.inputs as InputContainer[]).map((inputWrap: InputContainer) => {
       (inputWrap.children.input as Input).setValue((this.props as unknown as Record<string, string>)[(inputWrap.children.input as Input).getName()])
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `ya-praktikum.tech/api/v2/resources${this.props.avatar}`
     })
 
     this.children.changeData = new Button({

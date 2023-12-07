@@ -45,7 +45,7 @@ export class Store extends EventBus {
 const store = new Store()
 
 export function connect (mapStateToProps: (state: StoreData) => any) {
-  return function (Component: typeof Block) {
+  return function (Component: typeof Block): typeof Block {
     return class extends Component {
       constructor (props: any) {
         // сохраняем начальное состояние

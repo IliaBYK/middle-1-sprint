@@ -2,10 +2,9 @@ import { Imagine } from '../imagine/index'
 import Block from '../../utils/Block'
 import template from './container.hbs'
 import { Union } from '../../images'
-import { connect } from '../../utils/Store'
-import { type User } from '../../api/user-api'
 
-interface Props extends User {
+interface Props {
+  avatar: string
   class?: string
   onClick?: () => void
   events?: {
@@ -13,7 +12,7 @@ interface Props extends User {
   }
 }
 
-class EditAvatar extends Block<Props> {
+export class EditAvatarContainer extends Block<Props> {
   constructor (props: Props) {
     super({ ...props })
   }
@@ -24,8 +23,6 @@ class EditAvatar extends Block<Props> {
       class: 'edit__avatar',
       alt: 'Аватар пользователя'
     })
-
-    this.setProps({ avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}` })
   }
 
   protected componentDidUpdate (oldProps: Props, newProps: Props): boolean {
@@ -39,7 +36,3 @@ class EditAvatar extends Block<Props> {
     return this.compile(template, { ...this.props })
   }
 }
-
-const connectUser = connect((state) => ({ ...state.currentUser }))
-
-export const EditAvatarContainer = connectUser(EditAvatar as typeof Block)

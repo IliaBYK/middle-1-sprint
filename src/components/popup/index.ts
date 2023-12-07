@@ -44,6 +44,15 @@ class Popup extends Block<PopupProps> {
         classLabel: 'popup__label button'
       })
 
+    const element = this.getContent()
+
+    const input = element?.querySelector('.popup__input')
+    const label = element?.querySelector('.popup__label');
+    (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
+      this.setProps({ isLoaded: true });
+      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
+    })
+
     this.children.button = new Button({
       class: 'popup__button',
       type: 'submit',
@@ -51,7 +60,7 @@ class Popup extends Block<PopupProps> {
       events: {
         click: async () => {
           if (!(this.children.input as InputContainer).getValue()) {
-            (this.children.input as InputContainer).setProps({ error: 'Введите id пользователя' })
+            (this.children.input as InputContainer).setProps({ error: this.props.addUser ? 'Введите id пользователя' : 'Загрузите файл' })
           } else {
             (this.children.input as InputContainer).setProps({ error: '' })
             await this.props.onClick(+(this.children.input as InputContainer).getValue()).catch(() => {
