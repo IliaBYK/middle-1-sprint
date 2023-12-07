@@ -29,28 +29,12 @@ interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
   async submitChange (): Promise<void> {
     const element = this.getContent()
-    // const reader = new FileReader()
 
     const input = element?.querySelector('.popup__input')
-    // const label = element?.querySelector('.popup__label')
 
     const value: File = (((input as HTMLInputElement).files![0]) as unknown as File)
 
     const data: File = value
-
-    /* reader.readAsDataURL(data);
-
-    (input as HTMLInputElement).addEventListener('change', (e: Event) => {
-      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
-    }) */
-
-    /* reader.onload = function () {
-      const img = element?.querySelector('.edit__avatar')
-
-      if (typeof reader.result === 'string') {
-        (img as HTMLImageElement).src = reader.result
-      }
-    } */
 
     if (value) {
       await ChangeController.ChangeAvatar(data).then(() => {

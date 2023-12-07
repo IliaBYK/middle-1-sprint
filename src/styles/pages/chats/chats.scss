@@ -283,6 +283,8 @@
   margin: 0 0 10px;
   position: relative;
   word-wrap: break-word;
+  align-self: flex-start;
+  padding-right: 65px;
 }
 
 .chats__time {
