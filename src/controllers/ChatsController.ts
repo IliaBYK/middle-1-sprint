@@ -11,35 +11,51 @@ class ChatsController {
   }
 
   async create (title: string): Promise<void> {
-    await this.api.create(title)
+    await this.api.create(title).catch(e => {
+      console.log(e)
+    })
 
-    await this.fetchChats()
+    await this.fetchChats().catch(e => {
+      console.log(e)
+    })
   }
 
   async fetchChats (): Promise<void> {
-    const chats = await this.api.request()
+    try {
+      const chats = await this.api.request()
 
-    chats.map(async (chat) => {
-      const token = await this.getToken(chat.id)
+      chats.map(async (chat) => {
+        const token = await this.getToken(chat.id)
 
-      await MessagesController.connect(chat.id, token)
-    })
+        await MessagesController.connect(chat.id, token)
+      })
 
-    store.set('chats', chats)
+      store.set('chats', chats)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async addUserToChat (id: number, userId: number): Promise<void> {
-    await this.api.addUsers(id, [userId])
+    await this.api.addUsers(id, [userId]).catch(e => {
+      console.log(e)
+    })
   }
 
   async delete (id: number): Promise<void> {
-    await this.api.delete(id)
+    try {
+      await this.api.delete(id)
 
-    await this.fetchChats()
+      await this.fetchChats()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   getToken (id: number): any {
-    return this.api.getToken(id)
+    return this.api.getToken(id).catch(e => {
+      console.log(e)
+    })
   }
 
   selectChat (id: number): void {

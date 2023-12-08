@@ -39,8 +39,8 @@ class Profile extends Block<ProfileProps> {
     if (value) {
       await ChangeController.ChangeAvatar(data).then(() => {
         (this.children.popup as Popup).setProps({
-          class: '',
-          isLoaded: true
+          isLoaded: true,
+          class: ''
         })
       })
     } else {

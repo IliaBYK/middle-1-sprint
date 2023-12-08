@@ -53,7 +53,9 @@ class AuthController {
       return
     }
 
-    await this.fetchUser()
+    await this.fetchUser().catch(e => {
+      console.log(e)
+    })
 
     const router = Router
 
@@ -61,9 +63,13 @@ class AuthController {
   }
 
   async signIn (data: SignInData): Promise<void> {
-    await this.api.signin(data)
+    await this.api.signin(data).catch(e => {
+      console.log(e)
+    })
 
-    await this.fetchUser()
+    await this.fetchUser().catch(e => {
+      console.log(e)
+    })
 
     const router = Router
 
@@ -71,7 +77,9 @@ class AuthController {
   }
 
   async logout (): Promise<void> {
-    await this.api.logout()
+    await this.api.logout().catch(e => {
+      console.log(e)
+    })
 
     const router = Router
 
@@ -79,7 +87,9 @@ class AuthController {
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.api.request()
+    const user = await this.api.request().catch(e => {
+      console.log(e)
+    })
 
     store.set('currentUser', user)
   }

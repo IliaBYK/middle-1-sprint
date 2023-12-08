@@ -34,7 +34,9 @@ class MessagesController {
 
     this.sockets.set(id, wsTransport)
 
-    await wsTransport.connect()
+    await wsTransport.connect().catch(e => {
+      console.log(e)
+    })
 
     this.subscribe(wsTransport, id)
     this.fetchOldMessages(id)

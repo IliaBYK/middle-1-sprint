@@ -30,7 +30,9 @@ class ChangeController {
 
   async ChangePassword (data: PasswordData): Promise<void> {
     if (data.oldPassword !== data.newPassword && data.newPassword === data.newPasswordAgain) {
-      await this.api.changePassword(data)
+      await this.api.changePassword(data).catch(e => {
+        console.log(e)
+      })
     }
   }
 
@@ -44,7 +46,9 @@ class ChangeController {
       store.set('currentUser.isLoading', false)
     }
 
-    await this.fetchUser()
+    await this.fetchUser().catch(e => {
+      console.log(e)
+    })
   }
 
   async changeUser (data: ChangeData): Promise<void> {
@@ -76,7 +80,9 @@ class ChangeController {
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.apiUser.request()
+    const user = await this.apiUser.request().catch(e => {
+      console.log(e)
+    })
 
     store.set('currentUser', user)
   }

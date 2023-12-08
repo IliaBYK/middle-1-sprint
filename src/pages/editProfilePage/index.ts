@@ -3,7 +3,7 @@ import Block from '../../utils/Block'
 import template from './editProfilePage.hbs'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
-import { Imagine } from '../../components/imagine/index'
+// import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit, validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer/index'
@@ -12,7 +12,7 @@ import { type User } from '../../api/user-api'
 import { type Input } from '../../components/input/index'
 import store, { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
-import { Union } from '../../images'
+// import { Union } from '../../images'
 // import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
 const InputNames: Record<string, string> = {
@@ -60,11 +60,11 @@ class EditProfile extends Block<EditProfileProps> {
       label: this.props.first_name
     })
 
-    this.children.imagine = new Imagine({
+    /* this.children.imagine = new Imagine({
       src: this.props.avatar || Union,
       class: 'edit__avatar',
       alt: 'Аватар пользователя'
-    })
+    }) */
 
     this.children.buttonToChats = new Button({
       class: 'edit__button',
@@ -127,6 +127,10 @@ class EditProfile extends Block<EditProfileProps> {
     if (!oldProps && !newProps) return false;
     (this.children.inputs as InputContainer[]).map((inputWrap) => {
       ((inputWrap).children.input as Input).setValue((newProps as unknown as Record<string, string>)[inputWrap.getName()] + '')
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
     })
 
     return true

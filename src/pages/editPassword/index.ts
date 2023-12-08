@@ -5,6 +5,8 @@ import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { /* submit, */ validation } from '../../utils/validation'
 import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
+import { type User } from '../../api/user-api'
+import { connect } from '../../utils/Store'
 
 const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',
@@ -14,11 +16,10 @@ const InputNames: Record<string, string> = {
 
 const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
 
-interface Props {
+interface Props extends User {
   avatar: string
 }
-
-export class EditPasswordPage extends Block<Props> {
+class EditPassword extends Block<Props> {
   constructor (props: Props) {
     super({ ...props })
   }
@@ -51,6 +52,10 @@ export class EditPasswordPage extends Block<Props> {
           blur: () => validation(this.children)
         }
       })
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`
     })
 
     /* this.children.oldPassword = new InputContainer({
@@ -101,7 +106,21 @@ export class EditPasswordPage extends Block<Props> {
     })
   }
 
+  protected componentDidUpdate (oldProps: Props, newProps: Props): boolean {
+    if (!oldProps && !newProps) return false;
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
+    })
+
+    return true
+  }
+
   render (): DocumentFragment {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const EditPasswordPage = connectUser(EditPassword as typeof Block)
