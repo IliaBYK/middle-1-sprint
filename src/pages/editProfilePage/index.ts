@@ -12,6 +12,7 @@ import { type User } from '../../api/user-api'
 import { type Input } from '../../components/input/index'
 import store, { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
+import { RESOURCES_URL } from '../../utils/constants'
 // import { Union } from '../../images'
 // import AuthController, { type ChangeData } from '../../controllers/AuthController'
 
@@ -48,6 +49,12 @@ class EditProfile extends Block<EditProfileProps> {
   }
 
   init (): void {
+    const form = this.getContent()?.querySelector('.edit__form')
+    form?.addEventListener('submit', (e) => {
+      e.preventDefault()
+      void submit(this.children.inputs, this.submitChange.bind(this), e)
+    })
+
     this.children.avatar = new EditAvatarContainer({
       avatar: this.props.avatar,
       events: {
@@ -130,7 +137,7 @@ class EditProfile extends Block<EditProfileProps> {
     });
 
     (this.children.avatar as EditAvatarContainer).setProps({
-      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
+      avatar: `${RESOURCES_URL}${newProps.avatar}`
     })
 
     return true

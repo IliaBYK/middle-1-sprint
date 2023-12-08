@@ -19,31 +19,37 @@ export class ChatsAPI extends BaseAPI {
   }
 
   async request (): Promise<ChatInfo[]> {
-    return await this.http.get('/')
+    return await (this.http.get('/') as Promise<ChatInfo[]>)
   }
 
   async getToken (id: number): Promise<string> {
-    const response = await this.http.post<{ token: string }>(`/token/${id}`)
+    const response = await this.http.post(`/token/${id}`) as Promise<{ token: string }>
 
-    return response.token
+    return (await response).token
   }
 
   async create (title: string): Promise<void> {
-    await this.http.post('/', { title })
+    await this.http.post('/', { data: title })
 
     await this.request()
   }
 
   async delete (id: number): Promise<unknown> {
-    return await this.http.delete('/', { chatId: id })
+    return await this.http.delete('/', { data: { chatId: id } })
   }
 
   async getUsers (id: number): Promise<Array<User & { role: string }>> {
-    return await this.http.get(`/${id}/users`)
+    return await (this.http.get(`/${id}/users`) as Promise<Array<User & { role: string }>>)
   }
 
   async addUsers (id: number, users: number[]): Promise<void> {
-    await this.http.put('/users', { users, chatId: id })
+    await this.http.put('/users', { data: { users, chatId: id } })
+  }
+
+  async changeChatAvatar (file: File): Promise<void> {
+    const data = new FormData()
+    data.append('avatar', file)
+    await this.http.put('/avatar', { data })
   }
 
   update = undefined

@@ -2,7 +2,7 @@
 import UserAPI from '../api/user-api'
 import store from '../utils/Store'
 import Router from '../utils/Router'
-/* import { response } from 'express' */
+import { ACTIONS } from '../utils/constants'
 
 export interface SignUpData {
   first_name: string
@@ -31,24 +31,24 @@ class AuthController {
 
   async signUp (data: ControllerSignUpData): Promise<void> {
     if (data.passwordAgain !== data.password) {
-      store.set('currentUser.error', 'Пароли не совпдают')
+      store.set(ACTIONS.CURRENT_USER_ERROR, 'Пароли не совпдают')
 
       return
     }
 
     const { passwordAgain, ...signUpData } = data
 
-    store.set('currentUser.isLoading', true)
+    store.set(ACTIONS.CURRENT_USER_IS_LOADING, true)
 
     try {
       const response = this.api.signup(signUpData)
       if ((response as any).reason) {
-        store.set('currentUser.error', (response as any).reason)
+        store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
 
         return
       }
     } catch (e) {
-      store.set('currentUser.isLoading', false)
+      store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
 
       return
     }
@@ -91,7 +91,7 @@ class AuthController {
       console.log(e)
     })
 
-    store.set('currentUser', user)
+    store.set(ACTIONS.CURRENT_USER, user)
   }
 }
 

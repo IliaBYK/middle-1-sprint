@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-confusing-void-expression */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import API, { type ChatsAPI } from '../api/chats-api'
 import store from '../utils/Store'
+import { ACTIONS } from '../utils/constants'
 import MessagesController from './MessageController'
 
 class ChatsController {
@@ -24,22 +26,27 @@ class ChatsController {
     try {
       const chats = await this.api.request()
 
-      chats.map(async (chat) => {
-        const token = await this.getToken(chat.id)
+      if (chats?.length) {
+        chats.map(async (chat) => {
+          const token = await this.getToken(chat.id)
 
-        await MessagesController.connect(chat.id, token)
-      })
+          await MessagesController.connect(chat.id, token)
+        })
+      }
 
-      store.set('chats', chats)
+      store.set(ACTIONS.CHATS, chats)
     } catch (e) {
       console.log(e)
+      store.set(ACTIONS.CHATS_ERROR, e)
     }
   }
 
   async addUserToChat (id: number, userId: number): Promise<void> {
-    await this.api.addUsers(id, [userId]).catch(e => {
+    try {
+      await this.api.addUsers(id, [userId])
+    } catch (e) {
       console.log(e)
-    })
+    }
   }
 
   async delete (id: number): Promise<void> {
@@ -52,6 +59,17 @@ class ChatsController {
     }
   }
 
+  async ChangeAvatar (file: File): Promise<void> {
+    try {
+      const response = await this.api.changeChatAvatar(file)
+      if ((response as any).reason) {
+        store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
+      }
+    } catch (e) {
+      store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
+    }
+  }
+
   getToken (id: number): any {
     return this.api.getToken(id).catch(e => {
       console.log(e)
@@ -59,7 +77,7 @@ class ChatsController {
   }
 
   selectChat (id: number): void {
-    store.set('selectedChat', id)
+    store.set(ACTIONS.SELECTED_CHAT, id)
   }
 }
 

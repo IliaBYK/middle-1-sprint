@@ -34,15 +34,15 @@ class UserAPI extends BaseAPI {
   }
 
   async signin (data: SigninData): Promise<void> {
-    await this.http.post('/signin', data)
+    await this.http.post('/signin', { data })
   }
 
   async signup (data: SignupData): Promise<void> {
-    await this.http.post('/signup', data)
+    await this.http.post('/signup', { data })
   }
 
   async request (): Promise<User> {
-    return await this.http.get('/user')
+    return await (await this.http.get('/user') as Promise<User>)
   }
 
   async logout (): Promise<void> {

@@ -12,8 +12,11 @@ import ChatsController from '../../controllers/ChatsController'
 import { InputContainer } from '../inputContainer'
 import { validation } from '../../utils/validation'
 import Popup from '../popup'
+import { type ChatInfo } from '../../api/chats-api'
+import { RESOURCES_URL } from '../../utils/constants'
 
 interface ChatProps {
+  chats: ChatInfo[]
   messages: MessageInfo[]
   selectedChat: number | undefined
   userId: number
@@ -75,7 +78,10 @@ export class Chats extends Block<ChatProps> {
     this.children.imagineProfile = new Imagine({
       class: 'chats__img chats__img_place_header button',
       alt: 'Аватар собеседника',
-      src: avatar
+      src: this.props.chats.map(data => {
+        if (data.id === this.props.selectedChat) return RESOURCES_URL + data.avatar
+        else return undefined
+      }) || avatar
     })
 
     this.children.title = new Title({
@@ -132,7 +138,14 @@ export class Chats extends Block<ChatProps> {
 
   protected componentDidUpdate (oldProps: ChatProps, newProps: ChatProps): boolean {
     if (!oldProps && !newProps) return false
-    this.children.messages = this.createMessages(newProps)
+    this.children.messages = this.createMessages(newProps);
+
+    (this.children.imagineProfile as Imagine).setProps({
+      src: newProps.chats.map(data => {
+        if (data.id === this.props.selectedChat) return RESOURCES_URL + data.avatar
+        else return undefined
+      }) || avatar
+    })
 
     return true
   }
@@ -147,6 +160,7 @@ const withChat = connect(state => {
 
   if (!selectedChatId) {
     return {
+      chats: state.chats || [{}],
       messages: [{}],
       selectedChat: undefined,
       userId: state.currentUser?.id
@@ -154,6 +168,7 @@ const withChat = connect(state => {
   }
 
   return {
+    chats: state.chats,
     messages: state.messages?.[selectedChatId] || [{}],
     selectedChat: state.selectedChat,
     userId: state.currentUser?.id

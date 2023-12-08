@@ -11,6 +11,7 @@ import { connect } from '../../utils/Store'
 import { Union } from '../../images'
 import { Button } from '../button'
 import TabAdd from '../tabForAddChat'
+import { RESOURCES_URL } from '../../utils/constants'
 
 interface SideBarProps {
   chats: ChatInfo[]
@@ -56,7 +57,7 @@ class SidebarWrap extends Block<SideBarProps> {
   private createCards (props: SideBarProps): any {
     return props.chats.map(data => {
       return new Card({
-        src: data.avatar || Union,
+        src: data.avatar ? `${RESOURCES_URL}${data.avatar}` : Union,
         name: data.title,
         text: data.last_message?.content || '',
         time: data.last_message?.time.slice(0, 10) || '', // позже отфарматирую дату в нормальный вид
@@ -64,6 +65,7 @@ class SidebarWrap extends Block<SideBarProps> {
         events: {
           click: () => {
             ChatsController.selectChat(data.id)
+            console.log(data.avatar)
           }
         }
       })

@@ -13,6 +13,7 @@ import { type Input } from '../../components/input/index'
 import Popup from '../../components/popup/index'
 import AuthController from '../../controllers/AuthController'
 import ChangeController from '../../controllers/ChangeController'
+import { RESOURCES_URL } from '../../utils/constants'
 
 const InputNames: Record<string, string> = {
   email: 'Почта',
@@ -94,7 +95,7 @@ class Profile extends Block<ProfileProps> {
     });
 
     (this.children.avatar as EditAvatarContainer).setProps({
-      avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`
+      avatar: `${RESOURCES_URL}${this.props.avatar}`
     })
 
     this.children.changeData = new Button({

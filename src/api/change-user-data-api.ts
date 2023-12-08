@@ -38,17 +38,17 @@ class ChangeUserAPI extends BaseAPI {
   }
 
   async update (userId: string | number, data: ChangeData): Promise<void> {
-    await this.http.put('/profile', { id: userId, ...data })
+    await this.http.put('/profile', { data: { id: userId, ...data } })
   }
 
   async changePassword (data: Password): Promise<void> {
-    await this.http.put('/password', data)
+    await this.http.put('/password', { data })
   }
 
   async changeAvatar (file: File): Promise<void> {
     const data = new FormData()
     data.append('avatar', file)
-    await this.http.put('/profile/avatar', data)
+    await this.http.put('/profile/avatar', { data })
   }
 
   request = undefined

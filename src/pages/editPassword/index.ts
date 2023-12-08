@@ -7,6 +7,7 @@ import { InputContainer } from '../../components/inputContainer'
 import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
+import { RESOURCES_URL } from '../../utils/constants'
 
 const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',
@@ -110,7 +111,7 @@ class EditPassword extends Block<Props> {
     if (!oldProps && !newProps) return false;
 
     (this.children.avatar as EditAvatarContainer).setProps({
-      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
+      avatar: `${RESOURCES_URL}${newProps.avatar}`
     })
 
     return true

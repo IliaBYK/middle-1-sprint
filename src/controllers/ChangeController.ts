@@ -5,6 +5,7 @@ import UserApi from '../api/user-api'
 import isEqual from '../helpers/isEqual'
 import Router from '../utils/Router'
 import store from '../utils/Store'
+import { ACTIONS } from '../utils/constants'
 
 export interface ChangeData {
   email: string
@@ -40,10 +41,10 @@ class ChangeController {
     try {
       const response = await this.api.changeAvatar(file)
       if ((response as any).reason) {
-        store.set('currentUser.error', (response as any).reason)
+        store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
       }
     } catch (e) {
-      store.set('currentUser.isLoading', false)
+      store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
     }
 
     await this.fetchUser().catch(e => {
@@ -55,7 +56,7 @@ class ChangeController {
     data.display_name = data.first_name + ' ' + data.second_name
     const { ...ChangeData } = data
 
-    store.set('currentUser.isLoading', true)
+    store.set(ACTIONS.CURRENT_USER_IS_LOADING, true)
 
     // console.log(isEqual(ChangeData, store.getState().currentUser!))
 
@@ -63,15 +64,15 @@ class ChangeController {
       try {
         const response = this.api.update(store.getState().currentUser?.id + '', ChangeData)
         if ((response as any).reason) {
-          store.set('currentUser.error', (response as any).reason)
+          store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
         }
       } catch (e) {
-        store.set('currentUser.isLoading', false)
+        store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
       }
 
       // await this.fetchUser()
 
-      store.set('currentUser', data)
+      store.set(ACTIONS.CURRENT_USER, data)
 
       const router = Router
 
@@ -84,7 +85,7 @@ class ChangeController {
       console.log(e)
     })
 
-    store.set('currentUser', user)
+    store.set(ACTIONS.CURRENT_USER, user)
   }
 }
 
