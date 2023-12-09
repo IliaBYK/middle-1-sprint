@@ -51,6 +51,10 @@ export class ChatsAPI extends BaseAPI {
     await this.http.put('/users', { data: { users, chatId: id } })
   }
 
+  async deleteUsers (id: number, users: number[]): Promise<void> {
+    await this.http.delete('/users', { data: { users, chatId: id } })
+  }
+
   async changeChatAvatar (file: File): Promise<void> {
     const data = new FormData()
     data.append('avatar', file)

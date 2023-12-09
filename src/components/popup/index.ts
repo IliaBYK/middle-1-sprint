@@ -10,6 +10,7 @@ interface PopupProps {
   error?: string
   isLoaded?: boolean
   addUser?: boolean
+  deleteUser?: boolean
   onClick: (value: number) => Promise<void>
   events?: {
     click: () => void | Promise<void>
@@ -26,7 +27,7 @@ class Popup extends Block<PopupProps> {
   protected init (): void {
     this.children.title = new Title({
       class: this.props.error ? 'popup__title popup__title_error' : 'popup__title',
-      label: this.props.addUser ? 'Добавить пользователя' : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
+      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
     })
 
     this.children.input = this.props.addUser
@@ -54,8 +55,8 @@ class Popup extends Block<PopupProps> {
 
     this.children.button = new Button({
       class: 'popup__button',
-      type: 'submit',
-      label: this.props.addUser ? 'Добавить' : 'Поменять',
+      type: 'button',
+      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
         click: async () => {
           if (!(this.children.input as InputContainer).getValue()) {
@@ -78,6 +79,29 @@ class Popup extends Block<PopupProps> {
         click: () => { this.setProps({ class: '' }) }
       }
     })
+
+    this.setProps({
+      deleteUser: false
+    })
+  }
+
+  protected componentDidUpdate (oldProps: PopupProps, newProps: PopupProps): boolean {
+    if (!oldProps && !newProps) return false
+
+    const element = this.getContent()
+
+    const input = element?.querySelector('.popup__input')
+    const label = element?.querySelector('.popup__label');
+
+    (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
+      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
+    });
+
+    (this.children.title as Title).setProps({
+      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
+    })
+
+    return true
   }
 
   render (): DocumentFragment {

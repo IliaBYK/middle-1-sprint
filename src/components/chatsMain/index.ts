@@ -75,10 +75,9 @@ export class Chats extends Block<ChatProps> {
     this.children.imagineProfile = new Imagine({
       class: 'chats__img chats__img_place_header button',
       alt: 'Аватар собеседника',
-      src: this.props.chats.map(data => {
-        if (data.id === this.props.selectedChat) return RESOURCES_URL + data.avatar
-        else return undefined
-      }) || avatar
+      src: this.props.chats.find(data => data.id === this.props.selectedChat)?.avatar
+        ? `${RESOURCES_URL}${this.props.chats.find(data => data.id === this.props.selectedChat)?.avatar}`
+        : avatar
     })
 
     this.children.title = new Title({
@@ -97,9 +96,17 @@ export class Chats extends Block<ChatProps> {
       class: 'tab_top',
       users: true,
       addUser: () => {
-        (this.children.popup as Popup).setProps({ class: 'popup_opened' })
+        (this.children.popup as Popup).setProps({
+          class: 'popup_opened',
+          deleteUser: false
+        })
       },
-      deleteUser: async () => { },
+      deleteUser: async () => {
+        (this.children.popup as Popup).setProps({
+          class: 'popup_opened',
+          deleteUser: true
+        })
+      },
       addFile: async () => { },
       addMedia: async () => { },
       addLocation: async () => { }
@@ -133,15 +140,16 @@ export class Chats extends Block<ChatProps> {
     })
   }
 
+  /* `${RESOURCES_URL}${data.avatar}` */
+
   protected componentDidUpdate (oldProps: ChatProps, newProps: ChatProps): boolean {
     if (!oldProps && !newProps) return false
     this.children.messages = this.createMessages(newProps);
 
     (this.children.imagineProfile as Imagine).setProps({
-      src: newProps.chats.map(data => {
-        if (data.id === this.props.selectedChat) return RESOURCES_URL + data.avatar
-        else return undefined
-      }) || avatar
+      src: newProps.chats.find(data => data.id === newProps.selectedChat)?.avatar
+        ? `${RESOURCES_URL}${newProps.chats.find(data => data.id === newProps.selectedChat)?.avatar}`
+        : avatar
     })
 
     return true

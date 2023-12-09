@@ -75,7 +75,6 @@ class SidebarWrap extends Block<SideBarProps> {
         events: {
           click: () => {
             ChatsController.selectChat(data.id)
-            console.log(data.avatar)
           }
         }
       })
