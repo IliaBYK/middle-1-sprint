@@ -13,13 +13,14 @@ class ChatsController {
   }
 
   async create (title: string): Promise<void> {
-    await this.api.create(title).catch(e => {
-      console.log(e)
-    })
+    try {
+      await this.api.create(title)
 
-    await this.fetchChats().catch(e => {
+      await this.fetchChats()
+    } catch (e) {
       console.log(e)
-    })
+      console.log(title)
+    }
   }
 
   async fetchChats (): Promise<void> {

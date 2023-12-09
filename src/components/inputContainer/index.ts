@@ -1,6 +1,7 @@
 import { Input } from '../input/index'
 import Block from '../../utils/Block'
 import template from './inputContainer.hbs'
+import errors from '../../utils/errors'
 
 interface InputProps {
   name: string
@@ -30,15 +31,19 @@ export class InputContainer extends Block<InputProps> {
       name: this.props.name,
       type: this.props.type,
       class: this.props.class,
-      events: this.props.events,
       required: this.props.required,
       disabled: this.props.disabled,
-      placeholder: this.props.placeholder
+      placeholder: this.props.placeholder,
+      events: {
+        blur: () => { this.validation() }
+      }
     })
   }
 
-  validation (): boolean {
-    return (this.children.input as Input).validation()
+  validation (): void {
+    if (!(this.children.input as Input).validation()) {
+      this.setProps({ error: errors[this.getName()] })
+    }
   }
 
   getValue (): string {

@@ -51,11 +51,7 @@
     width: 290px;
     display: flex;
     flex-direction: column;
-    bottom: -110px;
-
-    &__label {
-      text-align: left;
-    }
+    bottom: -80px;
 
     &__title {
       color: $black;
@@ -78,6 +74,8 @@
       font-weight: 600;
       line-height: 13px;
       text-align: center;
+      width: 100%;
+      box-sizing: border-box;
 
       &:focus {
         outline: none;

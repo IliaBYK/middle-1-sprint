@@ -3,7 +3,6 @@ import template from './tab.hbs'
 import { Button } from '../button'
 import { Title } from '../title'
 import ChatsController from '../../controllers/ChatsController'
-import { validation } from '../../utils/validation'
 import { InputContainer } from '../inputContainer'
 import { type Input } from '../input'
 
@@ -46,7 +45,7 @@ class TabAdd extends Block<TabProps> {
           if (!(((this.children.input as InputContainer).children.input as Input).getContent() as HTMLInputElement).validationMessage) {
             this.setProps({ class: '' })
             await ChatsController.create((this.children.input as InputContainer).getValue())
-          } else validation(this.children.input)
+          } else (this.children.input as InputContainer).validation()
         }
       }
     })

@@ -16,7 +16,7 @@ export interface ChangeData {
   phone: string
 }
 
-interface PasswordData extends Password {
+export interface PasswordData extends Password {
   newPasswordAgain: string
 }
 
@@ -31,9 +31,11 @@ class ChangeController {
 
   async ChangePassword (data: PasswordData): Promise<void> {
     if (data.oldPassword !== data.newPassword && data.newPassword === data.newPasswordAgain) {
-      await this.api.changePassword(data).catch(e => {
+      try {
+        await this.api.changePassword(data)
+      } catch (e) {
         console.log(e)
-      })
+      }
     }
   }
 

@@ -2,22 +2,15 @@ import Block from '../../utils/Block'
 import template from './signup.hbs'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 /* import { render } from '../../utils/render' */
-import { Button } from '../../components/button/index'
-import { InputContainer } from '../../components/inputContainer/index'
+// import { Button } from '../../components/button/index'
+// import { InputContainer } from '../../components/inputContainer/index'
 import { Title } from '../../components/title/index'
-import { submit, validation } from '../../utils/validation'
-import { Link } from '../../components/link/index'
+// import { submit, validation } from '../../utils/validation'
+// import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
-
-const InputNames: Record<string, string> = {
-  first_name: 'Имя',
-  second_name: 'Фамилия',
-  email: 'Почта',
-  login: 'Логин',
-  phone: 'Телефон',
-  password: 'Пароль',
-  passwordAgain: 'Пароль еще раз'
-}
+import { Form, type FormWrap } from '../../components/form'
+import { submit } from '../../utils/validation'
+import { type InputContainer } from '../../components/inputContainer'
 
 const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
 
@@ -46,7 +39,21 @@ class Signup extends Block {
       label: 'Регистрация'
     })
 
-    this.children.inputs = userFields.map(input => {
+    this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: true,
+      editing: false,
+      signin: true,
+      events: {
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignUp.bind(this), '.auth__form')
+        }
+      }
+    })
+
+    /* this.children.inputs = userFields.map(input => {
       return new InputContainer({
         class: 'auth__input',
         label: InputNames[input],
@@ -73,7 +80,7 @@ class Signup extends Block {
       class: 'auth__button_reg button',
       label: 'Войти',
       to: '/'
-    })
+    }) */
   }
 
   render (): DocumentFragment {

@@ -29,9 +29,14 @@ export class ChatsAPI extends BaseAPI {
   }
 
   async create (title: string): Promise<void> {
-    await this.http.post('/', { data: title })
+    try {
+      await this.http.post('/', { data: { title } })
 
-    await this.request()
+      await this.request()
+    } catch (e) {
+      console.log(e)
+      console.log({ title })
+    }
   }
 
   async delete (id: number): Promise<unknown> {

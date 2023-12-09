@@ -9,11 +9,11 @@ import { avatar } from '../../images'
 import { connect } from '../../utils/Store'
 import { Message } from '../message'
 import ChatsController from '../../controllers/ChatsController'
-import { InputContainer } from '../inputContainer'
-import { validation } from '../../utils/validation'
+import { type InputContainer } from '../inputContainer'
 import Popup from '../popup'
 import { type ChatInfo } from '../../api/chats-api'
 import { RESOURCES_URL } from '../../utils/constants'
+import { Form } from '../form'
 
 interface ChatProps {
   chats: ChatInfo[]
@@ -42,22 +42,14 @@ export class Chats extends Block<ChatProps> {
       }
     })
 
-    this.children.input = new InputContainer({
-      label: '',
-      class: 'chats__input',
-      classLabel: 'chats__label',
-      placeholder: 'Сообщение',
-      name: 'message',
+    this.children.input = new Form({
+      inputs: ['message'],
+      button: false,
+      emptyValues: true,
       events: {
-        blur: () => validation(this.children.input)
-      }
-    })
+        submit: (e?: Event) => {
+          e?.preventDefault()
 
-    this.children.sendBtn = new Button({
-      class: 'chats__send-btn',
-      type: 'submit',
-      events: {
-        click: () => {
           const input = this.children.input as InputContainer
           const message = input.getValue()
 
@@ -73,6 +65,11 @@ export class Chats extends Block<ChatProps> {
           MessagesController.sendMessage(this.props.selectedChat!, message)
         }
       }
+    })
+
+    this.children.sendBtn = new Button({
+      class: 'chats__send-btn',
+      type: 'submit'
     })
 
     this.children.imagineProfile = new Imagine({

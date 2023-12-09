@@ -1,106 +1,44 @@
 /* eslint-disable array-callback-return */
-import { InputContainer } from '../components/inputContainer/index'
-import type Block from './Block'
-import errors from './errors'
-// import { render } from './render'
+// import { InputContainer } from '../components/inputContainer'
+// import errors from './errors'
+import { type InputContainer } from '../components/inputContainer'
+import { functions } from './validationFunctions'
 
-function isValidName (name: string): boolean {
-  // Проверка имени регулярным выражением
-  const pattern = /[A-ZА-Я][a-zа-я-]*/
-  return pattern.test(name)
+function validation (name: string, value: string): boolean {
+  return functions[name](value)
 }
 
-function isValidLogin (login: string): boolean {
-  if (login === '') return false
-  // Проверка имени регулярным выражением
-  const pattern = /^(?=.*[A-Za-z0-9]$)[A-Za-z][A-Za-z\d.-]{2,20}$/
-  return pattern.test(login)
-}
+/*
+  const form = this.getContent()?.querySelector('.edit__form')
+  const formData = new FormData(form as HTMLFormElement)
+  console.log(...formData)
+*/
 
-function isValidPassword (password: string): boolean {
-  if (password === '') return false
-  // Проверка пароля регулярным выражением
-  const pattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z0-9]{7,40}$/
-  return pattern.test(password)
-}
-
-function isValidEmail (email: string): boolean {
-  if (email === '') return false
-  // Проверка пароля регулярным выражением
-  const pattern = /^[\w-]+@([\w-]+\.)+[\w-]{2,4}$/g
-  return pattern.test(email)
-}
-
-function isValidPhone (phone: string): boolean {
-  if (phone === '') return false
-  // Проверка пароля регулярным выражением
-  const pattern = /^\+?[0-9]{9,15}$/g
-  return pattern.test(phone)
-}
-
-function isValidMessage (message: string): boolean {
-  return message.length > 0
-}
-
-const functions: Record<string, (S: string) => boolean> = {
-  email: isValidEmail,
-  login: isValidLogin,
-  message: isValidMessage,
-  first_name: isValidName,
-  second_name: isValidName,
-  display_name: isValidName,
-  password: isValidPassword,
-  oldPassword: isValidPassword,
-  newPassword: isValidPassword,
-  newPasswordAgain: isValidPassword,
-  passwordAgain: isValidPassword,
-  phone: isValidPhone,
-  addChat: isValidName
-}
-
-/* interface Names {
-  login: 'login'
-  email: 'email'
-  password: 'password'
-  passwordElse: 'passwordElse'
-  first_name: 'first_name'
-  second_name: 'second_name'
-  display_name: 'display_name'
-  phone: 'phone'
-} */
-
-function validation (object: any): boolean {
+async function submit (inputs: InputContainer | InputContainer[], element: HTMLElement | null, onClick: () => Promise<void>, className: string): Promise<void> {
+  // const result: Record<string, string> = {}
   let isValid: boolean = false
-  if (object instanceof InputContainer) {
-    if (!object.validation()) {
-      object.setProps({ error: errors[object.getName()] })
-    } else {
-      object.setProps({ error: '' })
-      isValid = true
-    }
-  } else {
-    const inputs = (object as InputContainer[])
-    inputs.map((el) => {
-      if (!el.validation()) {
-        el.setProps({ error: errors[el.getName()] })
-      } else {
-        el.setProps({ error: '' })
-        isValid = true
-      }
-    })
+
+  const form = element?.querySelector(className)
+  const data = [...new FormData(form as HTMLFormElement)]
+
+  const entries = new Map(data)
+  const result = Object.fromEntries(entries)
+
+  if (Array.isArray(inputs)) inputs.map(input => { input.validation() })
+  else inputs.validation()
+
+  for (const key in result) {
+    if (validation(key, result[key] as string)) isValid = true
+    else isValid = false
   }
-  return isValid
-}
 
-async function submit (array: Block<any> | Array<Block<any>>, onClick: () => Promise<void>, e?: Event): Promise<void> {
-  e?.preventDefault()
-  const result: Record<string, string> = {}
-  let option: boolean = false
+  try {
+    isValid && await onClick()
+  } catch (e) {
+    console.log(e)
+  }
 
-  const inputs = Object.values(array)
-  const values = inputs.map(el => [el.getName(), el.getValue()])
-
-  values.forEach(el => {
+  /* values.forEach(el => {
     if (functions[el[0]](el[1])) {
       option = true
       result[el[0]] = el[1]
@@ -111,20 +49,25 @@ async function submit (array: Block<any> | Array<Block<any>>, onClick: () => Pro
   })
 
   if (result.password !== result.passwordAgain) {
-    ((inputs.find((el: InputContainer) => el.getName() === 'passwordAgain'))).setProps({ error: 'Пароли не совпадают' })
+    ((inputs.find((el: InputContainer) => el.getName() === 'passwordAgain')))?.setProps({ error: 'Пароли не совпадают' })
+    return
+  }
+
+  if (result.newPassword === result.oldPassword) {
+    ((inputs.find((el: InputContainer) => el.getName() === 'newPassword')))?.setProps({ error: 'Новый пароль должен отличаться от старого' })
     return
   }
 
   if (result.newPassword !== result.newPasswordAgain) {
-    ((inputs.find((el: InputContainer) => el.getName() === 'newPasswordAgain'))).setProps({ error: 'Пароли не совпадают' })
+    ((inputs.find((el: InputContainer) => el.getName() === 'newPasswordAgain')))?.setProps({ error: 'Пароли не совпадают' })
     return
   }
 
-  if (result.password === (result.passwordAgain || result.newPasswordAgain) && option) {
+  if ((result.password || result.newPassword) === (result.passwordAgain || result.newPasswordAgain) && option) {
     // console.log(result)
     await onClick()
     // render('chats')
-  }
+  } */
 }
 
 export { functions, validation, submit }

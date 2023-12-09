@@ -1,18 +1,15 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import Block from '../../utils/Block'
 import template from './login.hbs'
-import { Button } from '../../components/button/index'
-import { InputContainer } from '../../components/inputContainer/index'
+// import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
-import { submit, validation } from '../../utils/validation'
+// import { submit } from '../../utils/validation'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
-import { Link } from '../../components/link/index'
+// import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
-
-const InputNames: Record<string, string> = {
-  login: 'Логин',
-  password: 'Пароль',
-  passwordAgain: 'Пароль еще раз'
-}
+import { Form, type FormWrap } from '../../components/form'
+import { submit } from '../../utils/validation'
+import { type InputContainer } from '../../components/inputContainer'
 
 const userFields: string[] = ['login', 'password', 'passwordAgain']
 
@@ -41,7 +38,22 @@ class Login extends Block {
       label: 'Вход'
     })
 
-    this.children.inputs = userFields.map(input => {
+    this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: true,
+      editing: false,
+      signin: true,
+      events: {
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.auth__form')
+        }
+      }
+    })
+
+    /*
+    userFields.map(input => {
       return new InputContainer({
         class: 'auth__input',
         label: InputNames[input],
@@ -52,9 +64,9 @@ class Login extends Block {
           blur: () => validation(this.children.inputs)
         }
       })
-    })
+    }) */
 
-    this.children.buttonSub = new Button({
+    /* this.children.buttonSub = new Button({
       class: 'auth__button auth__button_margin',
       label: 'Войти',
       type: 'submit',
@@ -69,7 +81,7 @@ class Login extends Block {
       class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
       to: '/sign-up'
-    })
+    }) */
   }
 
   render (): DocumentFragment {

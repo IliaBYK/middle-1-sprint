@@ -2,18 +2,20 @@ import Block from '../../utils/Block'
 import template from './editPassword.hbs'
 import { Button } from '../../components/button/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { /* submit, */ validation } from '../../utils/validation'
-import { InputContainer } from '../../components/inputContainer'
+import { submit } from '../../utils/validation'
 import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
 import { RESOURCES_URL } from '../../utils/constants'
+import { Form, type FormWrap } from '../../components/form'
+import ChangeController, { type PasswordData } from '../../controllers/ChangeController'
+import { type InputContainer } from '../../components/inputContainer'
 
-const InputNames: Record<string, string> = {
+/* const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',
   newPassword: 'Новый пароль',
   newPasswordAgain: 'Повторите новый пароль'
-}
+} */
 
 const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
 
@@ -25,13 +27,29 @@ class EditPassword extends Block<Props> {
     super({ ...props })
   }
 
+  async submitChange (): Promise<void> {
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.edit__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    try {
+      await ChangeController.ChangePassword(data as unknown as PasswordData)
+      Router.go('/settings')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       avatar: this.props.avatar,
-      class: 'edit__avatar-container_place_password',
-      events: {
-        click: () => {}
-      }
+      class: 'edit__avatar-container_place_password'
     })
 
     this.children.buttonToChats = new Button({
@@ -41,18 +59,19 @@ class EditPassword extends Block<Props> {
       }
     })
 
-    this.children.inputs = userFields.map(input => {
-      return new InputContainer({
-        class: 'edit__input',
-        label: InputNames[input],
-        name: input,
-        type: 'password',
-        edit: true,
-        required: false,
-        events: {
-          blur: () => validation(this.children)
+    this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: false,
+      editing: true,
+      signin: true,
+      emptyValues: true,
+      events: {
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.submitChange.bind(this), '.edit__form')
         }
-      })
+      }
     });
 
     (this.children.avatar as EditAvatarContainer).setProps({
@@ -95,16 +114,11 @@ class EditPassword extends Block<Props> {
       }
     }) */
 
-    this.children.changeData = new Button({
+    /* this.children.changeData = new Button({
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
       label: 'Cохранить',
-      type: 'submit',
-      events: {
-        click: () => {
-          // submit(this.children, e)
-          /* this.validation() */ }
-      }
-    })
+      type: 'submit'
+    }) */
   }
 
   protected componentDidUpdate (oldProps: Props, newProps: Props): boolean {

@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import Block from '../../utils/Block'
 import template from './sidebar.hbs'
-import Search from '../chatsSearch/index'
 import { type ChatInfo } from '../../api/chats-api'
 import ChatsController from '../../controllers/ChatsController'
 import { Card } from '../card/index'
@@ -12,6 +11,7 @@ import { Union } from '../../images'
 import { Button } from '../button'
 import TabAdd from '../tabForAddChat'
 import { RESOURCES_URL } from '../../utils/constants'
+import { Form } from '../form'
 
 interface SideBarProps {
   chats: ChatInfo[]
@@ -45,7 +45,17 @@ class SidebarWrap extends Block<SideBarProps> {
 
     this.children.tabForAddChat = new TabAdd({})
 
-    this.children.search = new Search()
+    this.children.search = new Form({
+      inputs: ['search'],
+      button: false,
+      emptyValues: true,
+      classInput: 'chats__search',
+      events: {
+        submit: (e?: Event) => {
+          e?.preventDefault()
+        }
+      }
+    })
   }
 
   toggleClass (block: TabAdd, className: string): void {

@@ -62,6 +62,10 @@ export default class HTTPTransport {
       xhr.onerror = () => { reject({ reason: 'network error' }) }
       xhr.ontimeout = () => { reject({ reason: 'timeout' }) }
 
+      if (!(data instanceof FormData)) {
+        xhr.setRequestHeader('Content-Type', 'application/json')
+      }
+
       Object.entries(headers ?? {}).forEach(([key, value]) => {
         xhr.setRequestHeader(key, value)
       })
@@ -71,13 +75,14 @@ export default class HTTPTransport {
       xhr.withCredentials = withCridentials
       xhr.responseType = 'json'
 
-      if (method === METHODS.GET || !data) {
-        xhr.send()
-      } else if (data instanceof FormData) {
-        xhr.send(data)
-      } else {
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.send(JSON.stringify(data))
+      try {
+        if (method === METHODS.GET || !data) {
+          xhr.send()
+        } else if (data) {
+          xhr.send(data instanceof FormData ? data : JSON.stringify(data))
+        }
+      } catch (e) {
+        console.log(e)
       }
     })
   }
