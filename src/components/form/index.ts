@@ -17,6 +17,7 @@ interface FormProps {
   button?: boolean
   disabled?: boolean
   emptyValues?: boolean
+  content?: Block<any> | Array<Block<any>>
   classInput?: string
   events: {
     submit: (e?: Event) => void | Promise<void>
@@ -46,6 +47,8 @@ export class FormWrap extends Block<FormProps> {
   }
 
   protected init (): void {
+    if (this.props.content) this.children.content = this.props.content!
+
     this.children.inputs = this.props.inputs.map((inputName) => {
       return this.props.auth
         ? new InputContainer({

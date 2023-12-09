@@ -43,11 +43,12 @@ class Login extends Block {
       button: true,
       auth: true,
       editing: false,
+      emptyValues: true,
       signin: true,
       events: {
         submit: async (e?: Event) => {
           e?.preventDefault()
-          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.auth__form')
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.edit__form')
         }
       }
     })

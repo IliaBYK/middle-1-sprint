@@ -13,7 +13,7 @@ import { type InputContainer } from '../inputContainer'
 import Popup from '../popup'
 import { type ChatInfo } from '../../api/chats-api'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form } from '../form'
+import { Form, type FormWrap } from '../form'
 
 interface ChatProps {
   chats: ChatInfo[]
@@ -42,34 +42,37 @@ export class Chats extends Block<ChatProps> {
       }
     })
 
-    this.children.input = new Form({
+    this.children.form = new Form({
       inputs: ['message'],
       button: false,
       emptyValues: true,
       events: {
         submit: (e?: Event) => {
           e?.preventDefault()
-
-          const input = this.children.input as InputContainer
-          const message = input.getValue()
-
-          if (!message) {
-            input.setProps({ error: 'Введите сообщение' })
-            return
-          }
-
-          input.setValue('')
-
-          input.setProps({ error: '' })
-
-          MessagesController.sendMessage(this.props.selectedChat!, message)
         }
       }
     })
 
     this.children.sendBtn = new Button({
       class: 'chats__send-btn',
-      type: 'submit'
+      type: 'button',
+      events: {
+        click: () => {
+          const input = (this.children.form as FormWrap).children.inputs as InputContainer[]
+          const message = input[0].getValue()
+
+          if (!message) {
+            input[0].setProps({ error: 'Введите сообщение' })
+            return
+          }
+
+          input[0].setValue('')
+
+          input[0].setProps({ error: '' })
+
+          MessagesController.sendMessage(this.props.selectedChat!, message)
+        }
+      }
     })
 
     this.children.imagineProfile = new Imagine({

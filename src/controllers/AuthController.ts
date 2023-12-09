@@ -57,9 +57,7 @@ class AuthController {
       console.log(e)
     })
 
-    const router = Router
-
-    router.go('/messenger')
+    Router.go('/messenger')
   }
 
   async signIn (data: SignInData): Promise<void> {
@@ -71,9 +69,7 @@ class AuthController {
       console.log(e)
     })
 
-    const router = Router
-
-    router.go('/messenger')
+    Router.go('/messenger')
   }
 
   async logout (): Promise<void> {
