@@ -1,16 +1,11 @@
 import Block from '../../utils/Block'
 import template from './signup.hbs'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
-/* import { render } from '../../utils/render' */
-// import { Button } from '../../components/button/index'
-// import { InputContainer } from '../../components/inputContainer/index'
-import { Title } from '../../components/title/index'
-// import { submit, validation } from '../../utils/validation'
-// import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
-import { Form, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
 import { submit } from '../../utils/validation'
 import { type InputContainer } from '../../components/inputContainer'
+import { Link } from '../../components/link'
 
 const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
 
@@ -34,17 +29,17 @@ class Signup extends Block {
   }
 
   init (): void {
-    this.children.title = new Title({
-      class: 'auth__title',
-      label: 'Регистрация'
-    })
-
-    this.children.form = new Form({
+    this.children.form = new Form<FormProps>({
+      class: 'auth',
+      titleClass: 'auth__title',
+      titleLabel: 'Регистрация',
       inputs: userFields,
-      button: true,
-      auth: true,
+      inputClass: 'auth__input',
       editing: false,
-      signin: true,
+      emptyValues: true,
+      btnClass: 'auth__button auth__button_margin',
+      btnLabel: 'Зарегистрироваться',
+      btnType: 'submit',
       events: {
         submit: async (e?: Event) => {
           e?.preventDefault()
@@ -52,6 +47,23 @@ class Signup extends Block {
         }
       }
     })
+
+    /* this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: true,
+      editing: false,
+      signin: true,
+      classBtn: 'auth__button auth__button_margin',
+      labelBtn: 'Зарегистрироваться',
+      typeBtn: 'submit',
+      events: {
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignUp.bind(this), '.auth__form')
+        }
+      }
+    }) */
 
     /* this.children.inputs = userFields.map(input => {
       return new InputContainer({
@@ -74,13 +86,13 @@ class Signup extends Block {
           void submit(this.children.inputs, this.onSignUp.bind(this), e)
         }
       }
-    })
+    }) */
 
     this.children.buttonLink = new Link({
       class: 'auth__button_reg button',
       label: 'Войти',
       to: '/'
-    }) */
+    })
   }
 
   render (): DocumentFragment {

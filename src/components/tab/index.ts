@@ -8,19 +8,13 @@ interface TabProps {
   class?: string
   users?: boolean
   addUser: () => void
-  deleteUser: () => Promise<void>
+  deleteUser: () => void
   addFile: () => Promise<void>
   addMedia: () => Promise<void>
   addLocation: () => Promise<void>
 }
 
 class Tab extends Block<TabProps> {
-  constructor (props: TabProps) {
-    super({
-      ...props
-    })
-  }
-
   protected init (): void {
     this.children.buttonAdd = new Button({
       label: 'Добавить пользователя',
@@ -44,7 +38,7 @@ class Tab extends Block<TabProps> {
         src: deleteUser
       }),
       events: {
-        click: async () => { await this.props.deleteUser() }
+        click: async () => { this.props.deleteUser() }
       }
     })
 

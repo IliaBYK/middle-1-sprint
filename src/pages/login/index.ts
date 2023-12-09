@@ -1,23 +1,16 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Block from '../../utils/Block'
 import template from './login.hbs'
-// import { Button } from '../../components/button/index'
-import { Title } from '../../components/title/index'
-// import { submit } from '../../utils/validation'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
-// import { Link } from '../../components/link/index'
 import { connect } from '../../utils/Store'
-import { Form, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
 import { submit } from '../../utils/validation'
 import { type InputContainer } from '../../components/inputContainer'
+import { Link } from '../../components/link'
 
 const userFields: string[] = ['login', 'password', 'passwordAgain']
 
 class Login extends Block {
-  constructor () {
-    super({})
-  }
-
   async onSignIn (): Promise<void> {
     const element = this.getContent()
 
@@ -33,22 +26,21 @@ class Login extends Block {
   }
 
   init (): void {
-    this.children.title = new Title({
-      class: 'auth__title',
-      label: 'Вход'
-    })
-
-    this.children.form = new Form({
+    this.children.form = new Form<FormProps>({
+      class: 'auth',
+      titleClass: 'auth__title',
+      titleLabel: 'Вход',
       inputs: userFields,
-      button: true,
-      auth: true,
+      inputClass: 'auth__input',
       editing: false,
       emptyValues: true,
-      signin: true,
+      btnClass: 'auth__button auth__button_margin',
+      btnLabel: 'Войти',
+      btnType: 'submit',
       events: {
         submit: async (e?: Event) => {
           e?.preventDefault()
-          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.edit__form')
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.auth__form')
         }
       }
     })
@@ -76,13 +68,13 @@ class Login extends Block {
           void submit(this.children.inputs, this.onSignIn.bind(this), e)
         }
       }
-    })
+    }) */
 
     this.children.buttonLink = new Link({
       class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
       to: '/sign-up'
-    }) */
+    })
   }
 
   render (): DocumentFragment {

@@ -8,12 +8,12 @@ import Tab from '../../components/tab'
 import { avatar } from '../../images'
 import { connect } from '../../utils/Store'
 import { Message } from '../message'
-import ChatsController from '../../controllers/ChatsController'
+// import ChatsController from '../../controllers/ChatsController'
 import { type InputContainer } from '../inputContainer'
 import Popup from '../popup'
 import { type ChatInfo } from '../../api/chats-api'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormWrap } from '../form'
+import { Form, type FormProps, type FormWrap } from '../form'
 
 interface ChatProps {
   chats: ChatInfo[]
@@ -31,8 +31,8 @@ export class Chats extends Block<ChatProps> {
     this.children.messages = this.createMessages(this.props)
 
     this.children.popup = new Popup({
-      addUser: true,
-      onClick: async (value: number) => { await ChatsController.addUserToChat(this.props.selectedChat as number, value) }
+      addUser: true
+      // onClick: async (value: number) => { await ChatsController.addUserToChat(this.props.selectedChat as number, value) }
     })
 
     this.children.attachBtn = new Button({
@@ -42,35 +42,24 @@ export class Chats extends Block<ChatProps> {
       }
     })
 
-    this.children.form = new Form({
+    this.children.form = new Form<FormProps>({
+      class: 'chats',
       inputs: ['message'],
-      button: false,
+      inputClass: 'chats__input',
+      btnClass: 'chats__send-btn',
+      btnType: 'submit',
+      placeholder: 'Сообщение',
       emptyValues: true,
       events: {
         submit: (e?: Event) => {
           e?.preventDefault()
-        }
-      }
-    })
 
-    this.children.sendBtn = new Button({
-      class: 'chats__send-btn',
-      type: 'button',
-      events: {
-        click: () => {
           const input = (this.children.form as FormWrap).children.inputs as InputContainer[]
           const message = input[0].getValue()
 
-          if (!message) {
-            input[0].setProps({ error: 'Введите сообщение' })
-            return
+          if (message) {
+            MessagesController.sendMessage(this.props.selectedChat!, message)
           }
-
-          input[0].setValue('')
-
-          input[0].setProps({ error: '' })
-
-          MessagesController.sendMessage(this.props.selectedChat!, message)
         }
       }
     })
@@ -104,7 +93,7 @@ export class Chats extends Block<ChatProps> {
           deleteUser: false
         })
       },
-      deleteUser: async () => {
+      deleteUser: () => {
         (this.children.popup as Popup).setProps({
           class: 'popup_opened',
           deleteUser: true
@@ -119,7 +108,7 @@ export class Chats extends Block<ChatProps> {
       class: 'tab_bottom',
       users: false,
       addUser: () => { },
-      deleteUser: async () => { },
+      deleteUser: () => { },
       addFile: async () => { },
       addMedia: async () => { },
       addLocation: async () => { }

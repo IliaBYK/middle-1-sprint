@@ -1,17 +1,3 @@
 <div class="edit__btns">
-  {{#unless auth}}
-    {{#if editing}}
-      {{{changeDataBtn}}}
-    {{/if}}
-    {{#unless editing}}
-      {{{changeData}}}
-      {{{changePassword}}}
-      {{{logout}}}
-    {{/unless}}
-  {{/unless}}
-
-  {{#if auth}}
-    {{{buttonSub}}}
-    {{{buttonLink}}}
-  {{/if}}
+  {{{button}}}
 </div>

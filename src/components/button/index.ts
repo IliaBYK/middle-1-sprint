@@ -5,7 +5,6 @@ interface ButtonProps {
   content?: unknown
   label?: string
   type?: 'submit' | 'button'
-  href?: string
   class?: string
   onClick?: (e?: Event) => void
   events?: {

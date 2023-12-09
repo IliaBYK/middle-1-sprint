@@ -12,7 +12,6 @@ import Router from '../../utils/Router'
 import { type Input } from '../../components/input/index'
 import Popup from '../../components/popup/index'
 import AuthController from '../../controllers/AuthController'
-import ChangeController from '../../controllers/ChangeController'
 import { RESOURCES_URL } from '../../utils/constants'
 
 const InputNames: Record<string, string> = {
@@ -28,35 +27,18 @@ const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name
 
 interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {
-  async submitChange (): Promise<void> {
-    const element = this.getContent()
-
-    const input = element?.querySelector('.popup__input')
-
-    const value: File = (((input as HTMLInputElement).files![0]) as unknown as File)
-
-    const data: File = value
-
-    if (value) {
-      await ChangeController.ChangeAvatar(data).then(() => {
-        (this.children.popup as Popup).setProps({
-          isLoaded: true,
-          class: ''
-        })
-      })
-    } else {
-      (this.children.popup as Popup).setProps({
-        isLoaded: false
-      });
-      ((this.children.popup as Popup).children as unknown as InputContainer).setProps({ error: 'Загрузите файл' })
-    }
-  }
-
   init (): void {
     this.children.avatar = new EditAvatarContainer({
       avatar: this.props.avatar,
       events: {
-        click: () => { (this.children.popup as Popup).setProps({ class: 'popup_opened' }) }
+        click: () => {
+          (this.children.popup as Popup).setProps({
+            editing: false,
+            addUser: false,
+            isLoaded: false,
+            class: 'popup_opened'
+          })
+        }
       }
     })
 
@@ -75,8 +57,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     this.children.popup = new Popup({
-      addUser: false,
-      onClick: this.submitChange.bind(this)
+      addUser: false
     })
 
     this.children.inputs = userFields.map(inputName => {
@@ -134,7 +115,7 @@ class Profile extends Block<ProfileProps> {
     });
 
     (this.children.avatar as EditAvatarContainer).setProps({
-      avatar: `https://ya-praktikum.tech/api/v2/resources${newProps.avatar}`
+      avatar: `${RESOURCES_URL}${newProps.avatar}`
     })
 
     return true

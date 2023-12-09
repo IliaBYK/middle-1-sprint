@@ -2,23 +2,30 @@
 import { type User } from '../../api/user-api'
 import Block from '../../utils/Block'
 import { connect } from '../../utils/Store'
+import { Button } from '../button'
 import Search from '../chatsSearch'
-import { EditProfileBtns } from '../editProfileBtns'
 import { type Input } from '../input'
 import { InputContainer } from '../inputContainer'
+import { Title } from '../title'
 import template from './form.hbs'
 
-interface FormProps {
-  user: User
+export interface FormProps {
+  class: string
+  titleClass?: string
+  titleLabel?: string
+  user?: User
   editing?: boolean
-  auth?: boolean
-  signin?: boolean
   inputs: string[]
-  button?: boolean
+  inputType?: string
   disabled?: boolean
   emptyValues?: boolean
-  content?: Block<any> | Array<Block<any>>
-  classInput?: string
+  btnClass?: string
+  labelClass?: string
+  btnLabel?: string
+  btnType?: 'submit' | 'button'
+  inputClass?: string
+  placeholder?: string
+  required?: boolean
   events: {
     submit: (e?: Event) => void | Promise<void>
   }
@@ -36,7 +43,8 @@ const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',
   newPassword: 'Новый пароль',
   newPasswordAgain: 'Повторите новый пароль',
-  addChat: ''
+  addChat: '',
+  file: 'Выбрать файл на компьютере'
 }
 
 export class FormWrap extends Block<FormProps> {
@@ -47,41 +55,31 @@ export class FormWrap extends Block<FormProps> {
   }
 
   protected init (): void {
-    if (this.props.content) this.children.content = this.props.content!
-
-    this.children.inputs = this.props.inputs.map((inputName) => {
-      return this.props.auth
-        ? new InputContainer({
-          class: 'auth__input',
-          label: InputNames[inputName],
-          name: inputName,
-          type: inputName.includes('password') ? 'password' : 'text',
-          required: true
-        })
-        : (inputName === 'message'
-            ? new InputContainer({
-              label: '',
-              class: 'chats__input',
-              classLabel: 'chats__label',
-              placeholder: 'Сообщение',
-              name: 'message'
-            })
-            : (inputName === 'search'
-                ? new Search()
-                : new InputContainer({
-                  name: inputName,
-                  label: InputNames[inputName],
-                  class: this.props.classInput ?? 'edit__input',
-                  edit: true,
-                  type: inputName.includes('Password') ? 'password' : 'text',
-                  required: true,
-                  disabled: this.props.disabled
-                })))
+    this.children.title = new Title({
+      class: this.props.titleClass,
+      label: this.props.titleLabel
     })
 
-    this.children.buttons = new EditProfileBtns({
-      editing: this.props.editing,
-      auth: this.props.auth
+    this.children.inputs = this.props.inputs.map((inputName) => {
+      return inputName === 'search'
+        ? new Search()
+        : new InputContainer({
+          name: inputName,
+          label: InputNames[inputName],
+          placeholder: this.props.placeholder,
+          class: this.props.inputClass,
+          classLabel: this.props.labelClass,
+          edit: this.props.editing,
+          type: this.props.inputType,
+          required: this.props.required,
+          disabled: this.props.disabled
+        })
+    })
+
+    this.children.button = new Button({
+      class: this.props.btnClass,
+      label: this.props.btnLabel,
+      type: this.props.btnType
     });
 
     (this.children.inputs as InputContainer[])?.map((inputWrap: InputContainer) => {
@@ -93,6 +91,17 @@ export class FormWrap extends Block<FormProps> {
     if (!oldProps && !newProps) return false;
     (this.children.inputs as InputContainer[])?.map((inputWrap) => {
       ((inputWrap).children.input as Input)?.setValue(this.props.emptyValues ? '' : (newProps as unknown as Record<string, string>)[inputWrap.getName()] + '')
+    });
+
+    (this.children.button as Button).setProps({
+      class: newProps.btnClass,
+      label: newProps.btnLabel,
+      type: newProps.btnType
+    });
+
+    (this.children.title as Title).setProps({
+      class: newProps.titleClass,
+      label: newProps.titleLabel
     })
 
     return true

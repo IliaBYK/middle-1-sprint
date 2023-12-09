@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { InputContainer } from './../inputContainer/index'
 import Block from '../../utils/Block'
-import { Title } from '../title'
 import template from './popup.hbs'
 import { Button } from '../button'
+import { Form, type FormWrap, type FormProps } from '../form'
+import ChangeController from '../../controllers/ChangeController'
+import { type InputContainer } from '../inputContainer'
 
 interface PopupProps {
   class?: string
@@ -11,65 +12,71 @@ interface PopupProps {
   isLoaded?: boolean
   addUser?: boolean
   deleteUser?: boolean
-  onClick: (value: number) => Promise<void>
+  editing?: boolean
+  onClick?: (value?: number) => Promise<void>
   events?: {
     click: () => void | Promise<void>
   }
 }
 
 class Popup extends Block<PopupProps> {
-  constructor (props: PopupProps) {
-    super({
-      ...props
-    })
-  }
-
-  protected init (): void {
-    this.children.title = new Title({
-      class: this.props.error ? 'popup__title popup__title_error' : 'popup__title',
-      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
-    })
-
-    this.children.input = this.props.addUser
-      ? new InputContainer({
-        name: 'login',
-        label: 'Логин',
-        type: 'text',
-        class: 'auth__input'
-      })
-      : new InputContainer({
-        name: 'file',
-        type: 'file',
-        class: 'popup__input',
-        label: 'Выбрать файл на компьютере',
-        classLabel: 'popup__label button'
-      })
-
+  async submitChange (): Promise<void> {
     const element = this.getContent()
 
     const input = element?.querySelector('.popup__input')
-    const label = element?.querySelector('.popup__label');
-    (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
-      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
-    })
 
-    this.children.button = new Button({
-      class: 'popup__button',
-      type: 'button',
-      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
+    const value: File = (((input as HTMLInputElement).files![0]) as unknown as File)
+
+    const data: File = value
+
+    if (value) {
+      try {
+        await ChangeController.ChangeAvatar(data)
+        this.setProps({
+          isLoaded: true,
+          class: ''
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      this.setProps({
+        isLoaded: false
+      });
+      (this.children as unknown as InputContainer).setProps({ error: 'Загрузите файл' })
+    }
+  }
+
+  protected init (): void {
+    this.children.form = new Form <FormProps>({
+      class: 'popup',
+      titleClass: this.props.error ? 'popup__title popup__title_error' : 'popup__title',
+      titleLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл')),
+      inputs: [this.props.addUser ? 'login' : 'file'],
+      emptyValues: true,
+      inputClass: this.props.addUser ? 'auth__input' : 'popup__input button',
+      inputType: this.props.addUser ? 'text' : 'file',
+      btnClass: 'popup__button',
+      labelClass: this.props.addUser ? 'auth__label' : 'popup__label button',
+      btnType: 'submit',
+      editing: this.props.editing,
+      btnLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
-        click: async () => {
-          if (!(this.children.input as InputContainer).getValue()) {
-            (this.children.input as InputContainer).setProps({ error: this.props.addUser ? 'Введите id пользователя' : 'Загрузите файл' })
-          } else {
-            (this.children.input as InputContainer).setProps({ error: '' })
-            this.setProps({ class: '' })
-            await this.props.onClick(+(this.children.input as InputContainer).getValue()).catch(() => {
-              (this.children.input as InputContainer).setProps({ error: 'Произошла ошибка, возможно такого пользователя нет' })
-            })
-          }
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await this.submitChange()
         }
       }
+    })
+
+    const element = this.getContent()
+
+    const input = element?.querySelector('.popup__input');
+
+    (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
+      ((this.children.form as FormWrap).children.inputs as InputContainer[])[0].setProps({
+        label: ((e.target as HTMLInputElement).files![0])?.name
+      })
     })
 
     this.children.closeBtn = new Button({
@@ -90,15 +97,18 @@ class Popup extends Block<PopupProps> {
 
     const element = this.getContent()
 
-    const input = element?.querySelector('.popup__input')
-    const label = element?.querySelector('.popup__label');
+    const input = element?.querySelector('.popup__input');
 
     (input as HTMLInputElement)?.addEventListener('change', (e: Event) => {
-      (label as HTMLLabelElement).textContent = ((e.target as HTMLInputElement).files![0])?.name
+      ((this.children.form as FormWrap).children.inputs as InputContainer[])[0].setProps({
+        label: ((e.target as HTMLInputElement).files![0])?.name
+      })
     });
 
-    (this.children.title as Title).setProps({
-      label: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
+    (this.children.form as FormWrap).setProps({
+      labelClass: newProps.addUser ? 'popup__label' : 'popup__label',
+      btnLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
+      titleLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (newProps.error ? 'Ошибка, попробуйте ещё раз' : (newProps.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
     })
 
     return true

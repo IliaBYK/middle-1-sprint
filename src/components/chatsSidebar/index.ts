@@ -48,6 +48,7 @@ class SidebarWrap extends Block<SideBarProps> {
     this.children.search = new Form({
       inputs: ['search'],
       button: false,
+      search: true,
       emptyValues: true,
       classInput: 'chats__search',
       events: {

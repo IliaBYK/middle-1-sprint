@@ -7,7 +7,7 @@ import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
 import ChangeController, { type PasswordData } from '../../controllers/ChangeController'
 import { type InputContainer } from '../../components/inputContainer'
 
@@ -59,13 +59,17 @@ class EditPassword extends Block<Props> {
       }
     })
 
-    this.children.form = new Form({
+    this.children.form = new Form<FormProps>({
+      class: 'edit',
       inputs: userFields,
-      button: true,
-      auth: false,
+      disabled: false,
+      inputClass: 'edit__input',
+      inputType: 'password',
       editing: true,
-      signin: true,
       emptyValues: true,
+      btnClass: 'auth__button edit__submit-btn_password edit__submit-btn',
+      btnLabel: 'Cохранить',
+      btnType: 'submit',
       events: {
         submit: async (e?: Event) => {
           e?.preventDefault()
@@ -74,8 +78,26 @@ class EditPassword extends Block<Props> {
       }
     });
 
+    /* this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: false,
+      editing: true,
+      signin: true,
+      emptyValues: true,
+      classBtn: 'auth__button edit__submit-btn_password edit__submit-btn',
+      labelBtn: 'Cохранить',
+      typeBtn: 'submit',
+      events: {
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.submitChange.bind(this), '.edit__form')
+        }
+      }
+    }); */
+
     (this.children.avatar as EditAvatarContainer).setProps({
-      avatar: `https://ya-praktikum.tech/api/v2/resources${this.props.avatar}`
+      avatar: `${RESOURCES_URL}${this.props.avatar}`
     })
 
     /* this.children.oldPassword = new InputContainer({

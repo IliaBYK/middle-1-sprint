@@ -19,7 +19,6 @@ class ChatsController {
       await this.fetchChats()
     } catch (e) {
       console.log(e)
-      console.log(title)
     }
   }
 
@@ -72,9 +71,11 @@ class ChatsController {
   }
 
   getToken (id: number): any {
-    return this.api.getToken(id).catch(e => {
-      console.log(e)
-    })
+    try {
+      return this.api.getToken(id)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   selectChat (id: number): void {

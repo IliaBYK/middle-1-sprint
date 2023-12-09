@@ -11,6 +11,7 @@ const errors: Record<string, string> = {
   oldPassword: 'Введите старый пароль',
   newPassword: 'Введите новый пароль',
   newPasswordAgain: 'Введите новый пароль еще раз',
-  addChat: 'Введите название чата'
+  addChat: 'Введите название чата',
+  idUser: 'Введите корректный id пользователя'
 }
 export default errors

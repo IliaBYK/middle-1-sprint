@@ -32,6 +32,13 @@ function isValidPhone (phone: string): boolean {
   return pattern.test(phone)
 }
 
+function isValidId (id: string | number): boolean {
+  if (id === '') return false
+  // Проверка пароля регулярным выражением
+  const pattern = /^\[0-9]$/g
+  return pattern.test(id + '')
+}
+
 function isValidMessage (message: string): boolean {
   return message.length > 0
 }
@@ -49,5 +56,6 @@ export const functions: Record<string, (S: string) => boolean> = {
   newPasswordAgain: isValidPassword,
   passwordAgain: isValidPassword,
   phone: isValidPhone,
-  addChat: isValidName
+  addChat: isValidName,
+  idUser: isValidId
 }

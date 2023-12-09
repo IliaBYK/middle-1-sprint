@@ -1,8 +1,6 @@
 import template from './editProfileBtns.hbs'
-import AuthController from '../../controllers/AuthController'
 import Block from '../../utils/Block'
 import { Button } from '../button'
-import Router from '../../utils/Router'
 import { Link } from '../link'
 
 interface EditProfileBtnsProps {
@@ -17,34 +15,6 @@ export class EditProfileBtns extends Block<EditProfileBtnsProps> {
       class: 'auth__button edit__submit-btn_password edit__submit-btn',
       label: 'Cохранить',
       type: 'submit'
-    })
-
-    this.children.changeData = new Button({
-      class: 'edit__btn button',
-      label: 'Изменить данные',
-      events: {
-        click: () => {
-          Router.go('/settings/edit-profile')
-        }
-      }
-    })
-
-    this.children.changePassword = new Button({
-      class: 'edit__btn button',
-      label: 'Изменить пароль',
-      events: {
-        click: () => {
-          Router.go('/settings/edit-password')
-        }
-      }
-    })
-
-    this.children.logout = new Button({
-      class: 'edit__btn button',
-      label: 'Выйти',
-      events: {
-        click: async () => { await AuthController.logout() }
-      }
     })
 
     this.children.buttonSub = new Button({

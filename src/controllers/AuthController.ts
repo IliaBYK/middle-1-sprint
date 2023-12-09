@@ -47,47 +47,47 @@ class AuthController {
 
         return
       }
+
+      await this.fetchUser()
+
+      Router.go('/messenger')
     } catch (e) {
       store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
-
-      return
     }
-
-    await this.fetchUser().catch(e => {
-      console.log(e)
-    })
-
-    Router.go('/messenger')
   }
 
   async signIn (data: SignInData): Promise<void> {
-    await this.api.signin(data).catch(e => {
-      console.log(e)
-    })
+    try {
+      await this.api.signin(data)
 
-    await this.fetchUser().catch(e => {
-      console.log(e)
-    })
+      await this.fetchUser()
 
-    Router.go('/messenger')
+      Router.go('/messenger')
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   async logout (): Promise<void> {
-    await this.api.logout().catch(e => {
-      console.log(e)
-    })
+    try {
+      await this.api.logout()
 
-    const router = Router
+      const router = Router
 
-    router.go('/')
+      router.go('/')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.api.request().catch(e => {
-      console.log(e)
-    })
+    try {
+      const user = await this.api.request()
 
-    store.set(ACTIONS.CURRENT_USER, user)
+      store.set(ACTIONS.CURRENT_USER, user)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

@@ -42,16 +42,13 @@ class ChangeController {
   async ChangeAvatar (file: File): Promise<void> {
     try {
       const response = await this.api.changeAvatar(file)
+      await this.fetchUser()
       if ((response as any).reason) {
         store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
       }
     } catch (e) {
       store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
     }
-
-    await this.fetchUser().catch(e => {
-      console.log(e)
-    })
   }
 
   async changeUser (data: ChangeData): Promise<void> {
@@ -59,8 +56,6 @@ class ChangeController {
     const { ...ChangeData } = data
 
     store.set(ACTIONS.CURRENT_USER_IS_LOADING, true)
-
-    // console.log(isEqual(ChangeData, store.getState().currentUser!))
 
     if (!isEqual(ChangeData, store.getState().currentUser)) {
       try {
@@ -72,8 +67,6 @@ class ChangeController {
         store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
       }
 
-      // await this.fetchUser()
-
       store.set(ACTIONS.CURRENT_USER, data)
 
       const router = Router
@@ -83,11 +76,13 @@ class ChangeController {
   }
 
   async fetchUser (): Promise<void> {
-    const user = await this.apiUser.request().catch(e => {
-      console.log(e)
-    })
+    try {
+      const user = await this.apiUser.request()
 
-    store.set(ACTIONS.CURRENT_USER, user)
+      store.set(ACTIONS.CURRENT_USER, user)
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 

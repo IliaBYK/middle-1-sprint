@@ -13,10 +13,6 @@ interface Props {
 }
 
 export class EditAvatarContainer extends Block<Props> {
-  constructor (props: Props) {
-    super({ ...props })
-  }
-
   init (): void {
     this.children.imagine = new Imagine({
       src: this.props.avatar || Union,
@@ -27,7 +23,10 @@ export class EditAvatarContainer extends Block<Props> {
 
   protected componentDidUpdate (oldProps: Props, newProps: Props): boolean {
     if (!oldProps && !newProps) return false;
-    (this.children.imagine as Imagine).setProps({ src: newProps.avatar })
+
+    (this.children.imagine as Imagine).setProps({
+      src: newProps.avatar
+    })
 
     return true
   }
