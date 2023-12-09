@@ -49,11 +49,12 @@ class AuthController {
       }
 
       await this.fetchUser()
-
-      Router.go('/messenger')
     } catch (e) {
       store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
+      return
     }
+
+    Router.go('/messenger')
   }
 
   async signIn (data: SignInData): Promise<void> {
@@ -61,23 +62,25 @@ class AuthController {
       await this.api.signin(data)
 
       await this.fetchUser()
-
-      Router.go('/messenger')
     } catch (e) {
       console.log(e)
+      return
     }
+
+    Router.go('/messenger')
   }
 
   async logout (): Promise<void> {
     try {
       await this.api.logout()
-
-      const router = Router
-
-      router.go('/')
     } catch (error) {
       console.log(error)
+      return
     }
+
+    const router = Router
+
+    router.go('/')
   }
 
   async fetchUser (): Promise<void> {

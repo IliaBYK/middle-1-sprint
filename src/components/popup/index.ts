@@ -13,7 +13,7 @@ interface PopupProps {
   addUser?: boolean
   deleteUser?: boolean
   editing?: boolean
-  onClick?: (value?: number) => Promise<void>
+  onClick: (value?: number) => Promise<void>
   events?: {
     click: () => void | Promise<void>
   }
@@ -25,7 +25,7 @@ class Popup extends Block<PopupProps> {
 
     const input = element?.querySelector('.popup__input')
 
-    const value: File = (((input as HTMLInputElement).files![0]) as unknown as File)
+    const value: File = (((input as HTMLInputElement).files![0]))
 
     const data: File = value
 
@@ -62,10 +62,12 @@ class Popup extends Block<PopupProps> {
       editing: this.props.editing,
       btnLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
-        submit: async (e?: Event) => {
-          e?.preventDefault()
-          await this.submitChange()
-        }
+        submit: this.props.addUser
+          ? async () => { await this.props.onClick() }
+          : async (e?: Event) => {
+            e?.preventDefault()
+            await this.submitChange()
+          }
       }
     })
 

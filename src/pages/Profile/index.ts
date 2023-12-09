@@ -57,6 +57,7 @@ class Profile extends Block<ProfileProps> {
     })
 
     this.children.popup = new Popup({
+      onClick: async () => {},
       addUser: false
     })
 

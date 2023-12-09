@@ -12,25 +12,22 @@ const userFields: string[] = ['login', 'password', 'passwordAgain']
 
 class Login extends Block {
   async onSignIn (): Promise<void> {
-    const element = this.getContent()
+    const form = this.getContent()?.querySelector('.auth__form')
 
-    const inputs = element?.querySelectorAll('.auth__input')
+    const data = [...new FormData(form as HTMLFormElement)]
 
-    const data: Record<string, unknown> = {}
+    const entries = new Map(data)
+    const result = Object.fromEntries(entries)
 
-    Array.from(inputs!).forEach((input) => {
-      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
-    })
-
-    await AuthController.signIn(data as unknown as ControllerSignUpData)
+    await AuthController.signIn(result as unknown as ControllerSignUpData)
   }
 
   init (): void {
     this.children.form = new Form<FormProps>({
       class: 'auth',
+      inputs: userFields,
       titleClass: 'auth__title',
       titleLabel: 'Вход',
-      inputs: userFields,
       inputClass: 'auth__input',
       editing: false,
       emptyValues: true,

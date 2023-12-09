@@ -5,7 +5,7 @@ import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit } from '../../utils/validation'
-import { InputContainer } from '../../components/inputContainer/index'
+import { type InputContainer } from '../../components/inputContainer/index'
 import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
@@ -82,12 +82,6 @@ class EditProfile extends Block<EditProfileProps> {
     })
 
     return true
-  }
-
-  getInputs (): Array<Block<any> | Array<Block<any>>> {
-    return Object
-      .values(this.children)
-      .filter(el => el instanceof InputContainer)
   }
 
   render (): DocumentFragment {

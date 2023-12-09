@@ -61,6 +61,7 @@ export class FormWrap extends Block<FormProps> {
     })
 
     this.children.inputs = this.props.inputs.map((inputName) => {
+      const passwordExp = /^\w*password\w*$/gi
       return inputName === 'search'
         ? new Search()
         : new InputContainer({
@@ -70,7 +71,7 @@ export class FormWrap extends Block<FormProps> {
           class: this.props.inputClass,
           classLabel: this.props.labelClass,
           edit: this.props.editing,
-          type: this.props.inputType,
+          type: this.props.inputType ?? passwordExp.test(inputName) ? 'password' : 'text',
           required: this.props.required,
           disabled: this.props.disabled
         })

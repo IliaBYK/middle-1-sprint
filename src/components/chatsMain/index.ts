@@ -8,7 +8,7 @@ import Tab from '../../components/tab'
 import { avatar } from '../../images'
 import { connect } from '../../utils/Store'
 import { Message } from '../message'
-// import ChatsController from '../../controllers/ChatsController'
+import ChatsController from '../../controllers/ChatsController'
 import { InputContainer } from '../inputContainer'
 import Popup from '../popup'
 import { type ChatInfo } from '../../api/chats-api'
@@ -22,16 +22,36 @@ interface ChatProps {
 }
 
 export class Chats extends Block<ChatProps> {
-  constructor (props: ChatProps) {
-    super({ ...props })
+  async addUserToChat (): Promise<void> {
+    const element = this.getContent()
+
+    const input = element?.querySelector('.popup__input')
+
+    const value = (input as HTMLInputElement).value
+
+    if (value) {
+      try {
+        await ChatsController.addUserToChat(this.props.selectedChat as number, +value);
+        (this.children.popup as Popup).setProps({
+          isLoaded: true,
+          class: ''
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      (this.children.popup as Popup).setProps({
+        isLoaded: false
+      })
+    }
   }
 
   init (): void {
     this.children.messages = this.createMessages(this.props)
 
     this.children.popup = new Popup({
-      addUser: true
-      // onClick: async (value: number) => { await ChatsController.addUserToChat(this.props.selectedChat as number, value) }
+      addUser: true,
+      onClick: async () => { await this.addUserToChat() }
     })
 
     this.children.attachBtn = new Button({

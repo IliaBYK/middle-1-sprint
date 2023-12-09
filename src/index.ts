@@ -41,19 +41,17 @@ async function start (): Promise<void> {
   }
 
   try {
-    // await ChatsController.fetchChats()
-
     await AuthController.fetchUser()
 
     Router.start()
 
-    if (!isLoggedIn) {
+    if (isLoggedIn) {
       Router.go(Routes.Messanger)
-    }
+    } else Router.go(Routes.Signin)
   } catch (e) {
     Router.start()
 
-    if (isLoggedIn) {
+    if (!isLoggedIn) {
       Router.go(Routes.Signin)
     }
   }
