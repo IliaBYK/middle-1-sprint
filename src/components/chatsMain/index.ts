@@ -9,11 +9,10 @@ import { avatar } from '../../images'
 import { connect } from '../../utils/Store'
 import { Message } from '../message'
 // import ChatsController from '../../controllers/ChatsController'
-import { type InputContainer } from '../inputContainer'
+import { InputContainer } from '../inputContainer'
 import Popup from '../popup'
 import { type ChatInfo } from '../../api/chats-api'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormProps, type FormWrap } from '../form'
 
 interface ChatProps {
   chats: ChatInfo[]
@@ -42,23 +41,25 @@ export class Chats extends Block<ChatProps> {
       }
     })
 
-    this.children.form = new Form<FormProps>({
-      class: 'chats',
-      inputs: ['message'],
-      inputClass: 'chats__input',
-      btnClass: 'chats__send-btn',
-      btnType: 'submit',
-      placeholder: 'Сообщение',
-      emptyValues: true,
-      events: {
-        submit: (e?: Event) => {
-          e?.preventDefault()
+    this.children.input = new InputContainer({
+      class: 'chats__input',
+      name: 'message',
+      label: '',
+      placeholder: 'Cообщение'
+    })
 
-          const input = (this.children.form as FormWrap).children.inputs as InputContainer[]
-          const message = input[0].getValue()
+    this.children.sendBtn = new Button({
+      class: 'chats__send-btn',
+      type: 'button',
+      events: {
+        click: () => {
+          const input = this.children.input as InputContainer
+          const message = input.getValue()
 
           if (message) {
             MessagesController.sendMessage(this.props.selectedChat!, message)
+            input.setValue('')
+            input.setProps({ error: '' })
           }
         }
       }
@@ -74,7 +75,7 @@ export class Chats extends Block<ChatProps> {
 
     this.children.title = new Title({
       class: 'chats__name',
-      label: ''
+      label: this.props.chats.find(data => data.id === this.props.selectedChat)?.title
     })
 
     this.children.buttonUsers = new Button({
@@ -132,8 +133,6 @@ export class Chats extends Block<ChatProps> {
     })
   }
 
-  /* `${RESOURCES_URL}${data.avatar}` */
-
   protected componentDidUpdate (oldProps: ChatProps, newProps: ChatProps): boolean {
     if (!oldProps && !newProps) return false
     this.children.messages = this.createMessages(newProps);
@@ -142,6 +141,10 @@ export class Chats extends Block<ChatProps> {
       src: newProps.chats.find(data => data.id === newProps.selectedChat)?.avatar
         ? `${RESOURCES_URL}${newProps.chats.find(data => data.id === newProps.selectedChat)?.avatar}`
         : avatar
+    });
+
+    (this.children.title as Title).setProps({
+      label: newProps.chats.find(data => data.id === newProps.selectedChat)?.title
     })
 
     return true

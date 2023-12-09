@@ -210,7 +210,7 @@
   display: grid;
   grid-template-columns: 42px 1fr 38px;
   align-items: center;
-  padding: 11px 0 20px;
+  padding: 11px 0 0;
   margin-top: auto;
   border-top: 1px solid $grayLines;
   background: $white;
@@ -222,16 +222,10 @@
   background: url("../../src/images/attachBtn.svg") no-repeat;
   border: none;
   margin: 0 10px 0 0;
-}
-
-.chats__label {
-  flex-direction: row;
-  margin: 0;
+  align-self: baseline;
 }
 
 .chats__input {
-  flex: 1;
-  margin: 0;
   height: 32px;
   border-radius: 30px;
   border: none;
@@ -245,11 +239,12 @@
 }
 
 .chats__send-btn {
-  background: url("../../src/images/sendBtn.svg");
+  background: url("../../src/images/sendBtn.svg") no-repeat;
   border: none;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin: 0 0 0 auto;
+  align-self: baseline;
 }
 
 .chats__menu {

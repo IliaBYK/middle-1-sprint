@@ -19,7 +19,7 @@ async function submit (inputs: InputContainer | InputContainer[], element: HTMLE
   let isValid: boolean = false
 
   const form = element?.querySelector(className)
-  console.log(form)
+
   const data = [...new FormData(form as HTMLFormElement)]
 
   const entries = new Map(data)
