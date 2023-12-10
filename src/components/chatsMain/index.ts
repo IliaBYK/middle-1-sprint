@@ -46,12 +46,37 @@ export class Chats extends Block<ChatProps> {
     }
   }
 
+  async deleteUserFromChat (): Promise<void> {
+    const element = this.getContent()
+
+    const input = element?.querySelector('.popup__input')
+
+    const value = (input as HTMLInputElement).value
+
+    if (value) {
+      try {
+        await ChatsController.deleteUserFromChat(this.props.selectedChat as number, +value);
+        (this.children.popup as Popup).setProps({
+          isLoaded: true,
+          class: ''
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      (this.children.popup as Popup).setProps({
+        isLoaded: false
+      })
+    }
+  }
+
   init (): void {
     this.children.messages = this.createMessages(this.props)
 
     this.children.popup = new Popup({
       addUser: true,
-      onClick: async () => { await this.addUserToChat() }
+      onClickAddUser: async () => { await this.addUserToChat() },
+      onClickDeletedUser: async () => { await this.deleteUserFromChat() }
     })
 
     this.children.attachBtn = new Button({

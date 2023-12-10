@@ -71,7 +71,7 @@ export class FormWrap extends Block<FormProps> {
           class: this.props.inputClass,
           classLabel: this.props.labelClass,
           edit: this.props.editing,
-          type: this.props.inputType ?? passwordExp.test(inputName) ? 'password' : 'text',
+          type: inputName.match(passwordExp) ? 'password' : this.props.inputType,
           required: this.props.required,
           disabled: this.props.disabled
         })
@@ -91,6 +91,13 @@ export class FormWrap extends Block<FormProps> {
   protected componentDidUpdate (oldProps: FormProps, newProps: FormProps): boolean {
     if (!oldProps && !newProps) return false;
     (this.children.inputs as InputContainer[])?.map((inputWrap) => {
+      inputWrap.setProps({
+        placeholder: newProps.placeholder,
+        type: newProps.inputType,
+        required: newProps.required,
+        disabled: newProps.disabled
+      });
+
       ((inputWrap).children.input as Input)?.setValue(this.props.emptyValues ? '' : (newProps as unknown as Record<string, string>)[inputWrap.getName()] + '')
     });
 

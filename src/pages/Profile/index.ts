@@ -57,8 +57,9 @@ class Profile extends Block<ProfileProps> {
     })
 
     this.children.popup = new Popup({
-      onClick: async () => {},
-      addUser: false
+      addUser: false,
+      onClickAddUser: async () => {},
+      onClickDeletedUser: async () => { }
     })
 
     this.children.inputs = userFields.map(inputName => {

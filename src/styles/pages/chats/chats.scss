@@ -231,11 +231,15 @@
   border: none;
   background: $grayDark;
   padding: 0 20px;
-  color: $grayForDates;
+  color: $black;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 12px;
+
+  &::placeholder {
+    color: $grayForDates;
+  }
 }
 
 .chats__send-btn {

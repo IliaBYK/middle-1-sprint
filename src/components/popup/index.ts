@@ -13,7 +13,8 @@ interface PopupProps {
   addUser?: boolean
   deleteUser?: boolean
   editing?: boolean
-  onClick: (value?: number) => Promise<void>
+  onClickAddUser: (value?: number) => Promise<void>
+  onClickDeletedUser: (value?: number) => Promise<void>
   events?: {
     click: () => void | Promise<void>
   }
@@ -63,7 +64,9 @@ class Popup extends Block<PopupProps> {
       btnLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
         submit: this.props.addUser
-          ? async () => { await this.props.onClick() }
+          ? (this.props.deleteUser
+              ? async () => { await this.props.onClickDeletedUser() }
+              : async () => { await this.props.onClickAddUser() })
           : async (e?: Event) => {
             e?.preventDefault()
             await this.submitChange()
@@ -110,7 +113,8 @@ class Popup extends Block<PopupProps> {
     (this.children.form as FormWrap).setProps({
       labelClass: newProps.addUser ? 'popup__label' : 'popup__label',
       btnLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
-      titleLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (newProps.error ? 'Ошибка, попробуйте ещё раз' : (newProps.isLoaded ? 'Файл загружен' : 'Загрузите файл'))
+      titleLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (newProps.error ? 'Ошибка, попробуйте ещё раз' : (newProps.isLoaded ? 'Файл загружен' : 'Загрузите файл')),
+      inputType: newProps.addUser ? 'text' : 'file'
     })
 
     return true
