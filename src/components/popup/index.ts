@@ -63,14 +63,14 @@ class Popup extends Block<PopupProps> {
       editing: this.props.editing,
       btnLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
-        submit: this.props.addUser
-          ? (this.props.deleteUser
-              ? async () => { await this.props.onClickDeletedUser() }
-              : async () => { await this.props.onClickAddUser() })
-          : async (e?: Event) => {
-            e?.preventDefault()
-            await this.submitChange()
-          }
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          this.props.addUser
+            ? (this.props.deleteUser
+                ? await this.props.onClickDeletedUser()
+                : await this.props.onClickAddUser())
+            : await this.submitChange()
+        }
       }
     })
 

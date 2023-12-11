@@ -19,8 +19,11 @@ export default class WSTransport extends EventBus {
     if (!this.socket) {
       throw new Error('Socket is not connected')
     }
-
-    this.socket.send(JSON.stringify(data))
+    try {
+      this.socket.send(JSON.stringify(data))
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   public async connect (): Promise<void> {
@@ -66,13 +69,17 @@ export default class WSTransport extends EventBus {
     })
 
     socket.addEventListener('message', (message) => {
-      const data = JSON.parse(message.data)
+      try {
+        const data = JSON.parse(message.data)
 
-      if (data.type && data.type === 'pong') {
-        return
+        if (data.type && data.type === 'pong') {
+          return
+        }
+
+        this.emit(WSTransportEvents.Message, data)
+      } catch (error) {
+        console.log(error)
       }
-
-      this.emit(WSTransportEvents.Message, data)
     })
   }
 }
