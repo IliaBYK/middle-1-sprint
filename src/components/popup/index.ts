@@ -53,7 +53,7 @@ class Popup extends Block<PopupProps> {
       class: 'popup',
       titleClass: this.props.error ? 'popup__title popup__title_error' : 'popup__title',
       titleLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл')),
-      inputs: [this.props.addUser ? 'loginPopup' : 'file'],
+      inputs: [this.props.addUser ? 'login' : 'file'],
       emptyValues: true,
       inputClass: this.props.addUser ? 'auth__input' : 'popup__input button',
       inputType: this.props.addUser ? 'text' : 'file',
@@ -63,20 +63,14 @@ class Popup extends Block<PopupProps> {
       editing: this.props.editing,
       btnLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       events: {
-        submit: this.props.addUser
-          ? (this.props.deleteUser
-              ? async (e?: Event) => {
-                e?.preventDefault()
-                await this.props.onClickDeletedUser()
-              }
-              : async (e?: Event) => {
-                e?.preventDefault()
-                await this.props.onClickAddUser()
-              })
-          : async (e?: Event) => {
-            e?.preventDefault()
-            await this.submitChange()
-          }
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          this.props.addUser
+            ? (this.props.deleteUser
+                ? await this.props.onClickDeletedUser()
+                : await this.props.onClickAddUser())
+            : await this.submitChange()
+        }
       }
     })
 
@@ -120,7 +114,7 @@ class Popup extends Block<PopupProps> {
       labelClass: newProps.addUser ? 'popup__label' : 'popup__label',
       btnLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить' : 'Добавить') : 'Поменять',
       titleLabel: newProps.addUser ? (newProps.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (newProps.error ? 'Ошибка, попробуйте ещё раз' : (newProps.isLoaded ? 'Файл загружен' : 'Загрузите файл')),
-      inputType: newProps.addUser ? 'text' : 'file'
+      inputType: (newProps.addUser ? 'text' : 'file')
     })
 
     return true
