@@ -25,7 +25,7 @@ export class Chats extends Block<ChatProps> {
   async addUserToChat (): Promise<void> {
     const element = this.getContent()
 
-    const input = element?.querySelector('.popup__input')
+    const input = element?.querySelector('.auth__input')
 
     const value = (input as HTMLInputElement).value
 
@@ -49,7 +49,7 @@ export class Chats extends Block<ChatProps> {
   async deleteUserFromChat (): Promise<void> {
     const element = this.getContent()
 
-    const input = element?.querySelector('.popup__input')
+    const input = element?.querySelector('.auth__input')
 
     const value = (input as HTMLInputElement).value
 

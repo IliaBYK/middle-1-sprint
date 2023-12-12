@@ -57,5 +57,5 @@ export const functions: Record<string, (S: string) => boolean> = {
   passwordAgain: isValidPassword,
   phone: isValidPhone,
   addChat: isValidName,
-  idUser: isValidId
+  loginPopup: isValidId
 }

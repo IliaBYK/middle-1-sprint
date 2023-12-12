@@ -34,6 +34,7 @@ export interface FormProps {
 const InputNames: Record<string, string> = {
   email: 'Почта',
   login: 'Логин',
+  loginPopup: 'Логин',
   first_name: 'Имя',
   second_name: 'Фамилия',
   display_name: 'Имя в чате',
