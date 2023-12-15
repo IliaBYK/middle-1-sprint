@@ -1,3 +1,4 @@
+import Handlebars from 'handlebars'
 import { EventBus } from './EventBus'
 import { v4 as makeUUID } from 'uuid'
 
@@ -145,8 +146,8 @@ class Block<P extends Record<string, any> = any> {
     this._addEvents()
   }
 
-  protected compile (template: (context: any) => string, context: any): DocumentFragment {
-    const contextAndStubs = { ...context }
+  protected compile (template: string, props?: any): DocumentFragment {
+    const contextAndStubs = { ...props }
 
     Object.entries(this.children).forEach(([name, component]) => {
       if (Array.isArray(component)) {
@@ -156,11 +157,13 @@ class Block<P extends Record<string, any> = any> {
       }
     })
 
-    const html = template(contextAndStubs)
+    // const html = template(contextAndStubs)
 
     const temp = document.createElement('template')
 
-    temp.innerHTML = html
+    temp.innerHTML = Handlebars.compile(template)(contextAndStubs)
+
+    // temp.innerHTML = html
 
     const replaceStub = (component: Block): void => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`)

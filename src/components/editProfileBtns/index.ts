@@ -1,4 +1,4 @@
-import template from './editProfileBtns.hbs'
+import { template } from './editProfileBtns'
 import Block from '../../utils/Block'
 import { Button } from '../button/index'
 import { Link } from '../link/index'

@@ -1,4 +1,4 @@
-import { TestBlock } from './TestBlock/TestBlock'
+import { TestBlock } from './TestBlock'
 import type Block from './Block'
 import { expect } from 'chai'
 import { type Title } from '../components/title/index'

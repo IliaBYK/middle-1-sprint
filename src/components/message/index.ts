@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './message.hbs'
+import { template } from './message'
 
 interface messageProps {
   isUser?: boolean

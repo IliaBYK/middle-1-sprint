@@ -1,6 +1,6 @@
 import { Imagine } from '../imagine/index'
 import Block from '../../utils/Block'
-import template from './container.hbs'
+import { template } from './container'
 import { Union } from '../../images/index'
 
 interface Props {

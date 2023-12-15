@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './tab.hbs'
+import { template } from './tab'
 import { Button } from '../button/index'
 import { Imagine } from '../imagine/index'
 import { addFile, addLocation, addMedia, addUser, deleteUser } from '../../images/index'

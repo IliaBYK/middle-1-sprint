@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './editPassword.hbs'
+import { template } from './editPassword'
 import { Button } from '../../components/button/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit } from '../../utils/validation'

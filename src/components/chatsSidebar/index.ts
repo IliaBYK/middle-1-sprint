@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import Block from '../../utils/Block'
-import template from './sidebar.hbs'
+import { template } from './sidebar'
 import { type ChatInfo } from '../../api/chats-api'
 import ChatsController from '../../controllers/ChatsController'
 import { Card } from '../card/index'

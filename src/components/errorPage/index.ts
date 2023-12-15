@@ -1,6 +1,6 @@
 import Block from '../../utils/Block'
 import { Button } from '../button/index'
-import template from './errorPage.hbs'
+import { template } from './errorPage'
 
 interface ErrorProps {
   code: string

@@ -1,6 +1,6 @@
 import { Input } from '../input/index'
 import Block from '../../utils/Block'
-import template from './inputContainer.hbs'
+import { template } from './inputContainer'
 import errors from '../../utils/errors'
 
 interface InputProps {

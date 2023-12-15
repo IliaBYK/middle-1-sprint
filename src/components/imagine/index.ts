@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './imagine.hbs'
+import { template } from './imagine'
 
 interface ImagineProps {
   src?: unknown

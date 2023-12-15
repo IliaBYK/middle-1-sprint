@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Block from '../../utils/Block'
-import template from './login.hbs'
+import { template } from './login'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 import { connect } from '../../utils/Store'
 import { Form, type FormProps, type FormWrap } from '../../components/form/index'

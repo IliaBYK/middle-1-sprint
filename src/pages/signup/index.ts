@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './signup.hbs'
+import { template } from './signup'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 import { connect } from '../../utils/Store'
 import { Form, type FormProps, type FormWrap } from '../../components/form/index'

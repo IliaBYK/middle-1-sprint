@@ -1,0 +1,9 @@
+export const template = `
+  <p class="chats__message {{#if isUser}}chats__message_user{{/if}}">
+    {{content}}
+    {{#if isUser}}
+      {{#if isRead}}<span class="chats__message_is-read">{{{img}}}</span>{{/if}}
+    {{/if}}
+    <time class="chats__time chats__time_place_message">{{time}}</time>
+  </p>
+`

@@ -1,6 +1,6 @@
 import MessagesController, { type Message as MessageInfo } from '../../controllers/MessageController'
 import Block from '../../utils/Block'
-import template from './chatsMain.hbs'
+import { template } from './chatsMain'
 import { Button } from '../../components/button/index'
 import { Imagine } from '../../components/imagine/index'
 import { Title } from '../../components/title/index'

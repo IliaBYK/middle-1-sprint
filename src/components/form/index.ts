@@ -7,7 +7,7 @@ import Search from '../chatsSearch/index'
 import { type Input } from '../input/index'
 import { InputContainer } from '../inputContainer/index'
 import { Title } from '../title/index'
-import template from './form.hbs'
+import { template } from './form'
 
 export interface FormProps {
   class: string

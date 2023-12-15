@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import Block from '../../utils/Block'
-import template from './card.hbs'
+import { template } from './card'
 import { type ChatInfo } from '../../api/chats-api'
 import { connect } from '../../utils/Store'
 

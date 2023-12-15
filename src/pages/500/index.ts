@@ -1,6 +1,6 @@
 import { ErrorPage } from '../../components/errorPage/index'
 import Block from '../../utils/Block'
-import template from './500.hbs'
+import { template } from './500'
 
 export class InternalError extends Block {
   constructor () {

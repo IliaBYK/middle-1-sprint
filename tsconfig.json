@@ -18,12 +18,12 @@
   "include": [
 		"src/**/*",
 		"src/**/*.spec.ts",
-		"types.d.ts",
 		"server.js"
 	],
   "exclude": ["node_modules", "dist/**/*", "./mochaSetup.js"],
   "ts-node": {
     "esm": true,
-    "experimentalSpecifierResolution": "node"
+    "experimentalSpecifierResolution": "node",
+    "transpileOnly": true
   }
 }

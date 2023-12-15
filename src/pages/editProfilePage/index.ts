@@ -1,6 +1,6 @@
 /* eslint-disable array-callback-return */
 import Block from '../../utils/Block'
-import template from './editProfilePage.hbs'
+import { template } from './editProfilePage'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'

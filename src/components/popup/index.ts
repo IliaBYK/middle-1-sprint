@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import Block from '../../utils/Block'
-import template from './popup.hbs'
+import { template } from './popup'
 import { Button } from '../button/index'
 import { Form, type FormWrap, type FormProps } from '../form/index'
 import ChangeController from '../../controllers/ChangeController'
