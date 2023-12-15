@@ -7,9 +7,9 @@ import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 import ChangeController, { type PasswordData } from '../../controllers/ChangeController'
-import { type InputContainer } from '../../components/inputContainer'
+import { type InputContainer } from '../../components/inputContainer/index'
 
 /* const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',

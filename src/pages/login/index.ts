@@ -3,10 +3,10 @@ import Block from '../../utils/Block'
 import template from './login.hbs'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 import { connect } from '../../utils/Store'
-import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 import { submit } from '../../utils/validation'
-import { type InputContainer } from '../../components/inputContainer'
-import { Link } from '../../components/link'
+import { type InputContainer } from '../../components/inputContainer/index'
+import { Link } from '../../components/link/index'
 
 const userFields: string[] = ['login', 'password', 'passwordAgain']
 
@@ -41,31 +41,6 @@ class Login extends Block {
         }
       }
     })
-
-    /*
-    userFields.map(input => {
-      return new InputContainer({
-        class: 'auth__input',
-        label: InputNames[input],
-        name: input,
-        type: input === 'password' || input === 'passwordAgain' ? 'password' : 'text',
-        required: true,
-        events: {
-          blur: () => validation(this.children.inputs)
-        }
-      })
-    }) */
-
-    /* this.children.buttonSub = new Button({
-      class: 'auth__button auth__button_margin',
-      label: 'Войти',
-      type: 'submit',
-      events: {
-        click: (e?: Event) => {
-          void submit(this.children.inputs, this.onSignIn.bind(this), e)
-        }
-      }
-    }) */
 
     this.children.buttonLink = new Link({
       class: 'auth__button_reg button',

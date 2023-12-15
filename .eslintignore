@@ -2,5 +2,6 @@
 /node_modules 
 server.js
 vite.config.ts
+mochaSetup.js
 vite-plugin-handelbars-precompile.ts
 ./*.ts

@@ -2,11 +2,11 @@
 import { type User } from '../../api/user-api'
 import Block from '../../utils/Block'
 import { connect } from '../../utils/Store'
-import { Button } from '../button'
-import Search from '../chatsSearch'
-import { type Input } from '../input'
-import { InputContainer } from '../inputContainer'
-import { Title } from '../title'
+import { Button } from '../button/index'
+import Search from '../chatsSearch/index'
+import { type Input } from '../input/index'
+import { InputContainer } from '../inputContainer/index'
+import { Title } from '../title/index'
 import template from './form.hbs'
 
 export interface FormProps {

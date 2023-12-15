@@ -2,10 +2,10 @@ import Block from '../../utils/Block'
 import template from './signup.hbs'
 import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
 import { connect } from '../../utils/Store'
-import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 import { submit } from '../../utils/validation'
-import { type InputContainer } from '../../components/inputContainer'
-import { Link } from '../../components/link'
+import { type InputContainer } from '../../components/inputContainer/index'
+import { Link } from '../../components/link/index'
 
 const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
 

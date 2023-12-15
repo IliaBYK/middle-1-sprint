@@ -11,7 +11,7 @@ import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
 import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 
 const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof EditProfileProps>
 

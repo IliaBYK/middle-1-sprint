@@ -5,13 +5,13 @@ import template from './sidebar.hbs'
 import { type ChatInfo } from '../../api/chats-api'
 import ChatsController from '../../controllers/ChatsController'
 import { Card } from '../card/index'
-import { Link } from '../link'
+import { Link } from '../link/index'
 import { connect } from '../../utils/Store'
-import { Union } from '../../images'
-import { Button } from '../button'
-import TabAdd from '../tabForAddChat'
+import { Union } from '../../images/index'
+import { Button } from '../button/index'
+import TabAdd from '../tabForAddChat/index'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form } from '../form'
+import { Form } from '../form/index'
 
 interface SideBarProps {
   chats: ChatInfo[]

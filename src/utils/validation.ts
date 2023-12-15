@@ -1,7 +1,7 @@
 /* eslint-disable array-callback-return */
 // import { InputContainer } from '../components/inputContainer'
 // import errors from './errors'
-import { type InputContainer } from '../components/inputContainer'
+import { type InputContainer } from '../components/inputContainer/index'
 import { functions } from './validationFunctions'
 
 function validation (name: string, value: string): boolean {
