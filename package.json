@@ -10,7 +10,7 @@
     "build": "tsc && vite build --emptyOutDir",
     "preview": "vite preview",
     "lint": "eslint src && stylelint 'src/**/*.scss' && tsc --noEmit",
-    "test": "./node_modules/.bin/mocha"
+    "test": "mocha"
   },
   "devDependencies": {
     "@types/chai": "^4.3.11",
