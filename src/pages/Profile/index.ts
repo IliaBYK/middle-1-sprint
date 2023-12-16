@@ -2,7 +2,7 @@
 /* eslint-disable array-callback-return */
 import { connect } from './../../utils/Store'
 import Block from '../../utils/Block'
-import template from './Profile.hbs'
+import { template } from './Profile'
 import { type User } from '../../api/user-api'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
@@ -23,7 +23,7 @@ const InputNames: Record<string, string> = {
   phone: 'Телефон'
 }
 
-const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>
+const userFields = [ 'email', 'login', 'first_name', 'second_name', 'display_name', 'phone' ] as Array<keyof ProfileProps>
 
 interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {

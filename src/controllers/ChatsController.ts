@@ -30,7 +30,7 @@ class ChatsController {
         chats.map(async (chat) => {
           const token = await this.getToken(chat.id)
 
-          await MessagesController.connect(chat.id, token)
+          await MessagesController.connect(chat.id, (token as string))
         })
       }
 
@@ -43,7 +43,7 @@ class ChatsController {
 
   async addUserToChat (id: number, userId: number): Promise<void> {
     try {
-      await this.api.addUsers(id, [userId])
+      await this.api.addUsers(id, [ userId ])
     } catch (e) {
       console.log(e)
     }
@@ -51,7 +51,7 @@ class ChatsController {
 
   async deleteUserFromChat (id: number, userId: number): Promise<void> {
     try {
-      await this.api.deleteUsers(id, [userId])
+      await this.api.addUsers(id, [ userId ])
     } catch (e) {
       console.log(e)
     }
@@ -69,16 +69,13 @@ class ChatsController {
 
   async ChangeAvatar (file: File): Promise<void> {
     try {
-      const response = await this.api.changeChatAvatar(file)
-      if ((response as any).reason) {
-        store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
-      }
+      await this.api.changeChatAvatar(file)
     } catch (e) {
       store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
     }
   }
 
-  getToken (id: number): any {
+  getToken (id: number) {
     try {
       return this.api.getToken(id)
     } catch (error) {

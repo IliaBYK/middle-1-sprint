@@ -1,6 +1,6 @@
 import { InputSearch } from '../inputSearch/index'
 import Block from '../../utils/Block'
-import template from './search.hbs'
+import { template } from './search'
 
 export default class Search extends Block {
   constructor () {

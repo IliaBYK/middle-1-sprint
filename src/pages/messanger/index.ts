@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import Block from '../../utils/Block'
-import template from './messanger.hbs'
+import { template } from './messanger'
 import { Sidebar } from '../../components/chatsSidebar/index'
-import { ChatsMain } from '../../components/chatsMain'
+import { ChatsMain } from '../../components/chatsMain/index'
 import ChatsController from '../../controllers/ChatsController'
 
 export class Messanger extends Block {

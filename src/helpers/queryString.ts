@@ -1,46 +1,26 @@
-type PlainObject<T = unknown> = {
-  [k in string]: T;
-}
+type StringIndexed = Record<string, unknown>
 
-function isPlainObject (value: unknown): value is PlainObject {
-  return typeof value === 'object' &&
-    value !== null &&
-    value.constructor === Object &&
-    Object.prototype.toString.call(value) === '[object Object]'
-}
+function queryString (data: StringIndexed): string | never {
+  if (typeof data !== 'object' || data === null) throw new Error('input must be an object')
 
-function isArray (value: unknown): value is [] {
-  return Array.isArray(value)
-}
-
-function isArrayOrObject (value: unknown): value is [] | PlainObject {
-  return isPlainObject(value) || isArray(value)
-}
-
-function getKey (key: string, parentKey?: string): string {
-  return parentKey ? `${parentKey}[${key}]` : key
-}
-
-function getParams (data: PlainObject | [], parentKey?: string): Array<[string, string]> {
-  const result: Array<[string, string]> = []
-
-  for (const [key, value] of Object.entries(data)) {
-    if (isArrayOrObject(value)) {
-      result.push(...getParams(value, getKey(key, parentKey)))
-    } else {
-      result.push([getKey(key, parentKey), encodeURIComponent(String(value))])
-    }
+  const objectToQuery = (obj: StringIndexed): string => {
+    return Object.entries(obj)
+      .map(([ key, value ]) => {
+        if (Array.isArray(value)) {
+          return value
+            .map((item, index) => `${encodeURIComponent(key)}[${index}]=${encodeURIComponent(String(item))}`)
+            .join('&')
+        } else if (typeof value === 'object' && value !== null) {
+          return objectToQuery(value as StringIndexed).split('&').map(q => `${encodeURIComponent(key)}${q ? `.${q}` : ''}`)
+        } else {
+          return `${encodeURIComponent(key)}=${encodeURIComponent(String(value))}`
+        }
+      })
+      .flat()
+      .join('&')
   }
 
-  return result
-}
-
-function queryString (data: PlainObject): string {
-  if (!isPlainObject(data)) {
-    throw new Error('input must be an object')
-  }
-
-  return getParams(data).map(arr => arr.join('=')).join('&')
+  return objectToQuery(data)
 }
 
 export default queryString

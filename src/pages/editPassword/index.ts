@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './editPassword.hbs'
+import { template } from './editPassword'
 import { Button } from '../../components/button/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
 import { submit } from '../../utils/validation'
@@ -7,9 +7,9 @@ import Router from '../../utils/Router'
 import { type User } from '../../api/user-api'
 import { connect } from '../../utils/Store'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 import ChangeController, { type PasswordData } from '../../controllers/ChangeController'
-import { type InputContainer } from '../../components/inputContainer'
+import { type InputContainer } from '../../components/inputContainer/index'
 
 /* const InputNames: Record<string, string> = {
   oldPassword: 'Старый пароль',
@@ -17,7 +17,7 @@ import { type InputContainer } from '../../components/inputContainer'
   newPasswordAgain: 'Повторите новый пароль'
 } */
 
-const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
+const userFields: string[] = [ 'oldPassword', 'newPassword', 'newPasswordAgain' ]
 
 interface Props extends User {
   avatar: string

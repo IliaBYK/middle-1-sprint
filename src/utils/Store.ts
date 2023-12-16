@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { set } from '../helpers/helpers'
 // import isEqual from '../helpers/isEqual'
 import { EventBus } from './EventBus'
@@ -39,7 +40,7 @@ export class Store extends EventBus {
     set(this.state, path, value)
 
     this.emit(StoreEvents.Updated, this.getState())
-  };
+  }
 }
 
 const store = new Store()

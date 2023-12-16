@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './inputSearch.hbs'
+import { template } from './inputSearch'
 
 interface InputProps {
   class?: string

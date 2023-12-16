@@ -1,6 +1,6 @@
 import { LoginPage } from '../../pages/login/index'
 import Block from '../../utils/Block'
-import template from './auth.hbs'
+import { template } from './auth'
 
 export default class Auth extends Block {
   constructor () {

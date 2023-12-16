@@ -1,6 +1,6 @@
 import Block from '../../utils/Block'
 import { type PropsWithRouter, withRouter } from '../../helpers/withRouter'
-import template from './link.hbs'
+import { template } from './link'
 
 interface LinkProps extends PropsWithRouter {
   class: string

@@ -41,20 +41,15 @@ class AuthController {
     store.set(ACTIONS.CURRENT_USER_IS_LOADING, true)
 
     try {
-      const response = this.api.signup(signUpData)
-      if ((response as any).reason) {
-        store.set(ACTIONS.CURRENT_USER_ERROR, (response as any).reason)
-
-        return
-      }
+      await this.api.signup(signUpData)
 
       await this.fetchUser()
+
+      Router.go('/messenger')
     } catch (e) {
       store.set(ACTIONS.CURRENT_USER_IS_LOADING, false)
       return
     }
-
-    Router.go('/messenger')
   }
 
   async signIn (data: SignInData): Promise<void> {

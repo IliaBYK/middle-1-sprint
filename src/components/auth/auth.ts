@@ -1,0 +1,5 @@
+export const template = `<main class="auth">
+  <form class="auth__form" id="auth-form">
+    {{{login}}}
+  </form>
+</main>`

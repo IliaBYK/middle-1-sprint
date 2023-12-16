@@ -1,10 +1,10 @@
 import Block from '../../utils/Block'
-import template from './tab.hbs'
-import { Button } from '../button'
-import { Title } from '../title'
+import { template } from './tab'
+import { Button } from '../button/index'
+import { Title } from '../title/index'
 import ChatsController from '../../controllers/ChatsController'
-import { InputContainer } from '../inputContainer'
-import { type Input } from '../input'
+import { InputContainer } from '../inputContainer/index'
+import { type Input } from '../input/index'
 
 interface TabProps {
   class?: string

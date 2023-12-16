@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Handlebars from 'handlebars'
 import { EventBus } from './EventBus'
-import { nanoid } from 'nanoid'
+import { v4 as makeUUID } from 'uuid'
 
 // Нельзя создавать экземпляр данного класса
 class Block<P extends Record<string, any> = any> {
@@ -10,7 +12,7 @@ class Block<P extends Record<string, any> = any> {
     FLOW_RENDER: 'flow:render'
   } as const
 
-  public id = nanoid(6)
+  public id = makeUUID()
   protected props: P
   public children: Record<string, Block | Block[]>
   private readonly eventBus: () => EventBus
@@ -40,7 +42,7 @@ class Block<P extends Record<string, any> = any> {
     const props: Record<string, unknown> = {}
     const children: Record<string, Block | Block[]> = {}
 
-    Object.entries(childrenAndProps).forEach(([key, value]) => {
+    Object.entries(childrenAndProps).forEach(([ key, value ]) => {
       if (Array.isArray(value) && value.every(v => v instanceof Block)) {
         children[key] = value
       } else if (value instanceof Block) {
@@ -145,10 +147,10 @@ class Block<P extends Record<string, any> = any> {
     this._addEvents()
   }
 
-  protected compile (template: (context: any) => string, context: any): DocumentFragment {
-    const contextAndStubs = { ...context }
+  protected compile (template: string, props?: any): DocumentFragment {
+    const contextAndStubs = { ...props }
 
-    Object.entries(this.children).forEach(([name, component]) => {
+    Object.entries(this.children).forEach(([ name, component ]) => {
       if (Array.isArray(component)) {
         contextAndStubs[name] = component.map(child => `<div data-id="${child.id}"></div>`)
       } else {
@@ -156,11 +158,13 @@ class Block<P extends Record<string, any> = any> {
       }
     })
 
-    const html = template(contextAndStubs)
+    // const html = template(contextAndStubs)
 
     const temp = document.createElement('template')
 
-    temp.innerHTML = html
+    temp.innerHTML = Handlebars.compile(template)(contextAndStubs)
+
+    // temp.innerHTML = html
 
     const replaceStub = (component: Block): void => {
       const stub = temp.content.querySelector(`[data-id="${component.id}"]`)
@@ -174,7 +178,7 @@ class Block<P extends Record<string, any> = any> {
       stub.replaceWith(component.getContent()!)
     }
 
-    Object.entries(this.children).forEach(([_, component]) => {
+    Object.entries(this.children).forEach(([ _, component ]) => {
       if (Array.isArray(component)) {
         component.forEach(replaceStub)
       } else {

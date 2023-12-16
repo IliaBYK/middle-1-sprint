@@ -1,16 +1,16 @@
 import MessagesController, { type Message as MessageInfo } from '../../controllers/MessageController'
 import Block from '../../utils/Block'
-import template from './chatsMain.hbs'
+import { template } from './chatsMain'
 import { Button } from '../../components/button/index'
-import { Imagine } from '../../components/imagine'
-import { Title } from '../../components/title'
-import Tab from '../../components/tab'
-import { avatar } from '../../images'
+import { Imagine } from '../../components/imagine/index'
+import { Title } from '../../components/title/index'
+import Tab from '../../components/tab/index'
+import { avatar } from '../../images/index'
 import { connect } from '../../utils/Store'
-import { Message } from '../message'
+import { Message } from '../message/index'
 import ChatsController from '../../controllers/ChatsController'
-import { InputContainer } from '../inputContainer'
-import Popup from '../popup'
+import { InputContainer } from '../inputContainer/index'
+import Popup from '../popup/index'
 import { type ChatInfo } from '../../api/chats-api'
 import { RESOURCES_URL } from '../../utils/constants'
 
@@ -126,7 +126,9 @@ export class Chats extends Block<ChatProps> {
     this.children.buttonUsers = new Button({
       class: 'chats__menu',
       events: {
-        click: () => { this.toggleClass((this.children.tabUsers as Tab), 'tab_top') }
+        click: () => {
+          this.toggleClass((this.children.tabUsers as Tab), 'tab_top')
+        }
       }
     })
 
@@ -167,7 +169,7 @@ export class Chats extends Block<ChatProps> {
     } else block.setProps({ class: `${className} tab_visible` })
   }
 
-  private createMessages (props: ChatProps): any {
+  private createMessages (props: ChatProps) {
     return props.messages.map(data => {
       return new Message({
         content: data.content,
@@ -205,8 +207,8 @@ const withChat = connect(state => {
 
   if (!selectedChatId) {
     return {
-      chats: state.chats || [{}],
-      messages: [{}],
+      chats: state.chats || [ {} ],
+      messages: [ {} ],
       selectedChat: undefined,
       userId: state.currentUser?.id
     }
@@ -214,7 +216,7 @@ const withChat = connect(state => {
 
   return {
     chats: state.chats,
-    messages: state.messages?.[selectedChatId] || [{}],
+    messages: state.messages?.[selectedChatId] || [ {} ],
     selectedChat: state.selectedChat,
     userId: state.currentUser?.id
   }

@@ -1,0 +1,11 @@
+export const template = `
+  <div class="edit__container">
+    {{!-- {{<a class="edit__button button" href="../../pages/mainMessanger/mainMessanger.html"></a>}} --}}
+    {{{buttonToChats}}}
+    <main class="edit">
+      {{{avatar}}}
+      
+      {{{form}}}
+    </main>
+  </div>
+`

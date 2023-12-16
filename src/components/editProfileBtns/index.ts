@@ -1,7 +1,7 @@
-import template from './editProfileBtns.hbs'
+import { template } from './editProfileBtns'
 import Block from '../../utils/Block'
-import { Button } from '../button'
-import { Link } from '../link'
+import { Button } from '../button/index'
+import { Link } from '../link/index'
 
 interface EditProfileBtnsProps {
   editing?: boolean

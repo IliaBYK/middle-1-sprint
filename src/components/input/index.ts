@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './input.hbs'
+import { template } from './input'
 import { functions } from '../../utils/validation'
 
 interface InputProps {

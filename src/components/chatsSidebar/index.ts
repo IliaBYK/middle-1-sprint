@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 import Block from '../../utils/Block'
-import template from './sidebar.hbs'
+import { template } from './sidebar'
 import { type ChatInfo } from '../../api/chats-api'
 import ChatsController from '../../controllers/ChatsController'
 import { Card } from '../card/index'
-import { Link } from '../link'
+import { Link } from '../link/index'
 import { connect } from '../../utils/Store'
-import { Union } from '../../images'
-import { Button } from '../button'
-import TabAdd from '../tabForAddChat'
+import { Union } from '../../images/index'
+import { Button } from '../button/index'
+import TabAdd from '../tabForAddChat/index'
 import { RESOURCES_URL } from '../../utils/constants'
-import { Form } from '../form'
+import { Form } from '../form/index'
 
 interface SideBarProps {
   chats: ChatInfo[]
@@ -46,7 +46,7 @@ class SidebarWrap extends Block<SideBarProps> {
     this.children.tabForAddChat = new TabAdd({})
 
     this.children.search = new Form({
-      inputs: ['search'],
+      inputs: [ 'search' ],
       button: false,
       search: true,
       emptyValues: true,
@@ -65,7 +65,7 @@ class SidebarWrap extends Block<SideBarProps> {
     } else block.setProps({ class: `${className} tab_visible` })
   }
 
-  private createCards (props: SideBarProps): any {
+  private createCards (props: SideBarProps) {
     return props.chats.map(data => {
       return new Card({
         src: data.avatar ? `${RESOURCES_URL}${data.avatar}` : Union,
@@ -94,6 +94,6 @@ class SidebarWrap extends Block<SideBarProps> {
   }
 }
 
-const withChats = connect((state) => ({ chats: [...state.chats || [{}]] }))
+const withChats = connect((state) => ({ chats: [ ...state.chats || [ {} ] ] }))
 
 export const Sidebar = withChats(SidebarWrap as typeof Block)

@@ -1,5 +1,5 @@
 import Block from '../../utils/Block'
-import template from './button.hbs'
+import { template } from './button'
 
 interface ButtonProps {
   content?: unknown

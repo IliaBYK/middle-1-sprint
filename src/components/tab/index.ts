@@ -1,8 +1,8 @@
 import Block from '../../utils/Block'
-import template from './tab.hbs'
-import { Button } from '../button'
-import { Imagine } from '../imagine'
-import { addFile, addLocation, addMedia, addUser, deleteUser } from '../../images'
+import { template } from './tab'
+import { Button } from '../button/index'
+import { Imagine } from '../imagine/index'
+import { addFile, addLocation, addMedia, addUser, deleteUser } from '../../images/index'
 
 interface TabProps {
   class?: string

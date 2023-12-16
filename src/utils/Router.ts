@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type Block from './Block'
 
-type BlockConstructable<P extends Record<string, any> = any> = new(props: P) => Block<P>
+export type BlockConstructable<P extends Record<string, any> = any> = new(props: P) => Block<P>
 
 function isEqual (lhs: string, rhs: string): boolean {
   return lhs === rhs
