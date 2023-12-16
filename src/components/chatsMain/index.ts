@@ -126,7 +126,9 @@ export class Chats extends Block<ChatProps> {
     this.children.buttonUsers = new Button({
       class: 'chats__menu',
       events: {
-        click: () => { this.toggleClass((this.children.tabUsers as Tab), 'tab_top') }
+        click: () => {
+          this.toggleClass((this.children.tabUsers as Tab), 'tab_top')
+        }
       }
     })
 

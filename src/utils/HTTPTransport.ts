@@ -1,3 +1,5 @@
+import queryString from '../helpers/queryString'
+
 /* eslint-disable prefer-promise-reject-errors */
 export enum METHODS {
   GET = 'GET',
@@ -14,20 +16,25 @@ interface Options {
   withCridentials?: boolean
 }
 
-type HTTPMethod = /* <R=unknown> */(url: string, options?: Options) => Promise<unknown>
-// если в точности как Вы написали, то возникают ошибки
+type HTTPMethod = (url: string, options?: Options) => Promise<unknown>
 
 export default class HTTPTransport {
-  static API_URL = 'https://ya-praktikum.tech/api/v2'
+  public API_URL = 'https://ya-praktikum.tech/api/v2'
   protected endpoint: string
 
   constructor (endpoint: string) {
-    this.endpoint = `${HTTPTransport.API_URL}${endpoint}`
+    this.endpoint = `${this.API_URL}${endpoint}`
   }
 
-  public get: HTTPMethod = async (url, options = {}) => (
-    await this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.GET }, options.timeout)
-  )
+  public get: HTTPMethod = async (url, options = {}) => {
+    const data = options?.data
+
+    if (data) {
+      return await this.request(`${this.endpoint}${url}?${queryString(options.data as Record<string, unknown>)}`, { ...options, method: METHODS.GET }, options.timeout)
+    }
+
+    return await this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.GET }, options.timeout)
+  }
 
   public post: HTTPMethod = async (url, options = {}) => (
     await this.request(`${this.endpoint}${url}`, { ...options, method: METHODS.POST }, options.timeout)

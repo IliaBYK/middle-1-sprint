@@ -26,7 +26,7 @@ describe('Router', () => {
     expect(result).to.eq(Router)
   })
 
-  describe('.back()', () => {
+  describe('actions on back() and go()', () => {
     it('should render a page on history back action', () => {
       Router
         .use('/', BlockMock)
@@ -35,6 +35,16 @@ describe('Router', () => {
       Router.back()
 
       expect(getFakeContent.callCount).to.eq(1)
+    })
+
+    it('should redirect to / by go()', () => {
+      Router
+        .use('/', BlockMock)
+        .start()
+
+      Router.go('/')
+
+      expect(global.window.location.pathname).to.eq('/')
     })
   })
 

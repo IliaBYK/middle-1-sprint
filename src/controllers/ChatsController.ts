@@ -51,7 +51,7 @@ class ChatsController {
 
   async deleteUserFromChat (id: number, userId: number): Promise<void> {
     try {
-      await this.api.deleteUsers(id, [userId])
+      await this.api.addUsers(id, [userId])
     } catch (e) {
       console.log(e)
     }
