@@ -2,6 +2,14 @@
   display: flex;
   box-sizing: border-box;
   width: 100%;
+
+  &__form {
+    display: flex;
+  }
+
+  &__label {
+    display: none;
+  }
 }
 
 .chats__sidebar {
@@ -23,6 +31,13 @@
   max-width: inherit;
   position: sticky;
   top: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.chats__add-chat-btn {
+  margin: 0 0 14px;
+  width: 100%;
 }
 
 .chats__profile {
@@ -95,6 +110,7 @@
   height: 47px;
   object-fit: contain;
   margin: 0 10px 0 0;
+  border-radius: 50%;
 }
 
 .chats__img_place_header {
@@ -137,6 +153,7 @@
   -webkit-box-orient: vertical; /* Вертикальная ориентация */
   overflow: hidden;
   height: 30px;
+  word-wrap: break-word;
 }
 
 .chats__card-info {
@@ -190,9 +207,10 @@
 .chats__footer {
   position: sticky;
   bottom: 0;
-  display: flex;
+  display: grid;
+  grid-template-columns: 42px 1fr 38px;
   align-items: center;
-  padding: 11px 0;
+  padding: 11px 0 0;
   margin-top: auto;
   border-top: 1px solid $grayLines;
   background: $white;
@@ -201,45 +219,55 @@
 .chats__attach-btn {
   width: 32px;
   height: 32px;
-  background: url("../../src/images/attachBtn.png") no-repeat;
+  background: url("../../src/images/attachBtn.svg") no-repeat;
   border: none;
   margin: 0 10px 0 0;
+  align-self: baseline;
 }
 
 .chats__input {
-  flex: 1;
-  margin: 0 10px 0 0;
   height: 32px;
   border-radius: 30px;
   border: none;
   background: $grayDark;
   padding: 0 20px;
-  color: $grayForDates;
+  color: $black;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: 12px;
+
+  &::placeholder {
+    color: $grayForDates;
+  }
 }
 
 .chats__send-btn {
-  background: url("../../src/images/sendBtn.png");
+  background: url("../../src/images/sendBtn.svg") no-repeat;
   border: none;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   margin: 0 0 0 auto;
+  align-self: baseline;
 }
 
 .chats__menu {
-  background: url("../../src/images/menu.png") no-repeat;
-  height: 15px;
+  background: url("../../src/images/menu.svg") no-repeat;
+  background-position: center;
+  background-color: $grayBg;
   margin-left: auto;
   border: none;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
 }
 
 .chats__main {
   display: flex;
   flex-direction: column;
   padding: 48px 0 0;
+  height: 100%;
+  position: relative;
 }
 
 .chats__date {
@@ -261,6 +289,9 @@
   line-height: 15px;
   margin: 0 0 10px;
   position: relative;
+  word-wrap: break-word;
+  align-self: flex-start;
+  padding-right: 65px;
 }
 
 .chats__time {
@@ -286,14 +317,28 @@
   background-color: $lightBlue;
   padding-right: 63px;
   position: relative;
+}
 
-  &::after {
-    position: absolute;
-    bottom: 12px;
-    right: 39px;
-    content: '';
-    background: url("../../src/images/read.svg") no-repeat;
-    width: 10px;
-    height: 5px;
+.chats__message_is-read {
+  position: absolute;
+  bottom: 12px;
+  right: 39px;
+  content: '';
+  background: url("../../src/images/read.svg") no-repeat;
+  width: 10px;
+  height: 5px;
+}
+
+.chats__empty-list {
+  margin: auto;
+  color: $grayForDates;
+  text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 12px;
+
+  &_place_sidebar {
+    margin-top: 30px;
   }
 }

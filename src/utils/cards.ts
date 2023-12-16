@@ -1,6 +1,8 @@
+import { avatar } from '../images'
+
 export const cards = [
   {
-    src: '../images/avatar.png',
+    src: avatar,
     name: 'Андрей',
     id: 1,
     text: `Привет! Смотри, тут всплыл интересный кусок лунной 
@@ -10,7 +12,7 @@ export const cards = [
     time: '12:00'
   },
   {
-    src: '../images/avatar.png',
+    src: avatar,
     name: 'Андрей',
     isOwner: true,
     id: 2,

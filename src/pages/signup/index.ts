@@ -1,95 +1,81 @@
 import Block from '../../utils/Block'
 import template from './signup.hbs'
-import { render } from '../../utils/render'
-import { Button } from '../../components/button/index'
-import { InputContainer } from '../../components/inputContainer/index'
-import { Title } from '../../components/title/index'
-import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
+import { connect } from '../../utils/Store'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { submit } from '../../utils/validation'
+import { type InputContainer } from '../../components/inputContainer'
+import { Link } from '../../components/link'
 
-export class SignupPage extends Block {
+const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
+
+class Signup extends Block {
   constructor () {
     super({})
   }
 
+  async onSignUp (): Promise<void> {
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.auth__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    await AuthController.signUp(data as unknown as ControllerSignUpData)
+  }
+
   init (): void {
-    this.children.title = new Title({
-      class: 'auth__title',
-      label: 'Регистрация'
-    })
-
-    this.children.first_name = new InputContainer({
-      class: 'auth__input',
-      label: 'Имя',
-      name: 'first_name',
-      type: 'text',
-      required: true,
+    this.children.form = new Form<FormProps>({
+      class: 'auth',
+      titleClass: 'auth__title',
+      titleLabel: 'Регистрация',
+      inputs: userFields,
+      inputClass: 'auth__input',
+      editing: false,
+      emptyValues: true,
+      btnClass: 'auth__button auth__button_margin',
+      btnLabel: 'Зарегистрироваться',
+      btnType: 'submit',
       events: {
-        blur: () => validation(this.children, 'first_name', errors)
-      }
-    })
-    this.children.second_name = new InputContainer({
-      class: 'auth__input',
-      label: 'Фамилия',
-      name: 'second_name',
-      type: 'text',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'second_name', errors)
-      }
-    })
-    this.children.email = new InputContainer({
-      class: 'auth__input',
-      label: 'Почта',
-      name: 'email',
-      type: 'email',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'email', errors)
-      }
-    })
-    this.children.login = new InputContainer({
-      class: 'auth__input',
-      label: 'Логин',
-      name: 'login',
-      type: 'text',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'login', errors)
-      }
-    })
-    this.children.phone = new InputContainer({
-      class: 'auth__input',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'phone', errors)
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignUp.bind(this), '.auth__form')
+        }
       }
     })
 
-    this.children.password = new InputContainer({
-      class: 'auth__input',
-      label: 'Пароль',
-      name: 'password',
-      type: 'password',
-      required: true,
+    /* this.children.form = new Form({
+      inputs: userFields,
+      button: true,
+      auth: true,
+      editing: false,
+      signin: true,
+      classBtn: 'auth__button auth__button_margin',
+      labelBtn: 'Зарегистрироваться',
+      typeBtn: 'submit',
       events: {
-        blur: () => validation(this.children, 'password', errors)
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignUp.bind(this), '.auth__form')
+        }
       }
-    })
+    }) */
 
-    this.children.passwordElse = new InputContainer({
-      class: 'auth__input',
-      classLabel: 'auth__label_last',
-      label: 'Пароль еще раз',
-      name: 'passwordElse',
-      type: 'password',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'passwordElse', errors)
-      }
+    /* this.children.inputs = userFields.map(input => {
+      return new InputContainer({
+        class: 'auth__input',
+        label: InputNames[input],
+        name: input,
+        type: input === 'password' || input === 'passwordAgain' ? 'password' : 'text',
+        required: true,
+        events: {
+          blur: () => validation(this.children.inputs)
+        }
+      })
     })
 
     this.children.buttonSub = new Button({
@@ -97,17 +83,15 @@ export class SignupPage extends Block {
       label: 'Зарегистрироваться',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
+          void submit(this.children.inputs, this.onSignUp.bind(this), e)
         }
       }
-    })
+    }) */
 
-    this.children.buttonLink = new Button({
-      class: 'auth__button_reg',
+    this.children.buttonLink = new Link({
+      class: 'auth__button_reg button',
       label: 'Войти',
-      events: {
-        click: () => { render('login') }
-      }
+      to: '/'
     })
   }
 
@@ -115,3 +99,7 @@ export class SignupPage extends Block {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const SignupPage = connectUser(Signup as typeof Block)

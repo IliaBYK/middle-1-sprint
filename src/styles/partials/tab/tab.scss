@@ -1,0 +1,97 @@
+.tab {
+  position: absolute;
+  box-shadow: 0 0 6px 0 rgba(0 0 0 / 14%);
+  border-radius: 12px;
+  padding: 15px;
+  z-index: 100;
+  transition: all .5s linear;
+  opacity: 0;
+  visibility: hidden;
+  background: $white;
+
+  &_visible {
+    transition: all .5s linear;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &_top {
+    top: 10px;
+    right: -10px;
+  }
+
+  &_bottom {
+    bottom: 10px;
+    left: -10px;
+  }
+
+  &__img {
+    margin: 0 15px 0 0;
+  }
+
+  &__button {
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 14px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    padding: 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &-add {
+    box-sizing: border-box;
+    width: 290px;
+    display: flex;
+    flex-direction: column;
+    bottom: -80px;
+
+    &__title {
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+      margin: 0 0 15px;
+    }
+
+    &__input {
+      border: none;
+      border-bottom: 1px solid $grayLines;
+      margin-bottom: 15px;
+      padding: 5px 10px;
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    &__button {
+      border: none;
+      border-radius: 6px;
+      height: 30px;
+      color: $black;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 13px;
+      text-align: center;
+    }
+  }
+}

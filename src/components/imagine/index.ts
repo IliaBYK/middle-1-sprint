@@ -2,7 +2,7 @@ import Block from '../../utils/Block'
 import template from './imagine.hbs'
 
 interface ImagineProps {
-  src?: string
+  src?: unknown
   alt?: string
   class?: string
 }

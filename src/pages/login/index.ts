@@ -1,90 +1,76 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import Block from '../../utils/Block'
 import template from './login.hbs'
-import { render } from '../../utils/render'
-import { Button } from '../../components/button/index'
-import { InputContainer } from '../../components/inputContainer/index'
-import { Title } from '../../components/title/index'
-import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
+import AuthController, { type ControllerSignUpData } from '../../controllers/AuthController'
+import { connect } from '../../utils/Store'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
+import { submit } from '../../utils/validation'
+import { type InputContainer } from '../../components/inputContainer'
+import { Link } from '../../components/link'
 
-export class LoginPage extends Block {
-  constructor () {
-    super({})
+const userFields: string[] = ['login', 'password', 'passwordAgain']
+
+class Login extends Block {
+  async onSignIn (): Promise<void> {
+    const form = this.getContent()?.querySelector('.auth__form')
+
+    const data = [...new FormData(form as HTMLFormElement)]
+
+    const entries = new Map(data)
+    const result = Object.fromEntries(entries)
+
+    await AuthController.signIn(result as unknown as ControllerSignUpData)
   }
 
   init (): void {
-    this.children.title = new Title({
-      class: 'auth__title',
-      label: 'Вход'
-    })
-
-    this.children.login = new InputContainer({
-      class: 'auth__input',
-      label: 'Логин',
-      name: 'login',
-      type: 'text',
-      required: true,
+    this.children.form = new Form<FormProps>({
+      class: 'auth',
+      inputs: userFields,
+      titleClass: 'auth__title',
+      titleLabel: 'Вход',
+      inputClass: 'auth__input',
+      editing: false,
+      emptyValues: true,
+      btnClass: 'auth__button auth__button_margin',
+      btnLabel: 'Войти',
+      btnType: 'submit',
       events: {
-        blur: () => validation(this.children, 'login', errors)
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.onSignIn.bind(this), '.auth__form')
+        }
       }
     })
 
-    this.children.password = new InputContainer({
-      class: 'auth__input',
-      label: 'Пароль',
-      name: 'password',
-      type: 'password',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'password', errors)
-      }
-    })
+    /*
+    userFields.map(input => {
+      return new InputContainer({
+        class: 'auth__input',
+        label: InputNames[input],
+        name: input,
+        type: input === 'password' || input === 'passwordAgain' ? 'password' : 'text',
+        required: true,
+        events: {
+          blur: () => validation(this.children.inputs)
+        }
+      })
+    }) */
 
-    this.children.passwordElse = new InputContainer({
-      class: 'auth__input',
-      classLabel: 'auth__label_last',
-      label: 'Пароль еще раз',
-      name: 'passwordElse',
-      type: 'password',
-      required: true,
-      events: {
-        blur: () => validation(this.children, 'passwordElse', errors)
-      }
-    })
-
-    this.children.buttonSub = new Button({
+    /* this.children.buttonSub = new Button({
       class: 'auth__button auth__button_margin',
       label: 'Войти',
       type: 'submit',
       events: {
         click: (e?: Event) => {
-          submit(this.children, e)
-          /* this.validation() */ }
+          void submit(this.children.inputs, this.onSignIn.bind(this), e)
+        }
       }
-    })
+    }) */
 
-    this.children.buttonLink = new Button({
-      class: 'auth__button_reg',
+    this.children.buttonLink = new Link({
+      class: 'auth__button_reg button',
       label: 'Нет аккаунта?',
-      events: {
-        click: () => { render('signup') }
-      }
-    })
-
-    this.children.buttonTo404 = new Button({
-      class: 'button__link',
-      label: '404',
-      events: {
-        click: () => { render(404) }
-      }
-    })
-
-    this.children.buttonTo500 = new Button({
-      class: 'button__link_right',
-      label: '500',
-      events: {
-        click: () => { render(500) }
-      }
+      to: '/sign-up'
     })
   }
 
@@ -92,3 +78,7 @@ export class LoginPage extends Block {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const LoginPage = connectUser(Login as typeof Block)

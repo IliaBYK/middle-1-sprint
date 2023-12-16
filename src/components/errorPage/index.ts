@@ -1,5 +1,4 @@
 import Block from '../../utils/Block'
-import { render } from '../../utils/render'
 import { Button } from '../button/index'
 import template from './errorPage.hbs'
 
@@ -18,7 +17,7 @@ export class ErrorPage extends Block<ErrorProps> {
       class: 'errorPage__link',
       label: 'Назад к чатам',
       events: {
-        click: () => { render('chats') }
+        click: () => { /* render('chats') */ }
       }
     })
   }

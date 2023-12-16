@@ -1,21 +1,39 @@
+/* eslint-disable array-callback-return */
 import Block from '../../utils/Block'
 import template from './editProfilePage.hbs'
-import { render } from '../../utils/render'
 import { Button } from '../../components/button/index'
 import { Title } from '../../components/title/index'
-import { Imagine } from '../../components/imagine/index'
 import { EditAvatarContainer } from '../../components/editAvatarContainer/index'
-import { submit, validation } from '../../utils/validation'
-import errors from '../../utils/errors'
-import { InputContainer } from '../../components/inputContainer'
+import { submit } from '../../utils/validation'
+import { type InputContainer } from '../../components/inputContainer/index'
+import Router from '../../utils/Router'
+import { type User } from '../../api/user-api'
+import { connect } from '../../utils/Store'
+import ChangeController, { type ChangeData } from '../../controllers/ChangeController'
+import { RESOURCES_URL } from '../../utils/constants'
+import { Form, type FormProps, type FormWrap } from '../../components/form'
 
-export class EditProfile extends Block {
-  constructor () {
-    super({})
+const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof EditProfileProps>
+
+interface EditProfileProps extends User {}
+class EditProfile extends Block<EditProfileProps> {
+  async submitChange (): Promise<void> {
+    const element = this.getContent()
+
+    const inputs = element?.querySelectorAll('.edit__input')
+
+    const data: Record<string, unknown> = {}
+
+    Array.from(inputs!).forEach((input) => {
+      data[(input as HTMLInputElement).name] = (input as HTMLInputElement).value
+    })
+
+    await ChangeController.changeUser(data as unknown as ChangeData)
   }
 
   init (): void {
     this.children.avatar = new EditAvatarContainer({
+      avatar: this.props.avatar,
       events: {
         click: () => {}
       }
@@ -23,108 +41,54 @@ export class EditProfile extends Block {
 
     this.children.title = new Title({
       class: 'edit__title',
-      label: 'Андрей'
-    })
-
-    this.children.imagine = new Imagine({
-      src: '../../images/Union.png',
-      class: 'edit__avatar',
-      alt: 'Аватар пользователя'
+      label: this.props.first_name
     })
 
     this.children.buttonToChats = new Button({
       class: 'edit__button',
       events: {
-        click: () => { render('chats') }
+        click: () => { Router.back() }
       }
     })
 
-    this.children.email = new InputContainer({
-      label: 'Почта',
-      class: 'edit__input',
-      name: 'email',
-      type: 'email',
-      edit: true,
-      required: false,
+    this.children.form = new Form<FormProps>({
+      class: 'edit',
+      inputs: userFields,
+      disabled: false,
+      inputClass: 'edit__input',
+      editing: true,
+      emptyValues: false,
+      btnClass: 'auth__button edit__submit-btn_password edit__submit-btn',
+      btnLabel: 'Cохранить',
+      btnType: 'submit',
       events: {
-        blur: () => validation(this.children, 'email', errors)
-      }
-    })
-
-    this.children.login = new InputContainer({
-      label: 'Логин',
-      class: 'edit__input',
-      name: 'login',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'login', errors)
-      }
-    })
-
-    this.children.first_name = new InputContainer({
-      label: 'Имя',
-      class: 'edit__input',
-      name: 'first_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'first_name', errors)
-      }
-    })
-
-    this.children.second_name = new InputContainer({
-      label: 'Фамилия',
-      class: 'edit__input',
-      name: 'second_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'second_name', errors)
-      }
-    })
-
-    this.children.display_name = new InputContainer({
-      label: 'Имя в чате',
-      class: 'edit__input',
-      name: 'display_name',
-      type: 'text',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'display_name', errors)
-      }
-    })
-
-    this.children.phone = new InputContainer({
-      class: 'edit__input',
-      identificator: 'edit__input-container_last',
-      label: 'Телефон',
-      name: 'phone',
-      type: 'tel',
-      edit: true,
-      required: false,
-      events: {
-        blur: () => validation(this.children, 'phone', errors)
-      }
-    })
-
-    this.children.changeData = new Button({
-      class: 'auth__button edit__submit-btn_password edit__submit-btn',
-      label: 'Cохранить',
-      type: 'submit',
-      events: {
-        click: (e?: Event) => {
-          submit(this.children, e)
+        submit: async (e?: Event) => {
+          e?.preventDefault()
+          await submit(((this.children.form as FormWrap).children.inputs as InputContainer[]), this.getContent(), this.submitChange.bind(this), '.edit__form')
         }
       }
+    });
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `${RESOURCES_URL}${this.props.avatar}`
     })
+  }
+
+  protected componentDidUpdate (oldProps: EditProfileProps, newProps: EditProfileProps): boolean {
+    if (!oldProps && !newProps) return false;
+
+    (this.children.avatar as EditAvatarContainer).setProps({
+      avatar: `${RESOURCES_URL}${newProps.avatar}`
+    })
+
+    return true
   }
 
   render (): DocumentFragment {
     return this.compile(template, this.props)
   }
 }
+
+const connectUser = connect((state) => ({ ...state.currentUser }))
+
+export const EditProfilePage = connectUser(EditProfile as typeof Block)

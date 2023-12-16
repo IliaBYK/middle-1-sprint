@@ -1,6 +1,7 @@
 const errors: Record<string, string> = {
   email: 'Введите корректный адрес электронной почты',
   login: 'Введите корректный логин: от 3 до 20 символов',
+  loginPopup: 'Введите корректный id пользователя',
   message: 'Введите сообщение',
   first_name: 'Введите корректное имя',
   second_name: 'Введите корректную фамилию',
@@ -10,6 +11,8 @@ const errors: Record<string, string> = {
   phone: 'Введите корректный телефон',
   oldPassword: 'Введите старый пароль',
   newPassword: 'Введите новый пароль',
-  newPasswordAgain: 'Введите новый пароль еще раз'
+  newPasswordAgain: 'Введите новый пароль еще раз',
+  addChat: 'Введите название чата',
+  idUser: 'Введите корректный id пользователя'
 }
 export default errors

@@ -2,16 +2,31 @@ import Block from '../../utils/Block'
 import template from './message.hbs'
 
 interface messageProps {
-  class?: string
-  text: string
+  isUser?: boolean
+  content?: string
   time?: string
+  isRead: boolean
 }
-export default class Message extends Block {
-  constructor (props: messageProps) {
-    super({ ...props })
+export class Message extends Block<messageProps> {
+  protected render (): DocumentFragment {
+    return this.compile(template, { ...this.props })
   }
+}
 
-  render (): DocumentFragment {
-    return this.compile(template, this.props)
-  }
-}
+/*
+chat_id: 38122
+
+content: "asd"
+
+fil: null
+
+id: 1
+
+is_read : true
+
+time: "2023-12-05T21:10:27+00:00"
+
+type: "message"
+
+user_id:1349268
+ */

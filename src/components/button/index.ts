@@ -2,14 +2,13 @@ import Block from '../../utils/Block'
 import template from './button.hbs'
 
 interface ButtonProps {
-  content?: boolean
+  content?: unknown
   label?: string
   type?: 'submit' | 'button'
-  href?: string
   class?: string
   onClick?: (e?: Event) => void
   events?: {
-    click: (e?: Event) => void
+    click: (e?: Event) => void | Promise<void>
   }
 }
 

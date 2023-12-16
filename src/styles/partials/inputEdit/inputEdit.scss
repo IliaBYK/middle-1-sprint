@@ -15,13 +15,13 @@
     position: relative;
     border-bottom: 1px solid $grayLines;
 
-    &_last {
-      border-bottom: none;
-    }
-
     &_btns {
       padding: 8px 0;
     }
+  }
+
+  &:disabled {
+    background: none;
   }
 }
 

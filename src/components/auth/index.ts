@@ -8,7 +8,7 @@ export default class Auth extends Block {
   }
 
   init (): void {
-    this.children.login = new LoginPage()
+    this.children.login = new LoginPage({})
   }
 
   render (): DocumentFragment {

@@ -79,17 +79,18 @@ class Block<P extends Record<string, any> = any> {
   private _init (): void {
     this.init()
 
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
+    this.eventBus().emit(Block.EVENTS.FLOW_CDM)
   }
 
   protected init (): void {
   }
 
-  _componentDidMount (): void {
+  private _componentDidMount (): void {
     this.componentDidMount()
   }
 
-  componentDidMount (): void {
+  protected componentDidMount (): void {
+    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
 
   public dispatchComponentDidMount (): void {
@@ -115,12 +116,15 @@ class Block<P extends Record<string, any> = any> {
     return true
   }
 
-  setProps = (nextProps: Partial<P>): void => {
+  setProps (nextProps: Partial<P>): void {
     if (!nextProps) {
       return
     }
 
+    const oldValue = { ...this.props }
+
     Object.assign(this.props, nextProps)
+    this.eventBus().emit(Block.EVENTS.FLOW_CDU, oldValue, this.props)
   }
 
   get element (): HTMLElement | null {
@@ -189,7 +193,7 @@ class Block<P extends Record<string, any> = any> {
     return this.element
   }
 
-  _makePropsProxy (eventBus: () => EventBus, props: P): P {
+  _makePropsProxy (eventBus: () => EventBus = this.eventBus, props: P): P {
     // Ещё один способ передачи this, но он больше не применяется с приходом ES6+
     // const self = this
 

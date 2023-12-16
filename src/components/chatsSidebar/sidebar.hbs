@@ -1,11 +1,18 @@
 <aside class="chats__sidebar">
   <div class="chats__sidebar-header">
     {{{button}}}
+    {{{buttonAddChat}}}
+    {{{tabForAddChat}}}
     {{{search}}}
   </div>
-  <ul class="chats__cards">
-    {{#each cards}}
-      {{{this}}}
-    {{/each}}
-  </ul>
+  {{#if isLoaded }}
+    <ul class="chats__cards">
+      {{#each cards}}
+        {{{this}}}
+      {{/each}}
+    </ul>
+  {{/if}}
+  {{#unless isLoaded}}
+    <p class="chats__empty-list chats__empty-list_place_sidebar">Чаты загружаются</p>
+  {{/unless}}
 </aside>
