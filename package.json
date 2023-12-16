@@ -9,7 +9,7 @@
     "dev": "vite",
     "build": "tsc && vite build --emptyOutDir",
     "preview": "vite preview",
-    "lint": "eslint src && stylelint 'src/**/*.scss' && tsc --noEmit",
+    "lint": "eslint 'src/**' && stylelint 'src/**/*.scss' && tsc --noEmit",
     "test": "mocha"
   },
   "devDependencies": {
