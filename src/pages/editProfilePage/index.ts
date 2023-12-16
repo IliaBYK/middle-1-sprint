@@ -13,7 +13,7 @@ import ChangeController, { type ChangeData } from '../../controllers/ChangeContr
 import { RESOURCES_URL } from '../../utils/constants'
 import { Form, type FormProps, type FormWrap } from '../../components/form/index'
 
-const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof EditProfileProps>
+const userFields = [ 'email', 'login', 'first_name', 'second_name', 'display_name', 'phone' ] as Array<keyof EditProfileProps>
 
 interface EditProfileProps extends User {}
 class EditProfile extends Block<EditProfileProps> {

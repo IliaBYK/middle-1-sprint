@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type Handler<A extends any[] = unknown[]> = (...args: A) => void
 type MapInterface<P> = P[keyof P]
 

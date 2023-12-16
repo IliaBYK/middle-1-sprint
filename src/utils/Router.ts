@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import type Block from './Block'
 
 export type BlockConstructable<P extends Record<string, any> = any> = new(props: P) => Block<P>

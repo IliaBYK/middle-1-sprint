@@ -1,11 +1,11 @@
-import { Messanger } from './pages/messanger/index'
+/* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { Messanger } from './pages/messanger/index'
 import { SignupPage } from './pages/signup/index'
 import { LoginPage } from './pages/login/index'
 import Router from './utils/Router'
 import { ProfilePage } from './pages/Profile/index'
 import AuthController from './controllers/AuthController'
-// import ChatsController from './controllers/ChatsController'
 import { EditProfilePage } from './pages/editProfilePage/index'
 import { EditPasswordPage } from './pages/editPassword/index'
 

@@ -8,13 +8,13 @@ import { submit } from '../../utils/validation'
 import { type InputContainer } from '../../components/inputContainer/index'
 import { Link } from '../../components/link/index'
 
-const userFields: string[] = ['login', 'password', 'passwordAgain']
+const userFields: string[] = [ 'login', 'password', 'passwordAgain' ]
 
 class Login extends Block {
   async onSignIn (): Promise<void> {
     const form = this.getContent()?.querySelector('.auth__form')
 
-    const data = [...new FormData(form as HTMLFormElement)]
+    const data = [ ...new FormData(form as HTMLFormElement) ]
 
     const entries = new Map(data)
     const result = Object.fromEntries(entries)

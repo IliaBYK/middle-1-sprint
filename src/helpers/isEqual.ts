@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 type PlainObject<T = any> = {
   [k in string]: T;
 }
@@ -22,7 +23,7 @@ function isEqual (lhs: PlainObject, rhs: PlainObject): boolean {
     return false
   } */
 
-  for (const [key, value] of Object.entries(lhs)) {
+  for (const [ key, value ] of Object.entries(lhs)) {
     const rightValue = rhs[key]
     if (isArrayOrObject(value) && isArrayOrObject(rightValue)) {
       if (isEqual(value, rightValue)) {

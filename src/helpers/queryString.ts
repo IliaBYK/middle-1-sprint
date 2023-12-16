@@ -5,7 +5,7 @@ function queryString (data: StringIndexed): string | never {
 
   const objectToQuery = (obj: StringIndexed): string => {
     return Object.entries(obj)
-      .map(([key, value]) => {
+      .map(([ key, value ]) => {
         if (Array.isArray(value)) {
           return value
             .map((item, index) => `${encodeURIComponent(key)}[${index}]=${encodeURIComponent(String(item))}`)

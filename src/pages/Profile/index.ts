@@ -23,7 +23,7 @@ const InputNames: Record<string, string> = {
   phone: 'Телефон'
 }
 
-const userFields = ['email', 'login', 'first_name', 'second_name', 'display_name', 'phone'] as Array<keyof ProfileProps>
+const userFields = [ 'email', 'login', 'first_name', 'second_name', 'display_name', 'phone' ] as Array<keyof ProfileProps>
 
 interface ProfileProps extends User {}
 class Profile extends Block<ProfileProps> {

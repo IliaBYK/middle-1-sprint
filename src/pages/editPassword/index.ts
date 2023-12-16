@@ -17,7 +17,7 @@ import { type InputContainer } from '../../components/inputContainer/index'
   newPasswordAgain: 'Повторите новый пароль'
 } */
 
-const userFields: string[] = ['oldPassword', 'newPassword', 'newPasswordAgain']
+const userFields: string[] = [ 'oldPassword', 'newPassword', 'newPasswordAgain' ]
 
 interface Props extends User {
   avatar: string

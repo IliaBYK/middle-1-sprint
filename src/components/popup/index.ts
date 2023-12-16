@@ -53,7 +53,7 @@ class Popup extends Block<PopupProps> {
       class: 'popup',
       titleClass: this.props.error ? 'popup__title popup__title_error' : 'popup__title',
       titleLabel: this.props.addUser ? (this.props.deleteUser ? 'Удалить пользователя' : 'Добавить пользователя') : (this.props.error ? 'Ошибка, попробуйте ещё раз' : (this.props.isLoaded ? 'Файл загружен' : 'Загрузите файл')),
-      inputs: [this.props.addUser ? 'login' : 'file'],
+      inputs: [ this.props.addUser ? 'login' : 'file' ],
       emptyValues: true,
       inputClass: this.props.addUser ? 'auth__input' : 'popup__input button',
       inputType: this.props.addUser ? 'text' : 'file',

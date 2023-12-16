@@ -20,7 +20,7 @@ async function submit (inputs: InputContainer | InputContainer[], element: HTMLE
 
   const form = element?.querySelector(className)
 
-  const data = [...new FormData(form as HTMLFormElement)]
+  const data = [ ...new FormData(form as HTMLFormElement) ]
 
   const entries = new Map(data)
   const result = Object.fromEntries(entries)

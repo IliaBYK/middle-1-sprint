@@ -169,7 +169,7 @@ export class Chats extends Block<ChatProps> {
     } else block.setProps({ class: `${className} tab_visible` })
   }
 
-  private createMessages (props: ChatProps): any {
+  private createMessages (props: ChatProps) {
     return props.messages.map(data => {
       return new Message({
         content: data.content,
@@ -207,8 +207,8 @@ const withChat = connect(state => {
 
   if (!selectedChatId) {
     return {
-      chats: state.chats || [{}],
-      messages: [{}],
+      chats: state.chats || [ {} ],
+      messages: [ {} ],
       selectedChat: undefined,
       userId: state.currentUser?.id
     }
@@ -216,7 +216,7 @@ const withChat = connect(state => {
 
   return {
     chats: state.chats,
-    messages: state.messages?.[selectedChatId] || [{}],
+    messages: state.messages?.[selectedChatId] || [ {} ],
     selectedChat: state.selectedChat,
     userId: state.currentUser?.id
   }

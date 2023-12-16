@@ -7,7 +7,7 @@ import { submit } from '../../utils/validation'
 import { type InputContainer } from '../../components/inputContainer/index'
 import { Link } from '../../components/link/index'
 
-const userFields: string[] = ['first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain']
+const userFields: string[] = [ 'first_name', 'second_name', 'email', 'login', 'phone', 'password', 'passwordAgain' ]
 
 class Signup extends Block {
   constructor () {

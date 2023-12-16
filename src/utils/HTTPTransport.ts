@@ -73,7 +73,7 @@ export default class HTTPTransport {
         xhr.setRequestHeader('Content-Type', 'application/json')
       }
 
-      Object.entries(headers ?? {}).forEach(([key, value]) => {
+      Object.entries(headers ?? {}).forEach(([ key, value ]) => {
         xhr.setRequestHeader(key, value)
       })
 
